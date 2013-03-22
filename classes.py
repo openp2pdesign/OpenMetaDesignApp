@@ -117,7 +117,7 @@ class project:
         # build the step
         for n,i in enumerate(self.steps):
             step = etree.SubElement(project, "step")
-            steptitle = etree.SubElement(step, "title")
+            steptitle = etree.SubElement(step, "steptitle")
             steptitle.text = self.steps[n].title
             participation = etree.SubElement(step, "participation")
             participation.text = self.steps[n].participation
@@ -153,25 +153,43 @@ class project:
     def load(self,filename):
         doc = etree.parse(filename)
         
-        # loading general information
+        # load general information
         title = (doc.find("title"))
         self.title = title.text
         version = (doc.find("version"))
         self.version = version.text
         founders = (doc.findall("founders"))
         for j,i in enumerate(founders):
-            print founders[j].text
-        
-        
+            self.founders[j] = founders[j].text
         license = (doc.find("license"))
         self.license = license.text
         licenseurl = (doc.find("licenseurl"))
         self.licenseurl = licenseurl.text
 
+        # load business model
         
+        print doc.attrib.get("valueproposition")
         
-        #self.businessmodel = businessmodel
-        #self.steps = steps
+        valueproposition = (doc.find("valueproposition"))
+        self.businessmodel.valueproposition = valueproposition.text
+        customerrelationships = (doc.find("customerrelationships"))
+        self.businessmodel.customerrelationships = customerrelationships.text
+        channels = (doc.find("channels"))
+        self.businessmodel.channels = channels.text
+        customersegments = (doc.find("customersegments"))
+        self.businessmodel.customersegments = customersegments.text
+        coststructure = (doc.find("coststructure"))
+        self.businessmodel.coststructure = coststructure.text
+        keyactivities = (doc.find("keyactivities"))
+        self.businessmodel.keyactivities = keyactivities.text
+        keyresources = (doc.find("keyresources"))
+        self.businessmodel.keyresources = keyactivities.text
+        keypartners = (doc.find("keypartners"))
+        self.businessmodel.keypartners = keypartners.text
+    
+        
+
+        # self.steps[0]
         # self.steps[0].flows[0]
         
         return
@@ -181,7 +199,7 @@ print p.license
 print p.businessmodel.channels
 print p.steps[0].title
 print p.steps[0].flows[0].what
-p.save("test.meta")
+#p.save("test.meta")
 print ""
 
 a = project()
