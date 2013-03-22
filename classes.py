@@ -76,8 +76,8 @@ class project:
     def save(self,filename):
         project = etree.Element('project')
         doc = etree.ElementTree(project)
-        # build the document before saving it
         
+        # build the document  and the general information before saving it
         title = etree.SubElement(project, "title")
         title.text = self.title
         version = etree.SubElement(project, "version")
@@ -109,7 +109,33 @@ class project:
         keypartners = etree.SubElement(businessmodel,"keypartners")
         keypartners.text = self.businessmodel.keypartners
         
-        
+        # build the step
+        for n,i in enumerate(self.steps):
+            step = etree.SubElement(project, "step")
+            steptitle = etree.SubElement(step, "title")
+            steptitle.text = self.steps[n].title
+            participation = etree.SubElement(step, "participation")
+            participation.text = self.steps[n].participation
+            tools = etree.SubElement(step, "tools")
+            tools.text = self.steps[n].tools
+            rules = etree.SubElement(step, "rules")
+            rules.text = self.steps[n].rules
+            roles = etree.SubElement(step, "roles")
+            roles.text = self.steps[n].roles
+            picture = etree.SubElement(step, "picture")
+            picture.text = self.steps[n].picture
+            
+            # build the flows
+            flow = etree.SubElement(step, "flow")
+            for m,k in enumerate(self.steps[n].flows):
+                flowtype = etree.SubElement(flow, "type")
+                flowtype.text = self.steps[n].flows[m].type
+                what = etree.SubElement(flow, "what")
+                what.text = self.steps[n].flows[m].what
+                direction = etree.SubElement(flow, "direction")
+                direction.text = self.steps[n].flows[m].direction
+            
+        # save the file
         outFile = open(filename, 'w')
         doc.write(outFile,pretty_print=True)
         print "File saved successfully as",filename
