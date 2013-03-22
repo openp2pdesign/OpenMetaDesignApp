@@ -86,9 +86,10 @@ class project:
         title.text = self.title
         version = etree.SubElement(project, "version")
         version.text = self.version
+        founders = etree.SubElement(project, "founders")
         for j in self.founders:
-            founders = etree.SubElement(project, "founders")
-            founders.text = j
+            founder = etree.SubElement(founders, "founder")
+            founder.text = j
         license = etree.SubElement(project, "license")
         license.text = self.license
         licenseurl = etree.SubElement(project, "licenseurl")
@@ -150,11 +151,30 @@ class project:
         return
     
     def load(self,filename):
-        loaded = project()
         doc = etree.parse(filename)
         
-        # or etree.iterparse ?
-        return loaded
+        # loading general information
+        title = (doc.find("title"))
+        self.title = title.text
+        version = (doc.find("version"))
+        self.version = version.text
+        founders = (doc.findall("founders"))
+        for j,i in enumerate(founders):
+            print founders[j].text
+        
+        
+        license = (doc.find("license"))
+        self.license = license.text
+        licenseurl = (doc.find("licenseurl"))
+        self.licenseurl = licenseurl.text
+
+        
+        
+        #self.businessmodel = businessmodel
+        #self.steps = steps
+        # self.steps[0].flows[0]
+        
+        return
 
 p = project()
 print p.license
@@ -162,3 +182,9 @@ print p.businessmodel.channels
 print p.steps[0].title
 print p.steps[0].flows[0].what
 p.save("test.meta")
+print ""
+
+a = project()
+a.title = "prova"
+a.load("test.meta")
+print a.title
