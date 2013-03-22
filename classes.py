@@ -27,11 +27,15 @@ class flow():
     def __init__(self, 
                  type = "flow type", 
                  what = "none", 
-                 direction = "direction"): 
+                 direction = "direction",
+                 fromrole = "from",
+                 torole =  "to" ): 
         
         self.type = type
         self.what = what
-        self.direction = direction       
+        self.direction = direction
+        self.fromrole = fromrole
+        self.torole = torole 
 
 class step():
     "A class for each step in the design process"
@@ -134,6 +138,10 @@ class project:
                 what.text = self.steps[n].flows[m].what
                 direction = etree.SubElement(flow, "direction")
                 direction.text = self.steps[n].flows[m].direction
+                fromrole = etree.SubElement(flow, "from")
+                fromrole.text = self.steps[n].flows[m].fromrole
+                torole = etree.SubElement(flow, "to")
+                torole.text = self.steps[n].flows[m].torole
             
         # save the file
         outFile = open(filename, 'w')
@@ -144,6 +152,7 @@ class project:
     def load(self,filename):
         loaded = project()
         doc = etree.parse(filename)
+        
         # or etree.iterparse ?
         return loaded
 
