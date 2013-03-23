@@ -174,8 +174,46 @@ class project:
         self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")
         self.businessmodel.keypartners = doc.xpath("//project/businessmodel/keypartners/text()")
         
+        # load steps
+        titles = doc.xpath("//project/step/steptitle/text()")
+        for j,i in enumerate(titles):
+            self.steps[j] = step()
+            self.steps[j].title = i
+            
+        participation = doc.xpath("//project/step/participation/text()")
+        for j,i in enumerate(participation):
+            #self.steps[j] = step()
+            self.steps[j].participation = i
+        
+        tools = doc.xpath("//project/step/tools/text()")
+        for j,i in enumerate(tools):
+            self.steps[j] = step()
+            self.steps[j].tools = i
+ 
+        rules = doc.xpath("//project/step/rules/text()")
+        for j,i in enumerate(rules):
+            self.steps[j] = step()
+            self.steps[j].rules = i
+ 
+        roles = doc.xpath("//project/step/roles/text()")
+        for j,i in enumerate(roles):
+            self.steps[j] = step()
+            self.steps[j].roles = i  
+            
+        picture = doc.xpath("//project/step/picture/text()")
+        for j,i in enumerate(picture):
+            self.steps[j] = step()
+            self.steps[j].picture = i    
+            
+        # load flows
+        
+        flowtype = doc.xpath("//project/step/flow/type/text()")
+        print flowtype
+        for j,i in enumerate(flowtype):
+            self.steps[j] = step()
+            self.steps[j].rules = i
 
-        # self.steps[0]
+
         # self.steps[0].flows[0]
         
         return
@@ -185,7 +223,7 @@ print p.license
 print p.businessmodel.channels
 print p.steps[0].title
 print p.steps[0].flows[0].what
-p.save("test.meta")
+#p.save("test.meta")
 print ""
 
 a = project()
@@ -195,3 +233,10 @@ a.load("test.meta")
 print a.title
 print a.founders
 print a.businessmodel.valueproposition
+print a.steps[0].title
+print a.steps[1].title
+print a.steps[0].participation
+print a.steps[1].participation
+
+print a.steps[0].flows[0].type
+print a.steps[1].flows[0].type
