@@ -154,39 +154,25 @@ class project:
         doc = etree.parse(filename)
         
         # load general information
-        title = (doc.find("title"))
-        self.title = title.text
-        version = (doc.find("version"))
-        self.version = version.text
-        founders = (doc.findall("founders"))
+        self.title = doc.findtext("title")
+        self.version = doc.findtext("version")
+        founders = doc.xpath("//project/founders/founder/text()")
         for j,i in enumerate(founders):
-            self.founders[j] = founders[j].text
-        license = (doc.find("license"))
-        self.license = license.text
-        licenseurl = (doc.find("licenseurl"))
-        self.licenseurl = licenseurl.text
-
+            if j == 0:
+                self.founders[j] = i
+            self.founders.append(i)
+        self.license = doc.findtext("license")
+        self.licenseurl = doc.findtext("licenseurl")
+        
         # load business model
-        
-        print doc.attrib.get("valueproposition")
-        
-        valueproposition = (doc.find("valueproposition"))
-        self.businessmodel.valueproposition = valueproposition.text
-        customerrelationships = (doc.find("customerrelationships"))
-        self.businessmodel.customerrelationships = customerrelationships.text
-        channels = (doc.find("channels"))
-        self.businessmodel.channels = channels.text
-        customersegments = (doc.find("customersegments"))
-        self.businessmodel.customersegments = customersegments.text
-        coststructure = (doc.find("coststructure"))
-        self.businessmodel.coststructure = coststructure.text
-        keyactivities = (doc.find("keyactivities"))
-        self.businessmodel.keyactivities = keyactivities.text
-        keyresources = (doc.find("keyresources"))
-        self.businessmodel.keyresources = keyactivities.text
-        keypartners = (doc.find("keypartners"))
-        self.businessmodel.keypartners = keypartners.text
-    
+        self.businessmodel.valueproposition = doc.xpath("//project/businessmodel/valueproposition/text()")
+        self.businessmodel.customerrelationships = doc.xpath("//project/businessmodel/customerrelationships/text()")
+        self.businessmodel.channels = doc.xpath("//project/businessmodel/channels/text()")
+        self.businessmodel.customersegments = doc.xpath("//project/businessmodel/customersegments/text()")
+        self.businessmodel.coststructure = doc.xpath("//project/businessmodel/coststructure/text()")
+        self.businessmodel.keyactivities = doc.xpath("//project/businessmodel/keyactivities/text()")
+        self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")
+        self.businessmodel.keypartners = doc.xpath("//project/businessmodel/keypartners/text()")
         
 
         # self.steps[0]
@@ -199,10 +185,13 @@ print p.license
 print p.businessmodel.channels
 print p.steps[0].title
 print p.steps[0].flows[0].what
-#p.save("test.meta")
+p.save("test.meta")
 print ""
 
 a = project()
 a.title = "prova"
+a.businessmodel.valueproposition = "X"
 a.load("test.meta")
 print a.title
+print a.founders
+print a.businessmodel.valueproposition
