@@ -154,7 +154,7 @@ class project:
             
         # save the file
         outFile = open(filename, 'w')
-        doc.write(outFile,pretty_print=True)
+        doc.write(outFile,pretty_print=True,xml_declaration=True, encoding="UTF-8")
         print "File saved successfully as",filename
         return
     
