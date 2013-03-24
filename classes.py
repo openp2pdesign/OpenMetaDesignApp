@@ -25,12 +25,14 @@ class businessmodel():
 class flow():
     "A class for each flow in the design process"
     def __init__(self, 
+                 number = "0",
                  type = "flow type", 
                  what = "none", 
                  direction = "direction",
                  fromrole = "from",
                  torole =  "to" ): 
         
+        self.number = number
         self.type = type
         self.what = what
         self.direction = direction
@@ -40,6 +42,7 @@ class flow():
 class step():
     "A class for each step in the design process"
     def __init__(self, 
+                 stepnumber = "0",
                  title = "step title", 
                  participation = "none", 
                  tools = "tools",
@@ -48,6 +51,7 @@ class step():
                  picture = "none",
                  flows = {0:flow()}): 
         
+        self.stepnumber = stepnumber
         self.title = title
         self.participation = participation
         self.tools = tools
@@ -117,6 +121,8 @@ class project:
         # build the step
         for n,i in enumerate(self.steps):
             step = etree.SubElement(project, "step")
+            stepnumber = etree.SubElement(step, "stepnumber")
+            stepnumber.text = str(n)
             steptitle = etree.SubElement(step, "steptitle")
             steptitle.text = self.steps[n].title
             participation = etree.SubElement(step, "participation")
@@ -133,6 +139,8 @@ class project:
             # build the flows
             flow = etree.SubElement(step, "flow")
             for m,k in enumerate(self.steps[n].flows):
+                flownumber = etree.SubElement(flow, "number")
+                flownumber.text = self.steps[n].flows[m].number
                 flowtype = etree.SubElement(flow, "type")
                 flowtype.text = self.steps[n].flows[m].type
                 what = etree.SubElement(flow, "what")
@@ -174,48 +182,48 @@ class project:
         self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")
         self.businessmodel.keypartners = doc.xpath("//project/businessmodel/keypartners/text()")
         
-        # load steps
-        titles = doc.xpath("//project/step/steptitle/text()")
-        for j,i in enumerate(titles):
-            self.steps[j] = step()
-            self.steps[j].title = i
-            
-        participation = doc.xpath("//project/step/participation/text()")
-        for j,i in enumerate(participation):
-            #self.steps[j] = step()
-            self.steps[j].participation = i
-        
-        tools = doc.xpath("//project/step/tools/text()")
-        for j,i in enumerate(tools):
-            self.steps[j] = step()
-            self.steps[j].tools = i
- 
-        rules = doc.xpath("//project/step/rules/text()")
-        for j,i in enumerate(rules):
-            self.steps[j] = step()
-            self.steps[j].rules = i
- 
-        roles = doc.xpath("//project/step/roles/text()")
-        for j,i in enumerate(roles):
-            self.steps[j] = step()
-            self.steps[j].roles = i  
-            
-        picture = doc.xpath("//project/step/picture/text()")
-        for j,i in enumerate(picture):
-            self.steps[j] = step()
-            self.steps[j].picture = i    
-            
-        # load flows
-        
-        flowtype = doc.xpath("//project/step/flow/type/text()")
-        print flowtype
-        for j,i in enumerate(flowtype):
-            self.steps[j] = step()
-            self.steps[j].rules = i
-
-
-        # self.steps[0].flows[0]
-        
+        # load steps 
+        steplist = doc.xpath("//project/step")
+        for k,m in enumerate(steplist):
+            stepelements = m.getchildren()
+            for l in stepelements:
+                if l.tag == "stepnumber":
+                    self.steps[k] = step()
+                    self.steps[k].stepnumber = l.text
+                elif l.tag == "steptitle":
+                    self.steps[k].title = l.text
+                elif l.tag == "participation":
+                    self.steps[k].participation = l.text
+                elif l.tag == "tools":
+                    self.steps[k].tools = l.text
+                elif l.tag == "rules":
+                    self.steps[k].rules = l.text
+                elif l.tag == "roles":
+                    self.steps[k].roles = l.text
+                elif l.tag == "picture":
+                    self.steps[k].picture = l.text
+                elif l.tag == "flow":
+                    flowelements = l.getchildren()
+                    f = 0
+                    for j in flowelements:
+                        if j.tag == "number" and j.text == "0":
+                            f = int(j.text)
+                            self.steps[k].flows[f].number = j.text
+                        elif j.tag == "number" and j.text != "0":
+                            f = int(j.text)
+                            self.steps[k].flows[f] = flow()
+                            self.steps[k].flows[f].number = j.text
+                        elif j.tag == "type":
+                            self.steps[k].flows[f].type = j.text
+                        elif j.tag == "what":
+                            self.steps[k].flows[f].what = j.text
+                        elif j.tag == "direction":
+                            self.steps[k].flows[f].direction = j.text
+                        elif j.tag == "from":
+                            self.steps[k].flows[f].fromrole = j.text
+                        elif j.tag == "to":
+                            self.steps[k].flows[f].torole = j.text
+                
         return
 
 p = project()
@@ -240,3 +248,5 @@ print a.steps[1].participation
 
 print a.steps[0].flows[0].type
 print a.steps[1].flows[0].type
+print a.steps[1].flows[1].type
+print a.steps[1].flows[1].what
