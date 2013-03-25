@@ -2,13 +2,13 @@
 import wx
 import wx.lib.mixins.inspection
 
-global currenttab
-currenttab = ""
+
 
 class StepPage(wx.Panel):
     def __init__(self, parent,pagename="Step"):
         wx.Panel.__init__(self, parent, name=pagename)
-        t = wx.StaticText(self, -1, "THIS IS A PAGE OBJECT", (20,20))
+        testo = "THIS IS A PAGE OBJECT n." + pagename
+        t = wx.StaticText(self, -1, testo, (20,20))
         
 class GeneralPage(wx.Panel):
     def __init__(self, parent):
@@ -68,6 +68,30 @@ class Main(wx.Frame):
         wx.EVT_MENU(self, 14, self.onButtonRemove)
         
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
+        
+        self.m_menu3 = wx.Menu()
+        self.m_menuItem7 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the participation in the design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem7 )
+        
+        self.m_menuItem9 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the business model", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem9 )
+        
+        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the System Map", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem11 )
+        
+        self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the project", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem8 )
+        
+        self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem12 )
+        
+        self.m_menubar1.Append( self.m_menu3, u"View" ) 
+        
+        self.m_menu4 = wx.Menu()
+        self.m_menuItem10 = wx.MenuItem( self.m_menu4, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu4.AppendItem( self.m_menuItem10 )
+        
+        self.m_menubar1.Append( self.m_menu4, u"Help" ) 
         
         self.SetMenuBar( self.m_menubar1 )
         
