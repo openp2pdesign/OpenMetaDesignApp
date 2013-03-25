@@ -124,52 +124,40 @@ class Main(wx.Frame):
         self.statusBar = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
         self.m_menubar1 = wx.MenuBar( 0 )
         self.m_menu1 = wx.Menu()
+        
         self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Open", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem1 )
-        
         self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem2 )
-        
         self.m_menuItem3 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save As", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem3 )
-        
         self.m_menuItem4 = wx.MenuItem( self.m_menu1, 12, u"Exit", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem4 )
-        
         self.m_menubar1.Append( self.m_menu1, u"File" ) 
         
         self.m_menu2 = wx.Menu()
         self.m_menuItem5 = wx.MenuItem( self.m_menu2, 13, u"Add a step in the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem5 )
-        
-        
         self.m_menuItem6 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem6 )
-        
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
         self.m_menu3 = wx.Menu()
         self.m_menuItem7 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the participation in the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem7 )
-        
         self.m_menuItem9 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the business model", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem9 )
-        
         self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the System Map", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem11 )
-        
         self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the project", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem8 )
-        
         self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem12 )
-        
         self.m_menubar1.Append( self.m_menu3, u"View" ) 
         
         self.m_menu4 = wx.Menu()
         self.m_menuItem10 = wx.MenuItem( self.m_menu4, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu4.AppendItem( self.m_menuItem10 )
-        
         self.m_menubar1.Append( self.m_menu4, u"Help" ) 
         
         self.SetMenuBar( self.m_menubar1 )
