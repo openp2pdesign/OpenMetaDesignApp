@@ -4,8 +4,6 @@ import wx.lib.mixins.inspection
 
 global currenttab
 currenttab = ""
-global currentid
-currentid = 0
 
 class StepPage(wx.Panel):
     def __init__(self, parent,pagename="Step"):
@@ -65,7 +63,7 @@ class Main(wx.Frame):
         self.m_menu2.AppendItem( self.m_menuItem5 )
         wx.EVT_MENU(self, 13, self.onButtonInsert)
         
-        self.m_menuItem6 = wx.MenuItem( self.m_menu2, 14, u"Remove a step in the design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem6 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem6 )
         wx.EVT_MENU(self, 14, self.onButtonRemove)
         
@@ -83,19 +81,15 @@ class Main(wx.Frame):
         businesspage = BusinessModelPage(self.Notebook3)
         self.Notebook3.AddPage(businesspage, "Business model")
 
-        self.pageCounter = 0
+        self.pageCounter = 2
+        self.pageTitleCounter = 1
         self.addNotebookPage()
         
     def OnTabChanged(self,event):
         # Useful resources learnt from here: 
         # http://www.daniweb.com/software-development/python/threads/310718/how-to-get-current-page-name-in-notbook-control
         tab = event.EventObject.GetChildren()[event.Selection]
-        global currenttab
-        global currentid
         currenttab = tab.GetName()
-        print "Tab:",currenttab
-        currentid = tab.GetId()
-        print "ID:",currentid
         event.Skip()     
     
     def OnQuit(self, event):
@@ -103,15 +97,15 @@ class Main(wx.Frame):
 
     def addNotebookPage(self):
         self.pageCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageCounter))
+        pageTitle = "Step: {0}".format(str(self.pageTitleCounter))
         page      = StepPage(self.Notebook3, pageTitle)
         self.Notebook3.AddPage(page, pageTitle)
+        self.pageTitleCounter += 1
 
     def onButtonRemove(self, event):   
-        if currenttab != "Business model" or currenttab != "General information":
-            print "Deleting",currentid
-            self.Notebook3.DeletePage(currentid)
-            
+        if self.pageCounter > 2:
+            self.Notebook3.DeletePage(self.pageCounter)
+            self.pageTitleCounter -= 1
             self.pageCounter -= 1
         else:
             pass
