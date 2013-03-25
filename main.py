@@ -86,8 +86,6 @@ class Main(wx.Frame):
         self.addNotebookPage()
         
     def OnTabChanged(self,event):
-        # Useful resources learnt from here: 
-        # http://www.daniweb.com/software-development/python/threads/310718/how-to-get-current-page-name-in-notbook-control
         tab = event.EventObject.GetChildren()[event.Selection]
         currenttab = tab.GetName()
         event.Skip()     
@@ -97,14 +95,14 @@ class Main(wx.Frame):
 
     def addNotebookPage(self):
         self.pageCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageTitleCounter))
+        pageTitle = "Step: {0}".format(str(self.pageCounter-2))
         page      = StepPage(self.Notebook3, pageTitle)
         self.Notebook3.AddPage(page, pageTitle)
         self.pageTitleCounter += 1
 
     def onButtonRemove(self, event):   
         if self.pageCounter > 2:
-            self.Notebook3.DeletePage(self.pageCounter)
+            self.Notebook3.DeletePage(self.pageTitleCounter)
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
         else:
