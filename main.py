@@ -13,29 +13,88 @@
 import os
 import wx
 import wx.lib.mixins.inspection
+import wx.lib.scrolledpanel as scrolled
 
 
 
 class StepPage(wx.Panel):
     def __init__(self, parent,pagename="Step"):
         wx.Panel.__init__(self, parent, name=pagename)
-        testo = "THIS IS A PAGE OBJECT n." + pagename
-        t = wx.StaticText(self, -1, testo, (20,20))
+        
         
 class GeneralPage(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, name="General information")
-        t = wx.StaticText(self, -1, "THIS IS A GENERAL PAGE OBJECT", (20,20))
-        
-class BusinessModelPage(wx.Panel):
+
+        wx.StaticBox(self, -1, 'General Information', (5, 5), size=(570, 240))
+        wx.CheckBox(self, -1 ,'Male', (15, 30))
+        wx.CheckBox(self, -1 ,'Married', (15, 55))
+        wx.StaticText(self, -1, 'Age', (15, 95))
+        wx.SpinCtrl(self, -1, '1', (55, 90), (60, -1), min=1, max=120)
+        wx.Button(self, 1, 'Ok', (90, 185), (60, -1))
+
+class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent,name="Business model")
-        t = wx.StaticText(self, -1, "THIS IS A BUSINESS PAGE OBJECT", (20,20))
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Business model")
+        box = wx.BoxSizer()
+        
+        fgs = wx.FlexGridSizer(9, 1, 20, 0)
+
+        label1 = wx.StaticText(self, label="Value proposition:")
+        label2 = wx.StaticText(self, label="Customer segments:")
+        label3 = wx.StaticText(self, label="Customer relationships:")
+        label4 = wx.StaticText(self, label="Channels:")
+        label5 = wx.StaticText(self, label="Key partners:")
+        label6 = wx.StaticText(self, label="Key activities:")
+        label7 = wx.StaticText(self, label="Key resources:")
+        label8 = wx.StaticText(self, label="Revenue stream:")
+        label9 = wx.StaticText(self, label="Cost structure:")
+
+        tc1 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc2 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc3 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc4 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc5 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc6 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc7 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc8 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc9 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        
+
+        fgs.AddMany([
+                     (label1), 
+                     (tc1, 1, wx.EXPAND), 
+                     (label2), 
+                     (tc2, 1, wx.EXPAND), 
+                     (label3), 
+                     (tc3, 1, wx.EXPAND),
+                     (label4),
+                     (tc4, 1, wx.EXPAND),
+                     (label5), 
+                     (tc5, 1, wx.EXPAND),
+                     (label6), 
+                     (tc6, 1, wx.EXPAND),
+                     (label7), 
+                     (tc7, 1, wx.EXPAND),
+                     (label8), 
+                     (tc8, 1, wx.EXPAND),
+                     (label9), 
+                     (tc9, 1, wx.EXPAND)
+                     ])
+
+
+        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
+        self.SetSizer(box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
+
+        
+        
         
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(600, 400))
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(600, 400),style=wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION)
         self.currentDirectory = os.getcwd()
 
         pannel  = wx.Panel(self)
@@ -164,7 +223,7 @@ class Main(wx.Frame):
         
     def onTabChanged(self,event):
         tab = event.EventObject.GetChildren()[event.Selection]
-        currenttab = tab.GetName()
+        currentTab = tab.GetName()
         event.Skip()     
     
     def onQuit(self, event):
