@@ -50,15 +50,15 @@ class BusinessModelPage(scrolled.ScrolledPanel):
         label8 = wx.StaticText(self, label="Revenue stream:")
         label9 = wx.StaticText(self, label="Cost structure:")
 
-        tc1 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc2 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc3 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc4 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc5 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc6 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc7 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc8 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
-        tc9 = wx.TextCtrl(self, size=(530,120), style=wx.TE_MULTILINE)
+        tc1 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc3 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc4 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc5 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc6 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc7 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc8 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
         
 
         fgs.AddMany([
@@ -95,6 +95,8 @@ class BusinessModelPage(scrolled.ScrolledPanel):
 class Main(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(600, 400),style=wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION)
+        self.SetMinSize( self.GetSize() )
+        
         self.currentDirectory = os.getcwd()
 
         pannel  = wx.Panel(self)
