@@ -1,3 +1,14 @@
+#
+# Open MetaDesign 0.1
+#
+# Author: Massimo Menichinelli
+# Website:
+# http://openmetadesign.org
+# http://openp2pdesign.org
+#
+# License: GPL v.3
+#
+
 from lxml import etree
 
 class businessmodel():

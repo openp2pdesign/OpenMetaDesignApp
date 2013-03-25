@@ -1,3 +1,14 @@
+#
+# Open MetaDesign 0.1
+#
+# Author: Massimo Menichinelli
+# Website:
+# http://openmetadesign.org
+# http://openp2pdesign.org
+#
+# License: GPL v.3
+#
+
 
 import wx
 import wx.lib.mixins.inspection
@@ -23,16 +34,16 @@ class BusinessModelPage(wx.Panel):
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign")
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(400, 400))
 
         pannel  = wx.Panel(self)
         vbox    = wx.BoxSizer(wx.VERTICAL)
         hbox    = wx.BoxSizer(wx.HORIZONTAL)    
-
+        
         vbox.Add(hbox)
 
         self.Notebook3 = wx.Notebook(pannel)
-        self.Notebook3.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.OnTabChanged)
+        self.Notebook3.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         vbox.Add(self.Notebook3, 2, flag=wx.EXPAND)
         
 
@@ -54,18 +65,16 @@ class Main(wx.Frame):
         
         self.m_menuItem4 = wx.MenuItem( self.m_menu1, 12, u"Exit", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem4 )
-        wx.EVT_MENU(self, 12, self.OnQuit)
         
         self.m_menubar1.Append( self.m_menu1, u"File" ) 
         
         self.m_menu2 = wx.Menu()
         self.m_menuItem5 = wx.MenuItem( self.m_menu2, 13, u"Add a step in the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem5 )
-        wx.EVT_MENU(self, 13, self.onButtonInsert)
+        
         
         self.m_menuItem6 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem6 )
-        wx.EVT_MENU(self, 14, self.onButtonRemove)
         
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
@@ -98,6 +107,14 @@ class Main(wx.Frame):
         
         # to here
         
+        # Set events for the Menu
+        self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem10)
+        self.Bind(wx.EVT_MENU, self.onButtonRemove, self.m_menuItem6)
+        self.Bind(wx.EVT_MENU, self.onButtonInsert, self.m_menuItem5)
+        self.Bind(wx.EVT_MENU, self.onQuit, self.m_menuItem4)
+        
+        
+        # Initializing the notebook
         
         generalpage = GeneralPage(self.Notebook3)
         self.Notebook3.AddPage(generalpage, "General information")
@@ -109,12 +126,18 @@ class Main(wx.Frame):
         self.pageTitleCounter = 1
         self.addNotebookPage()
         
-    def OnTabChanged(self,event):
+        
+    def onAbout(self,e):
+        dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
+        dlg.ShowModal()
+        dlg.Destroy()
+        
+    def onTabChanged(self,event):
         tab = event.EventObject.GetChildren()[event.Selection]
         currenttab = tab.GetName()
         event.Skip()     
     
-    def OnQuit(self, event):
+    def onQuit(self, event):
         self.Close()
 
     def addNotebookPage(self):
