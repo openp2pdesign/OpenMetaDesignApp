@@ -10,6 +10,7 @@
 #
 
 
+import os
 import wx
 import wx.lib.mixins.inspection
 
@@ -34,7 +35,8 @@ class BusinessModelPage(wx.Panel):
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(400, 400))
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(600, 400))
+        self.currentDirectory = os.getcwd()
 
         pannel  = wx.Panel(self)
         vbox    = wx.BoxSizer(wx.VERTICAL)
@@ -51,7 +53,7 @@ class Main(wx.Frame):
         
         # Insert here the code from wxFormBuilder 
         
-        self.m_statusBar1 = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
+        self.statusBar = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
         self.m_menubar1 = wx.MenuBar( 0 )
         self.m_menu1 = wx.Menu()
         self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Open", wx.EmptyString, wx.ITEM_NORMAL )
@@ -104,14 +106,18 @@ class Main(wx.Frame):
         
         self.SetMenuBar( self.m_menubar1 )
         
-        
-        # to here
+
         
         # Set events for the Menu
-        self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem10)
-        self.Bind(wx.EVT_MENU, self.onButtonRemove, self.m_menuItem6)
-        self.Bind(wx.EVT_MENU, self.onButtonInsert, self.m_menuItem5)
+        
+        self.Bind(wx.EVT_MENU, self.onOpenFile, self.m_menuItem1)
+        self.Bind(wx.EVT_MENU, self.onSaveFile, self.m_menuItem2)
+        self.Bind(wx.EVT_MENU, self.onSaveFileAs, self.m_menuItem3)
         self.Bind(wx.EVT_MENU, self.onQuit, self.m_menuItem4)
+        self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem5)
+        self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem6)
+        self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem10)
+        
         
         
         # Initializing the notebook
@@ -127,9 +133,33 @@ class Main(wx.Frame):
         self.addNotebookPage()
         
         
-    def onAbout(self,e):
+    def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
         dlg.ShowModal()
+        dlg.Destroy()
+        
+    def onOpenFile(self, event):
+        dlg = wx.FileDialog(self, message="Choose a file",defaultDir=self.currentDirectory, defaultFile="",wildcard="*.meta",style=wx.OPEN | wx.CHANGE_DIR)
+        if dlg.ShowModal() == wx.ID_OK:
+            paths = dlg.GetPaths()
+            
+        # Here save the file
+            
+        dlg.Destroy()
+        
+    def onSaveFile(self):
+        
+        # Here save the current opened file
+        
+        pass
+        
+    def onSaveFileAs(self, event):
+        dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
+        if dlg.ShowModal() == wx.ID_OK:
+            path = dlg.GetPath()
+            
+            # Here add the code for saving the file
+            
         dlg.Destroy()
         
     def onTabChanged(self,event):
@@ -147,7 +177,7 @@ class Main(wx.Frame):
         self.Notebook3.AddPage(page, pageTitle)
         self.pageTitleCounter += 1
 
-    def onButtonRemove(self, event):   
+    def onStepRemove(self, event):   
         if self.pageCounter > 2:
             self.Notebook3.DeletePage(self.pageTitleCounter)
             self.pageTitleCounter -= 1
@@ -155,7 +185,7 @@ class Main(wx.Frame):
         else:
             pass
 
-    def onButtonInsert(self, event):   
+    def onStepInsert(self, event):   
         self.addNotebookPage()
 
 class MyApp(wx.App, wx.lib.mixins.inspection.InspectionMixin):
