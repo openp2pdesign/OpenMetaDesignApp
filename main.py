@@ -16,22 +16,29 @@ import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
 
 
-
-class StepPage(wx.Panel):
+        
+class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
-        wx.Panel.__init__(self, parent, name=pagename)
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(550,400),name=pagename)
+        box = wx.BoxSizer()        
         
         
-class GeneralPage(wx.Panel):
+        
+class GeneralPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent, name="General information")
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(550,400),name="General information")
+        box = wx.BoxSizer()
 
-        wx.StaticBox(self, -1, 'General Information', (5, 5), size=(570, 240))
+        wx.StaticBox(self, -1, 'General Information', (5, 5), size=(550, 240))
         wx.CheckBox(self, -1 ,'Male', (15, 30))
         wx.CheckBox(self, -1 ,'Married', (15, 55))
         wx.StaticText(self, -1, 'Age', (15, 95))
         wx.SpinCtrl(self, -1, '1', (55, 90), (60, -1), min=1, max=120)
         wx.Button(self, 1, 'Ok', (90, 185), (60, -1))
+        
+        self.SetSizer(box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
 
 class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
