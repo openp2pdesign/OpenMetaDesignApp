@@ -15,26 +15,35 @@ import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
 
-
         
 class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
-        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(550,400),name=pagename)
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name=pagename)
         box = wx.BoxSizer()
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
-        
+
         
 class GeneralPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(550,400),name="General information")
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
         box = wx.BoxSizer()
+        
+        #text3 = "text..."
+        #lyrics3 = wx.StaticText(self, -1, text3)
+        
+        self.bitmap = wx.Bitmap('images/openmetadesign.png')
+        wx.EVT_PAINT(self, self.OnPaint)
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
+        
+    def OnPaint(self, event):
+        dc = wx.PaintDC(self)
+        dc.DrawBitmap(self.bitmap, 60, 20)
 
 class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
@@ -104,11 +113,11 @@ class Main(wx.Frame):
 
         pannel  = wx.Panel(self)
         vbox    = wx.BoxSizer(wx.VERTICAL)
-        hbox    = wx.BoxSizer(wx.HORIZONTAL)    
+        #hbox    = wx.BoxSizer(wx.HORIZONTAL)    
         
-        vbox.Add(hbox)
+        #vbox.Add(hbox)
 
-        self.Notebook3 = wx.Notebook(pannel)
+        self.Notebook3 = wx.Notebook(pannel,-1)
         self.Notebook3.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         vbox.Add(self.Notebook3, 2, flag=wx.EXPAND)
         
