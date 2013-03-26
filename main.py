@@ -25,8 +25,8 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetAutoLayout(1)
         self.SetupScrolling()
 
-        
-class GeneralPage(scrolled.ScrolledPanel):
+
+class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
         box = wx.BoxSizer()
@@ -44,6 +44,20 @@ class GeneralPage(scrolled.ScrolledPanel):
     def OnPaint(self, event):
         dc = wx.PaintDC(self)
         dc.DrawBitmap(self.bitmap, 60, 20)
+
+        
+class GeneralPage(scrolled.ScrolledPanel):
+    def __init__(self, parent):
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
+        box = wx.BoxSizer()
+        
+
+        
+        self.SetSizer(box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
+        
+
 
 class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
@@ -113,14 +127,21 @@ class Main(wx.Frame):
 
         pannel  = wx.Panel(self)
         vbox    = wx.BoxSizer(wx.VERTICAL)
-        #hbox    = wx.BoxSizer(wx.HORIZONTAL)    
         
-        #vbox.Add(hbox)
-
-        self.Notebook3 = wx.Notebook(pannel,-1)
-        self.Notebook3.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
-        vbox.Add(self.Notebook3, 2, flag=wx.EXPAND)
+        # Initializing the notebook
+        self.pageCounter = 2
+        self.pageTitleCounter = 1          
+        self.nb = wx.Notebook(pannel, -1)
+        self.page0 = WelcomePage(self.nb)
+        self.page1 = GeneralPage(self.nb)
+        self.page2 = BusinessModelPage(self.nb)
+        self.nb.AddPage(self.page0, "Welcome!") 
+        self.nb.AddPage(self.page1, "General Information")
+        self.nb.AddPage(self.page2, "Business Model")
+        self.addNotebookPage()
+        self.nb.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         
+        vbox.Add(self.nb, 2, flag=wx.EXPAND)
 
         pannel.SetSizer(vbox)
         
@@ -178,21 +199,7 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem5)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem10)
-        
-        
-        
-        # Initializing the notebook
-        
-        generalpage = GeneralPage(self.Notebook3)
-        self.Notebook3.AddPage(generalpage, "General information")
-        
-        businesspage = BusinessModelPage(self.Notebook3)
-        self.Notebook3.AddPage(businesspage, "Business model")
-
-        self.pageCounter = 2
-        self.pageTitleCounter = 1
-        self.addNotebookPage()
-        
+                
         
     def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
@@ -234,13 +241,15 @@ class Main(wx.Frame):
     def addNotebookPage(self):
         self.pageCounter += 1
         pageTitle = "Step: {0}".format(str(self.pageCounter-2))
-        page      = StepPage(self.Notebook3, pageTitle)
-        self.Notebook3.AddPage(page, pageTitle)
+        page      = StepPage(self.nb, pageTitle)
+        self.nb.AddPage(page, pageTitle)
+        
+        
         self.pageTitleCounter += 1
 
     def onStepRemove(self, event):   
         if self.pageCounter > 2:
-            self.Notebook3.DeletePage(self.pageTitleCounter)
+            self.nb.DeletePage(self.pageTitleCounter)
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
         else:
