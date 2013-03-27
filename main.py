@@ -19,7 +19,7 @@ import wx.lib.scrolledpanel as scrolled
 class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name=pagename)
-        box = wx.BoxSizer()
+        box = wx.BoxSizer(wx.VERTICAL)
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
@@ -29,7 +29,7 @@ class StepPage(scrolled.ScrolledPanel):
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Welcome")
-        box = wx.BoxSizer()
+        box = wx.BoxSizer(wx.VERTICAL)
         
         #text3 = "text..."
         #lyrics3 = wx.StaticText(self, -1, text3)
@@ -50,7 +50,7 @@ class WelcomePage(scrolled.ScrolledPanel):
 class GeneralPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General Information")
-        box = wx.BoxSizer()
+        box = wx.BoxSizer(wx.VERTICAL)
         
         fgs = wx.FlexGridSizer(9, 1, 20, 0)
         
@@ -63,31 +63,23 @@ class GeneralPage(scrolled.ScrolledPanel):
                     "Creative Commons - No Rights Reserved (CC0)"]
 
         label1 = wx.StaticText(self, label="Project title:")
-        label2 = wx.StaticText(self, label="Version:")
-        label3 = wx.StaticText(self, label="Founders:")
-        label4 = wx.StaticText(self, label="License:")
-
+        box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         tc1 = wx.TextCtrl(self, size=(530,40), style=wx.TE_MULTILINE)
+        box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
+        label2 = wx.StaticText(self, label="Version:")
+        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.TextCtrl(self, size=(530,40), style=wx.TE_MULTILINE)
+        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        label3 = wx.StaticText(self, label="Founders:")
+        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         tc3 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
+        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        label4 = wx.StaticText(self, label="License:")
+        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         tc4 = wx.Choice(self, -1, choices = licenses)
+        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.Bind(wx.EVT_CHOICE, self.onChoice, tc4)
-
-        fgs.AddMany([
-                     (label1), 
-                     (tc1, 1, wx.EXPAND), 
-                     (label2), 
-                     (tc2, 1, wx.EXPAND), 
-                     (label3), 
-                     (tc3, 1, wx.EXPAND),
-                     (label4),
-                     (tc4, 1, wx.EXPAND)
-                     ])
-
-
-        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
-
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
@@ -101,54 +93,47 @@ class GeneralPage(scrolled.ScrolledPanel):
 class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Business Model")
-        box = wx.BoxSizer()
+        box = wx.BoxSizer(wx.VERTICAL)
         
-        fgs = wx.FlexGridSizer(9, 1, 20, 0)
-
         label1 = wx.StaticText(self, label="Value proposition:")
-        label2 = wx.StaticText(self, label="Customer segments:")
-        label3 = wx.StaticText(self, label="Customer relationships:")
-        label4 = wx.StaticText(self, label="Channels:")
-        label5 = wx.StaticText(self, label="Key partners:")
-        label6 = wx.StaticText(self, label="Key activities:")
-        label7 = wx.StaticText(self, label="Key resources:")
-        label8 = wx.StaticText(self, label="Revenue stream:")
-        label9 = wx.StaticText(self, label="Cost structure:")
-
+        box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         tc1 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc3 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc4 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc5 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc6 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc7 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc8 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
         
+        label2 = wx.StaticText(self, label="Customer segments:")
+        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
+        tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        label3 = wx.StaticText(self, label="Customer relationships:")
+        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
+        tc3 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        label4 = wx.StaticText(self, label="Channels:")
+        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
+        tc4 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        label5 = wx.StaticText(self, label="Key partners:")
+        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
+        tc5 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
+        label6 = wx.StaticText(self, label="Key activities:")
+        box.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
+        tc6 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc6, flag=wx.ALL|wx.EXPAND, border=10)
+        label7 = wx.StaticText(self, label="Key resources:")
+        box.Add(label7, flag=wx.ALL|wx.EXPAND, border=10)
+        tc7 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc7, flag=wx.ALL|wx.EXPAND, border=10)
+        label8 = wx.StaticText(self, label="Revenue stream:")
+        box.Add(label8, flag=wx.ALL|wx.EXPAND, border=10)
+        tc8 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc8, flag=wx.ALL|wx.EXPAND, border=10)
+        label9 = wx.StaticText(self, label="Cost structure:")
+        box.Add(label9, flag=wx.ALL|wx.EXPAND, border=10)
+        tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc9, flag=wx.ALL|wx.EXPAND, border=10)
 
-        fgs.AddMany([
-                     (label1), 
-                     (tc1, 1, wx.EXPAND), 
-                     (label2), 
-                     (tc2, 1, wx.EXPAND), 
-                     (label3), 
-                     (tc3, 1, wx.EXPAND),
-                     (label4),
-                     (tc4, 1, wx.EXPAND),
-                     (label5), 
-                     (tc5, 1, wx.EXPAND),
-                     (label6), 
-                     (tc6, 1, wx.EXPAND),
-                     (label7), 
-                     (tc7, 1, wx.EXPAND),
-                     (label8), 
-                     (tc8, 1, wx.EXPAND),
-                     (label9), 
-                     (tc9, 1, wx.EXPAND)
-                     ])
 
-
-        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -157,59 +142,49 @@ class BusinessModelPage(scrolled.ScrolledPanel):
 class CommunityPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Community Analysis")
-        box = wx.BoxSizer()
-        
-        fgs = wx.FlexGridSizer(10, 1, 20, 0)
+        box = wx.BoxSizer(wx.VERTICAL)
 
         label1 = wx.StaticText(self, label="Locality:")
-        label2 = wx.StaticText(self, label="Activity:")
-        label3 = wx.StaticText(self, label="Who is doing the activity:")
-        label4 = wx.StaticText(self, label="The object of the activity:")
-        label5 = wx.StaticText(self, label="The outcome of the activity:")
-        label6 = wx.StaticText(self, label="The needs of the community:")
-        label7 = wx.StaticText(self, label="The tools of the activity:")
-        label8 = wx.StaticText(self, label="The rules of the activity:")
-        label9 = wx.StaticText(self, label="The roles within the activity:")
-        label10 = wx.StaticText(self, label="The larger context of the activity:")
-
-
+        box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         tc1 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
+        label2 = wx.StaticText(self, label="Activity:")
+        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        label3 = wx.StaticText(self, label="Who is doing the activity:")
+        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         tc3 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        label4 = wx.StaticText(self, label="The object of the activity:")
+        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         tc4 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        label5 = wx.StaticText(self, label="The outcome of the activity:")
+        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         tc5 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
+        label6 = wx.StaticText(self, label="The needs of the community:")
+        box.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
         tc6 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc6, flag=wx.ALL|wx.EXPAND, border=10)
+        label7 = wx.StaticText(self, label="The tools of the activity:")
+        box.Add(label7, flag=wx.ALL|wx.EXPAND, border=10)
         tc7 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc7, flag=wx.ALL|wx.EXPAND, border=10)
+        label8 = wx.StaticText(self, label="The rules of the activity:")
+        box.Add(label8, flag=wx.ALL|wx.EXPAND, border=10)
         tc8 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc8, flag=wx.ALL|wx.EXPAND, border=10)
+        label9 = wx.StaticText(self, label="The roles within the activity:")
+        box.Add(label9, flag=wx.ALL|wx.EXPAND, border=10)
         tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        box.Add(tc9, flag=wx.ALL|wx.EXPAND, border=10)
+        label10 = wx.StaticText(self, label="The larger context of the activity:")
+        box.Add(label10, flag=wx.ALL|wx.EXPAND, border=10)
         tc10 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
-        
-
-        fgs.AddMany([
-                     (label1), 
-                     (tc1, 1, wx.EXPAND), 
-                     (label2), 
-                     (tc2, 1, wx.EXPAND), 
-                     (label3), 
-                     (tc3, 1, wx.EXPAND),
-                     (label4),
-                     (tc4, 1, wx.EXPAND),
-                     (label5), 
-                     (tc5, 1, wx.EXPAND),
-                     (label6), 
-                     (tc6, 1, wx.EXPAND),
-                     (label7), 
-                     (tc7, 1, wx.EXPAND),
-                     (label8), 
-                     (tc8, 1, wx.EXPAND),
-                     (label9), 
-                     (tc9, 1, wx.EXPAND),
-                     (label10),
-                     (tc10, 1, wx.EXPAND)
-                     ])
-
-
-        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
+        box.Add(tc10, flag=wx.ALL|wx.EXPAND, border=10)
+       
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -220,7 +195,7 @@ class CommunityPage(scrolled.ScrolledPanel):
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(610, 400),style=wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION)
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(610, 400))
         self.SetMinSize( self.GetSize() )
         
         self.currentDirectory = os.getcwd()
@@ -342,7 +317,7 @@ class Main(wx.Frame):
 
     def addNotebookPage(self):
         self.pageCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageCounter-2))
+        pageTitle = "Step: {0}".format(str(self.pageCounter-3))
         page      = StepPage(self.nb, pageTitle)
         self.nb.AddPage(page, pageTitle)
         
