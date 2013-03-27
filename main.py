@@ -19,6 +19,7 @@ import wx.lib.scrolledpanel as scrolled
 class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name=pagename)
+        self.panel = wx.Panel(self, -1)
         self.box = wx.BoxSizer(wx.VERTICAL)
         
         participationlevels = ["None",
@@ -34,6 +35,7 @@ class StepPage(scrolled.ScrolledPanel):
         label2 = wx.StaticText(self, label="Participation of the Open Design community:")
         self.box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.Choice(self, -1, choices = participationlevels)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
         self.box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
         label3 = wx.StaticText(self, label="Tools:")
         self.box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
@@ -48,23 +50,17 @@ class StepPage(scrolled.ScrolledPanel):
         tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
         
+        buttons = wx.BoxSizer(wx.HORIZONTAL)
+        self.flowsnumber = 0
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.label6 = wx.StaticText(self, label=self.flowmessage)
+        buttons.Add(self.label6, flag=wx.ALL|wx.EXPAND, border=10)
+        addflow = wx.Button(self, 20, "Add a flow")
+        buttons.Add(addflow, flag=wx.ALL, border=10)
+        self.Bind(wx.EVT_BUTTON, self.onAddFlow, addflow)
+        self.box.Add(buttons,flag=wx.ALL|wx.EXPAND, border=10)
         
-        self.stbox = wx.StaticBox(self, -1, 'Flows', (5, 5), size=(240, 170))
-        self.stbox_sizer = wx.StaticBoxSizer(self.stbox)
         
-        label6 = wx.StaticText(self, label="Number of flows in the activity:")
-        self.stbox_sizer.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
-        self.sc = wx.SpinCtrl(self, -1, "", (30, 50))
-        self.sc.SetRange(1,100)
-        self.sc.SetValue(1)
-        self.stbox_sizer.Add(self.sc, flag=wx.ALL,border=10)
-        
-        self.box.Add(self.stbox_sizer, flag=wx.ALL|wx.EXPAND, border=10)
-        
-
-        self.Bind(wx.EVT_SPINCTRL, self.OnSpin, self.sc)
-        
-        self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
         
         self.SetSizer(self.box)
         self.SetAutoLayout(1)
@@ -73,13 +69,22 @@ class StepPage(scrolled.ScrolledPanel):
     def onChoice(self, event):
         choice = event.GetString()
         print choice
-    
-    def OnSpin(self, event):
-        self.flowsnumber = self.sc.GetValue()
-        print self.flowsnumber
-        label8 = wx.StaticText(self, label=str(self.flowsnumber))
-        self.stbox_sizer.Add(self.flowsnumber, flag=wx.ALL,border=10)
-        #self.box.Add(label8, flag=wx.ALL|wx.EXPAND, border=10)
+        
+    def onAddFlow(self, event):
+        self.flowsnumber += 1
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.label6.SetLabel(self.flowmessage)
+        
+        self.stbox = wx.StaticBox(self, -1, 'Flow '+ str(self.flowsnumber), (5, 5), size=(550, 170))
+        self.stbox_sizer = wx.StaticBoxSizer(self.stbox)
+        self.box.Add(self.stbox, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        self.SetSizer(self.box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
+        self.panel.Fit()
+        self.panel.Layout()
+
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
