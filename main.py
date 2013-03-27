@@ -36,6 +36,7 @@ class WelcomePage(scrolled.ScrolledPanel):
         
         self.bitmap = wx.Bitmap('images/openmetadesign.png')
         wx.EVT_PAINT(self, self.OnPaint)
+
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
@@ -51,12 +52,49 @@ class GeneralPage(scrolled.ScrolledPanel):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
         box = wx.BoxSizer()
         
+        fgs = wx.FlexGridSizer(9, 1, 20, 0)
+        
+        licenses = ["Creative Commons - Attribution (CC BY)",
+                    "Creative Commons - Attribution Share Alike (CC BY-SA)",
+                    "Creative Commons - Attribution No Derivatives (CC BY-ND)",
+                    "Creative Commons - Attribution Non-Commercial (CC BY-NC)", 
+                    "Creative Commons - Attribution Non-Commercial Share Alike (CC BY-NC-SA)", 
+                    "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)"]
+
+        label1 = wx.StaticText(self, label="Project title:")
+        label2 = wx.StaticText(self, label="Version:")
+        label3 = wx.StaticText(self, label="Founders:")
+        label4 = wx.StaticText(self, label="License:")
+
+        tc1 = wx.TextCtrl(self, size=(530,40), style=wx.TE_MULTILINE)
+        tc2 = wx.TextCtrl(self, size=(530,40), style=wx.TE_MULTILINE)
+        tc3 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
+        tc4 = wx.Choice(self, -1, choices = licenses)
+        
+        self.Bind(wx.EVT_CHOICE, self.onChoice, tc4)
+
+        fgs.AddMany([
+                     (label1), 
+                     (tc1, 1, wx.EXPAND), 
+                     (label2), 
+                     (tc2, 1, wx.EXPAND), 
+                     (label3), 
+                     (tc3, 1, wx.EXPAND),
+                     (label4),
+                     (tc4, 1, wx.EXPAND)
+                     ])
+
+
+        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
 
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
-        
+    
+    def onChoice(self, event):
+        choice = event.GetString()
+        print choice
 
 
 class BusinessModelPage(scrolled.ScrolledPanel):
@@ -120,7 +158,7 @@ class BusinessModelPage(scrolled.ScrolledPanel):
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(600, 400),style=wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION)
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(610, 400),style=wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION)
         self.SetMinSize( self.GetSize() )
         
         self.currentDirectory = os.getcwd()
