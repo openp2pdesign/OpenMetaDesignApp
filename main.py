@@ -28,7 +28,7 @@ class StepPage(scrolled.ScrolledPanel):
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Welcome")
         box = wx.BoxSizer()
         
         #text3 = "text..."
@@ -49,7 +49,7 @@ class WelcomePage(scrolled.ScrolledPanel):
         
 class GeneralPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General information")
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General Information")
         box = wx.BoxSizer()
         
         fgs = wx.FlexGridSizer(9, 1, 20, 0)
@@ -59,7 +59,8 @@ class GeneralPage(scrolled.ScrolledPanel):
                     "Creative Commons - Attribution No Derivatives (CC BY-ND)",
                     "Creative Commons - Attribution Non-Commercial (CC BY-NC)", 
                     "Creative Commons - Attribution Non-Commercial Share Alike (CC BY-NC-SA)", 
-                    "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)"]
+                    "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)",
+                    "Creative Commons - No Rights Reserved (CC0)"]
 
         label1 = wx.StaticText(self, label="Project title:")
         label2 = wx.StaticText(self, label="Version:")
@@ -99,7 +100,7 @@ class GeneralPage(scrolled.ScrolledPanel):
 
 class BusinessModelPage(scrolled.ScrolledPanel):
     def __init__(self, parent):
-        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Business model")
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Business Model")
         box = wx.BoxSizer()
         
         fgs = wx.FlexGridSizer(9, 1, 20, 0)
@@ -152,6 +153,67 @@ class BusinessModelPage(scrolled.ScrolledPanel):
         self.SetAutoLayout(1)
         self.SetupScrolling()
 
+
+class CommunityPage(scrolled.ScrolledPanel):
+    def __init__(self, parent):
+        scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Community Analysis")
+        box = wx.BoxSizer()
+        
+        fgs = wx.FlexGridSizer(10, 1, 20, 0)
+
+        label1 = wx.StaticText(self, label="Locality:")
+        label2 = wx.StaticText(self, label="Activity:")
+        label3 = wx.StaticText(self, label="Who is doing the activity:")
+        label4 = wx.StaticText(self, label="The object of the activity:")
+        label5 = wx.StaticText(self, label="The outcome of the activity:")
+        label6 = wx.StaticText(self, label="The needs of the community:")
+        label7 = wx.StaticText(self, label="The tools of the activity:")
+        label8 = wx.StaticText(self, label="The rules of the activity:")
+        label9 = wx.StaticText(self, label="The roles within the activity:")
+        label10 = wx.StaticText(self, label="The larger context of the activity:")
+
+
+        tc1 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc3 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc4 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc5 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc6 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc7 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc8 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        tc10 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
+        
+
+        fgs.AddMany([
+                     (label1), 
+                     (tc1, 1, wx.EXPAND), 
+                     (label2), 
+                     (tc2, 1, wx.EXPAND), 
+                     (label3), 
+                     (tc3, 1, wx.EXPAND),
+                     (label4),
+                     (tc4, 1, wx.EXPAND),
+                     (label5), 
+                     (tc5, 1, wx.EXPAND),
+                     (label6), 
+                     (tc6, 1, wx.EXPAND),
+                     (label7), 
+                     (tc7, 1, wx.EXPAND),
+                     (label8), 
+                     (tc8, 1, wx.EXPAND),
+                     (label9), 
+                     (tc9, 1, wx.EXPAND),
+                     (label10),
+                     (tc10, 1, wx.EXPAND)
+                     ])
+
+
+        box.Add(fgs, proportion=1, flag=wx.ALL|wx.EXPAND, border=5)
+        self.SetSizer(box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
+
         
         
         
@@ -167,15 +229,17 @@ class Main(wx.Frame):
         vbox    = wx.BoxSizer(wx.VERTICAL)
         
         # Initializing the notebook
-        self.pageCounter = 2
+        self.pageCounter = 3
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
         self.page0 = WelcomePage(self.nb)
         self.page1 = GeneralPage(self.nb)
-        self.page2 = BusinessModelPage(self.nb)
+        self.page2 = CommunityPage(self.nb)
+        self.page3 = BusinessModelPage(self.nb)
         self.nb.AddPage(self.page0, "Welcome!") 
         self.nb.AddPage(self.page1, "General Information")
-        self.nb.AddPage(self.page2, "Business Model")
+        self.nb.AddPage(self.page2, "Community Analysis")
+        self.nb.AddPage(self.page3, "Business Model")
         self.addNotebookPage()
         self.nb.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         
