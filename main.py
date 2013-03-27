@@ -21,9 +21,43 @@ class StepPage(scrolled.ScrolledPanel):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name=pagename)
         box = wx.BoxSizer(wx.VERTICAL)
         
+        participationlevels = ["None",
+                              "Indirect",
+                              "Consultative",
+                              "Shared control", 
+                              "Full control"]
+        
+        label1 = wx.StaticText(self, label="Step title:")
+        box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
+        tc1 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
+        box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
+        label2 = wx.StaticText(self, label="Participation of the Open Design community:")
+        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
+        tc2 = wx.Choice(self, -1, choices = participationlevels)
+        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        label3 = wx.StaticText(self, label="Tools:")
+        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
+        tc3 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
+        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        label4 = wx.StaticText(self, label="Rules:")
+        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
+        tc4 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
+        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        label5 = wx.StaticText(self, label="Roles:")
+        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
+        tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
+        box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        
+        self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
+        
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
+    
+    def onChoice(self, event):
+        choice = event.GetString()
+        print choice
 
 
 class WelcomePage(scrolled.ScrolledPanel):
@@ -52,8 +86,6 @@ class GeneralPage(scrolled.ScrolledPanel):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General Information")
         box = wx.BoxSizer(wx.VERTICAL)
         
-        fgs = wx.FlexGridSizer(9, 1, 20, 0)
-        
         licenses = ["Creative Commons - Attribution (CC BY)",
                     "Creative Commons - Attribution Share Alike (CC BY-SA)",
                     "Creative Commons - Attribution No Derivatives (CC BY-ND)",
@@ -68,7 +100,7 @@ class GeneralPage(scrolled.ScrolledPanel):
         box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
         label2 = wx.StaticText(self, label="Version:")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
-        tc2 = wx.TextCtrl(self, size=(530,40), style=wx.TE_MULTILINE)
+        tc2 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
         box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
         label3 = wx.StaticText(self, label="Founders:")
         box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
@@ -195,7 +227,7 @@ class CommunityPage(scrolled.ScrolledPanel):
 
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(610, 400))
+        wx.Frame.__init__(self, None, title = u"Open MetaDesign", size=(620, 400))
         self.SetMinSize( self.GetSize() )
         
         self.currentDirectory = os.getcwd()
