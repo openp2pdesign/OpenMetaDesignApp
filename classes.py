@@ -72,6 +72,32 @@ class step():
         self.flows = flows
 
 
+class community:
+    "A class for a community analysis"
+    def __init__(self, 
+                 locality = "Locality",
+                 activity = "Activity", 
+                 subject = "Subject", 
+                 activityobject = "Object",
+                 outcome = "Outcome",
+                 needs = "Needs",
+                 tools = "Tools",
+                 rules = "Rules",
+                 roles = "Roles",
+                 context = "Larger context"): 
+        
+        self.locality = locality
+        self.activity = activity
+        self.subject = subject
+        self.object = activityobject
+        self.outcome = outcome
+        self.needs = needs
+        self.tools = tools
+        self.rules = rules
+        self.roles = roles
+        self.context = context
+
+
 class project:
     "A class for a metadesign project"
     
@@ -81,6 +107,7 @@ class project:
                  founders = ["founder"],
                  license = "CC",
                  licenseurl = "http://",
+                 community = community(),
                  businessmodel = businessmodel(),
                  steps = {0:step()}):
         
@@ -89,6 +116,7 @@ class project:
         self.founders = founders
         self.license = license
         self.licenseurl = licenseurl
+        self.community = community
         self.businessmodel = businessmodel
         self.steps = steps
     
@@ -109,6 +137,29 @@ class project:
         license.text = self.license
         licenseurl = etree.SubElement(project, "licenseurl")
         licenseurl.text = self.licenseurl
+        
+        # build the community analysis
+        community = etree.SubElement(project, "community")
+        locality = etree.SubElement(community, "locality")
+        locality.text = self.community.locality
+        activity = etree.SubElement(community, "activity")
+        activity.text = self.community.activity
+        subject = etree.SubElement(community, "subject")
+        subject.text = self.community.subject
+        object = etree.SubElement(community, "object")
+        object.text = self.community.object
+        outcome = etree.SubElement(community, "outcome")
+        outcome.text = self.community.outcome
+        needs = etree.SubElement(community, "needs")
+        needs.text = self.community.needs
+        activitytools = etree.SubElement(community, "communitytools")
+        activitytools.text = self.community.tools
+        activityrules = etree.SubElement(community, "communityrules")
+        activityrules.text = self.community.rules
+        activityroles = etree.SubElement(community, "communityroles")
+        activityroles.text = self.community.roles
+        context = etree.SubElement(community, "context")
+        context.text = self.community.context
         
         # build the business model
         businessmodel = etree.SubElement(project, "businessmodel")
@@ -183,6 +234,18 @@ class project:
         self.license = doc.findtext("license")
         self.licenseurl = doc.findtext("licenseurl")
         
+        # load community analysis
+        self.community.locality = doc.xpath("//project/community/locality/text()")
+        self.community.activity = doc.xpath("//project/community/activity/text()")
+        self.community.subject = doc.xpath("//project/community/subject/text()")
+        self.community.object = doc.xpath("//project/community/object/text()")
+        self.community.outcome = doc.xpath("//project/community/outcome/text()")
+        self.community.needs = doc.xpath("//project/community/needs/text()")
+        self.community.tools = doc.xpath("//project/community/communitytools/text()")
+        self.community.rules = doc.xpath("//project/community/communityrules/text()")
+        self.community.roles = doc.xpath("//project/community/communityroles/text()")
+        self.community.context = doc.xpath("//project/community/context/text()")
+        
         # load business model
         self.businessmodel.valueproposition = doc.xpath("//project/businessmodel/valueproposition/text()")
         self.businessmodel.customerrelationships = doc.xpath("//project/businessmodel/customerrelationships/text()")
@@ -252,6 +315,7 @@ a.load("test.meta")
 print a.title
 print a.founders
 print a.businessmodel.valueproposition
+print a.community.locality
 print a.steps[0].title
 print a.steps[1].title
 print a.steps[0].participation
