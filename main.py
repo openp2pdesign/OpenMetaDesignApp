@@ -19,7 +19,7 @@ import wx.lib.scrolledpanel as scrolled
 class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name=pagename)
-        box = wx.BoxSizer(wx.VERTICAL)
+        self.box = wx.BoxSizer(wx.VERTICAL)
         
         participationlevels = ["None",
                               "Indirect",
@@ -28,38 +28,45 @@ class StepPage(scrolled.ScrolledPanel):
                               "Full control"]
         
         label1 = wx.StaticText(self, label="Step title:")
-        box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         tc1 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
-        box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc1, flag=wx.ALL|wx.EXPAND, border=10)
         label2 = wx.StaticText(self, label="Participation of the Open Design community:")
-        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.Choice(self, -1, choices = participationlevels)
-        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
         label3 = wx.StaticText(self, label="Tools:")
-        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         tc3 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
-        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
         label4 = wx.StaticText(self, label="Rules:")
-        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         tc4 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
-        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
         label5 = wx.StaticText(self, label="Roles:")
-        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
-        box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        
+        self.stbox = wx.StaticBox(self, -1, 'Flows', (5, 5), size=(240, 170))
+        self.stbox_sizer = wx.StaticBoxSizer(self.stbox)
         
         label6 = wx.StaticText(self, label="Number of flows in the activity:")
-        box.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
+        self.stbox_sizer.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
         self.sc = wx.SpinCtrl(self, -1, "", (30, 50))
         self.sc.SetRange(1,100)
         self.sc.SetValue(1)
-        box.Add(self.sc, flag=wx.ALL,border=10)
+        self.stbox_sizer.Add(self.sc, flag=wx.ALL,border=10)
+        
+        self.box.Add(self.stbox_sizer, flag=wx.ALL|wx.EXPAND, border=10)
+        
 
         self.Bind(wx.EVT_SPINCTRL, self.OnSpin, self.sc)
         
         self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
         
-        self.SetSizer(box)
+        self.SetSizer(self.box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
     
@@ -68,8 +75,11 @@ class StepPage(scrolled.ScrolledPanel):
         print choice
     
     def OnSpin(self, event):
-        choice = self.sc.GetValue()
-        print choice
+        self.flowsnumber = self.sc.GetValue()
+        print self.flowsnumber
+        label8 = wx.StaticText(self, label=str(self.flowsnumber))
+        self.stbox_sizer.Add(self.flowsnumber, flag=wx.ALL,border=10)
+        #self.box.Add(label8, flag=wx.ALL|wx.EXPAND, border=10)
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
@@ -265,7 +275,7 @@ class Main(wx.Frame):
 
         pannel.SetSizer(vbox)
         
-        # Insert here the code from wxFormBuilder 
+        # Initializing the Menu
         
         self.statusBar = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
         self.m_menubar1 = wx.MenuBar( 0 )
