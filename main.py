@@ -48,6 +48,14 @@ class StepPage(scrolled.ScrolledPanel):
         tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
         
+        label6 = wx.StaticText(self, label="Number of flows in the activity:")
+        box.Add(label6, flag=wx.ALL|wx.EXPAND, border=10)
+        self.sc = wx.SpinCtrl(self, -1, "", (30, 50))
+        self.sc.SetRange(1,100)
+        self.sc.SetValue(1)
+        box.Add(self.sc, flag=wx.ALL,border=10)
+
+        self.Bind(wx.EVT_SPINCTRL, self.OnSpin, self.sc)
         
         self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
         
@@ -58,7 +66,10 @@ class StepPage(scrolled.ScrolledPanel):
     def onChoice(self, event):
         choice = event.GetString()
         print choice
-
+    
+    def OnSpin(self, event):
+        choice = self.sc.GetValue()
+        print choice
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
