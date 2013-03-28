@@ -21,10 +21,47 @@ class FlowTab(wx.Panel):
         wx.Panel.__init__(self, parent)
         box = wx.BoxSizer(wx.VERTICAL)
         
+        flowtype = ["Financial flow",
+                   "Physical resources flow",
+                   "Information flow"]
+        
         label1 = wx.StaticText(self, label="Flow type:")
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
+        tc1 = wx.Choice(self, -1, choices = flowtype)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, tc1)
+        box.Add(tc1, flag=wx.ALL, border=10)
+        label2 = wx.StaticText(self, label="What does flow?")
+        box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
+        tc2 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
+        box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        label3 = wx.StaticText(self, label="First agent of the flow:")
+        box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
+        tc3 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
+        box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        label4 = wx.StaticText(self, label="Second agent of the flow:")
+        box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
+        tc4 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
+        box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        flowdirection = ["Both directions",
+                         "From A to B",
+                         "From B to A"]
+        
+        label5 = wx.StaticText(self, label="Direction of the flow:")
+        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
+        tc5 = wx.Choice(self, -1, choices = flowdirection)
+        self.Bind(wx.EVT_CHOICE, self.onChoice2, tc5)
+        box.Add(tc5, flag=wx.ALL, border=10)
         
         self.SetSizer(box)
+        
+    def onChoice(self, event):
+        choice = event.GetString()
+        print choice
+        
+    def onChoice2(self, event):
+        choice = event.GetString()
+        print choice
 
         
 class StepPage(scrolled.ScrolledPanel):
@@ -47,7 +84,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.Choice(self, -1, choices = participationlevels)
         self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
-        self.box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        self.box.Add(tc2, flag=wx.ALL, border=10)
         label3 = wx.StaticText(self, label="Tools:")
         self.box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         tc3 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
