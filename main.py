@@ -101,7 +101,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.flowsnumber += 1
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
-        tab = FlowTab(self)
+        tab = FlowTab(self.nestednb)
         self.nestednb.AddPage(tab, "Flow n. " + str(self.flowsnumber)) 
 
 
