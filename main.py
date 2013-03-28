@@ -15,6 +15,21 @@ import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
 
+
+class FlowTab(wx.Panel):
+    def __init__(self, parent,pagename="Step"):
+        #scrolled.ScrolledPanel.__init__(self, parent, -1,size=(520,400),name=pagename)
+        #self.panel = wx.Panel(self, -1)
+        wx.Panel.__init__(self, parent)
+        self.box = wx.BoxSizer(wx.VERTICAL)
+        
+        label1 = wx.StaticText(self, label="Flow type:")
+        self.box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        self.SetSizer(self.box)
+        self.SetAutoLayout(1)
+        #self.SetupScrolling()
+
         
 class StepPage(scrolled.ScrolledPanel):
     def __init__(self, parent,pagename="Step"):
@@ -50,6 +65,8 @@ class StepPage(scrolled.ScrolledPanel):
         tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(tc5, flag=wx.ALL|wx.EXPAND, border=10)
         
+        
+        
         buttons = wx.BoxSizer(wx.HORIZONTAL)
         self.flowsnumber = 0
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
@@ -62,6 +79,11 @@ class StepPage(scrolled.ScrolledPanel):
         
         
         
+        self.nestednb = wx.Notebook(self)
+        self.tab0 = FlowTab(self)
+        self.nestednb.AddPage(self.tab0, "Flow 0") 
+        self.box.Add(self.nestednb,flag=wx.ALL|wx.EXPAND, border=10)
+        
         self.SetSizer(self.box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -70,13 +92,38 @@ class StepPage(scrolled.ScrolledPanel):
         choice = event.GetString()
         print choice
         
+    def onRemoveFlow(self, event):
+        choice = event.GetString()
+        print choice
+        
     def onAddFlow(self, event):
+        self.flowsnumber += 1
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.label6.SetLabel(self.flowmessage)
+        
+        self.SetSizer(self.box)
+        self.SetAutoLayout(1)
+        self.SetupScrolling()
+        self.panel.Fit()
+        self.panel.Layout()
+        
+    def onAddFlow2(self, event):
         self.flowsnumber += 1
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
         
         self.stbox = wx.StaticBox(self, -1, 'Flow '+ str(self.flowsnumber), (5, 5), size=(550, 170))
         self.stbox_sizer = wx.StaticBoxSizer(self.stbox)
+        
+        #removeflow = wx.Button(self, 20, "Remove the flow")
+        #self.stbox_sizer.Add(removeflow, flag=wx.ALL, border=10)
+        #self.Bind(wx.EVT_BUTTON, self.onRemoveFlow, removeflow)
+        
+        label11 = wx.StaticText(self, label="Step title:")
+        self.stbox_sizer.Add(label11, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        
+        #self.box.Add(self.stbox_sizer, flag=wx.ALL|wx.EXPAND, border=10)
         self.box.Add(self.stbox, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.SetSizer(self.box)
