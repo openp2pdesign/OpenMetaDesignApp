@@ -79,7 +79,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(buttons,flag=wx.ALL|wx.EXPAND, border=10)
         
         self.nestednb = wx.Notebook(self)
-        self.tab = FlowTab(self)
+        self.tab = FlowTab(self.nestednb)
         self.nestednb.AddPage(self.tab, "Flow n. 1") 
         self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
