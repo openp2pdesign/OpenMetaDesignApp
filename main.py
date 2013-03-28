@@ -17,9 +17,7 @@ import wx.lib.scrolledpanel as scrolled
 
 
 class FlowTab(wx.Panel):
-    def __init__(self, parent,pagename="Step"):
-        #scrolled.ScrolledPanel.__init__(self, parent, -1,size=(520,400),name=pagename)
-        #self.panel = wx.Panel(self, -1)
+    def __init__(self, parent,pagename="Flow"):
         wx.Panel.__init__(self, parent)
         box = wx.BoxSizer(wx.VERTICAL)
         
@@ -27,8 +25,6 @@ class FlowTab(wx.Panel):
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.SetSizer(box)
-        self.SetAutoLayout(1)
-        #self.SetupScrolling()
 
         
 class StepPage(scrolled.ScrolledPanel):
@@ -83,9 +79,9 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(buttons,flag=wx.ALL|wx.EXPAND, border=10)
         
         self.nestednb = wx.Notebook(self)
-        self.tab0 = FlowTab(self)
-        self.nestednb.AddPage(self.tab0, "Flow n. 1") 
-        self.box.Add(self.nestednb,flag=wx.ALL|wx.EXPAND, border=10)
+        self.tab = FlowTab(self)
+        self.nestednb.AddPage(self.tab, "Flow n. 1") 
+        self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
         self.SetSizer(self.box)
         self.SetAutoLayout(1)
@@ -105,17 +101,14 @@ class StepPage(scrolled.ScrolledPanel):
         self.flowsnumber += 1
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
-        self.tab0 = FlowTab(self)
-        self.nestednb.AddPage(self.tab0, "Flow n. " + str(self.flowsnumber)) 
+        tab = FlowTab(self)
+        self.nestednb.AddPage(tab, "Flow n. " + str(self.flowsnumber)) 
 
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Welcome")
         box = wx.BoxSizer(wx.VERTICAL)
-        
-        #text3 = "text..."
-        #lyrics3 = wx.StaticText(self, -1, text3)
         
         self.bitmap = wx.Bitmap('images/openmetadesign.png')
         wx.EVT_PAINT(self, self.OnPaint)
@@ -401,12 +394,10 @@ class Main(wx.Frame):
         pageTitle = "Step: {0}".format(str(self.pageCounter-3))
         page      = StepPage(self.nb, pageTitle)
         self.nb.AddPage(page, pageTitle)
-        
-        
         self.pageTitleCounter += 1
 
     def onStepRemove(self, event):   
-        if self.pageCounter > 2:
+        if self.pageCounter > 4:
             self.nb.DeletePage(self.pageTitleCounter)
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
