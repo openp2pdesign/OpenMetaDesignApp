@@ -31,8 +31,8 @@ class FlowTab(wx.Panel):
         label1 = wx.StaticText(self, label="Flow type:")
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc1 = wx.Choice(self, -1, choices = flowtype)
-        self.Bind(wx.EVT_CHOICE, self.onChoice, tc1)
-        box.Add(tc1, flag=wx.ALL, border=10)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc1)
+        box.Add(self.tc1, flag=wx.ALL, border=10)
         label2 = wx.StaticText(self, label="What does flow?")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc2 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
@@ -53,7 +53,7 @@ class FlowTab(wx.Panel):
         label5 = wx.StaticText(self, label="Direction of the flow:")
         box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc5 = wx.Choice(self, -1, choices = flowdirection)
-        self.Bind(wx.EVT_CHOICE, self.onChoice2, tc5)
+        self.Bind(wx.EVT_CHOICE, self.onChoice2, self.tc5)
         box.Add(self.tc5, flag=wx.ALL, border=10)
         
         self.SetSizer(box)
@@ -86,7 +86,7 @@ class StepPage(scrolled.ScrolledPanel):
         label2 = wx.StaticText(self, label="Participation of the Open Design community:")
         self.box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc2 = wx.Choice(self, -1, choices = participationlevels)
-        self.Bind(wx.EVT_CHOICE, self.onChoice, tc2)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc2)
         self.box.Add(self.tc2, flag=wx.ALL, border=10)
         label3 = wx.StaticText(self, label="Tools:")
         self.box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
@@ -193,7 +193,7 @@ class GeneralPage(scrolled.ScrolledPanel):
         self.tc4 = wx.Choice(self, -1, choices = licenses)
         box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
         
-        self.Bind(wx.EVT_CHOICE, self.onChoice, tc4)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc4)
         
         self.SetSizer(box)
         self.SetAutoLayout(1)
@@ -405,12 +405,31 @@ class Main(wx.Frame):
             
         dlg.Destroy()
         
-    def onSaveFile(self):
+    def onSaveFile(self,event):
         
         # Here save the current project
         
         # Load the current values for General information
-        temp.businessmodel.valueproposition = self.page3.tc1.GetValue()
+        temp.title = self.page1.tc1.GetValue()
+        temp.version = self.page1.tc2.GetValue()
+        temp.founders = self.page1.tc3.GetValue()
+        # CHECK FOUNDERS
+        temp.license = self.page1.tc4.GetSelection()
+        
+        # add automatically url of license
+        
+        
+        # Load the current values for Community analysis
+        temp.community.locality = self.page2.tc1.GetValue()
+        temp.community.activity = self.page2.tc2.GetValue()
+        temp.community.subject = self.page2.tc3.GetValue()
+        temp.community.object = self.page2.tc4.GetValue()
+        temp.community.outcome = self.page2.tc5.GetValue()
+        temp.community.needs = self.page2.tc6.GetValue()
+        temp.community.tools = self.page2.tc7.GetValue()
+        temp.community.rules = self.page2.tc8.GetValue()
+        temp.community.roles = self.page2.tc9.GetValue()
+        temp.community.context = self.page2.tc10.GetValue()
         
         # Load the current values for Business model
         temp.businessmodel.valueproposition = self.page3.tc1.GetValue()
@@ -423,9 +442,11 @@ class Main(wx.Frame):
         temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
+        for i in range(3,self.pageCounter):
+            print i
  
         
-        pass
+       
         
     def onSaveFileAs(self, event):
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
