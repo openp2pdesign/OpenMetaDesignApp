@@ -17,6 +17,7 @@ import wx.lib.scrolledpanel as scrolled
 from classes import *
 
 temp = project()
+currentFile = ""
 
 
 class FlowTab(wx.Panel):
@@ -415,18 +416,29 @@ class Main(wx.Frame):
         dlg.Destroy()
         
     def onSaveFile(self,event):
-        
-        # Here save the current project
-        
         # Load the current values for General information
         temp.title = self.page1.tc1.GetValue()
         temp.version = self.page1.tc2.GetValue()
-        temp.founders = self.page1.tc3.GetValue()
-        # CHECK FOUNDERS
+        
+        temp.founders = [x.strip() for x in self.page1.tc3.GetValue().split(',')]
         temp.license = self.page1.tc4.GetSelection()
         
-        # add automatically url of license
-        
+        # Add automatically url of license
+        if temp.license == "Creative Commons - Attribution (CC BY)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by/3.0/"
+        elif temp.license == "Creative Commons - Attribution Share Alike (CC BY-SA)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-sa/3.0"
+        elif temp.license == "Creative Commons - Attribution No Derivatives (CC BY-ND)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nd/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial (CC BY-NC)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial Share Alike (CC BY-NC-SA)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc-sa/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc-nd/3.0"
+        elif temp.license == "Creative Commons - No Rights Reserved (CC0)":
+            temp.licenseurl = "http://creativecommons.org/publicdomain/zero/1.0/"
+         
         
         # Load the current values for Community analysis
         temp.community.locality = self.page2.tc1.GetValue()
@@ -469,14 +481,85 @@ class Main(wx.Frame):
                 temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
                 temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
                 temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
-               
+        
+        # Save file
+        temp.save.save(currentFile)
         
     def onSaveFileAs(self, event):
+                # Load the current values for General information
+        temp.title = self.page1.tc1.GetValue()
+        temp.version = self.page1.tc2.GetValue()
+        
+        temp.founders = [x.strip() for x in self.page1.tc3.GetValue().split(',')]
+        temp.license = self.page1.tc4.GetSelection()
+        
+        # Add automatically url of license
+        if temp.license == "Creative Commons - Attribution (CC BY)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by/3.0/"
+        elif temp.license == "Creative Commons - Attribution Share Alike (CC BY-SA)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-sa/3.0"
+        elif temp.license == "Creative Commons - Attribution No Derivatives (CC BY-ND)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nd/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial (CC BY-NC)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial Share Alike (CC BY-NC-SA)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc-sa/3.0"
+        elif temp.license == "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)":
+            temp.licenseurl = "http://creativecommons.org/licenses/by-nc-nd/3.0"
+        elif temp.license == "Creative Commons - No Rights Reserved (CC0)":
+            temp.licenseurl = "http://creativecommons.org/publicdomain/zero/1.0/"
+         
+        
+        # Load the current values for Community analysis
+        temp.community.locality = self.page2.tc1.GetValue()
+        temp.community.activity = self.page2.tc2.GetValue()
+        temp.community.subject = self.page2.tc3.GetValue()
+        temp.community.object = self.page2.tc4.GetValue()
+        temp.community.outcome = self.page2.tc5.GetValue()
+        temp.community.needs = self.page2.tc6.GetValue()
+        temp.community.tools = self.page2.tc7.GetValue()
+        temp.community.rules = self.page2.tc8.GetValue()
+        temp.community.roles = self.page2.tc9.GetValue()
+        temp.community.context = self.page2.tc10.GetValue()
+        
+        # Load the current values for Business model
+        temp.businessmodel.valueproposition = self.page3.tc1.GetValue()
+        temp.businessmodel.customersegments = self.page3.tc2.GetValue()
+        temp.businessmodel.customerrelationships = self.page3.tc3.GetValue()
+        temp.businessmodel.channels = self.page3.tc4.GetValue()
+        temp.businessmodel.keypartners = self.page3.tc5.GetValue()
+        temp.businessmodel.keyactivities =  self.page3.tc6.GetValue()
+        temp.businessmodel.keyresources = self.page3.tc7.GetValue()
+        temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
+        temp.businessmodel.coststructure = self.page3.tc9.GetValue()
+        
+        # Load the current values for the Steps
+        for j,i in enumerate(range(4,self.pageCounter+1)):
+            temp.steps[j] = step()
+            temp.steps[j].stepnumber = j 
+            temp.steps[j].title = self.pages[i].tc1.GetValue()
+            temp.steps[j].participation = self.pages[i].tc2.GetSelection()
+            temp.steps[j].tools = self.pages[i].tc3.GetValue()
+            temp.steps[j].rules = self.pages[i].tc4.GetValue()
+            temp.steps[j].roles = self.pages[i].tc5.GetValue()
+            
+            # Load the current values for the Flows
+            for k in range(self.pages[i].flowsnumber):
+                temp.steps[j].flows[k] = flow()
+                temp.steps[j].flows[k].type = self.pages[i].tabs[k].tc1.GetSelection()
+                temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
+                temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
+                temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
+                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
+        
+        
+        
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             
-            # Here add the code for saving the file
+        # Save file
+        temp.save(path)
             
         dlg.Destroy()
         
