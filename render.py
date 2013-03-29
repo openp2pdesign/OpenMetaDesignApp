@@ -27,24 +27,44 @@ ctx.set_font_size(32)
 ctx.move_to(10, 32)
 ctx.show_text("System Map")
 
-originX = 10
-originY = 50
-space = 20
-barsize = 40
+space = 40
+barsize = 50
+barsOriginX = 20
+barsOriginY = 50
+flowsOriginX = 40
+flowsOriginY = barsOriginY + barsize + space
 
-coord = {1:{"x":1,"y":1}}
+
+flowsCoord = {1:{"x":1,"y":1, "label":"flow"}}
+coord = {}
 
 # calculate coordinates for the rectangles
 for i in range(5):
     coord[i] = {}
-    coord[i]["x"] = originX
+    coord[i]["x"] = barsOriginX
     if i == 0:
-        coord[i]["y"] = originY
+        coord[i]["y"] = barsOriginY
     else:
         coord[i]["y"] = coord[i-1]["y"] + barsize + space
     print "X:",coord[i]["x"]
     print "Y:",coord[i]["y"]
     print ""
+    
+# calculate coordinates for the flows
+for i in range(5):
+    flowsCoord[i] = {}
+    flowsCoord[i]["x"] = flowsOriginX
+    if i == 0:
+        flowsCoord[i]["y"] = flowsOriginY
+    else:
+        flowsCoord[i]["y"] = flowsCoord[i-1]["y"] + barsize + space
+    print "X:",flowsCoord[i]["x"]
+    print "Y:",flowsCoord[i]["y"]
+    print ""
+    
+# Adding the labels
+for i in range(5):
+    flowsCoord[i]["label"] = "flow n."+str(i)
 
 # Draw bars
 for i in range(5):
@@ -58,8 +78,8 @@ for i in range(5):
     ctx.set_source_rgb(0, 0, 0)
     ctx.set_line_width(4)
     ctx.set_dash([1.0])
-    ctx.move_to(coord[i]["x"], coord[i]["y"]-space)
-    ctx.line_to(coord[i]["x"], coord[i]["y"]) 
+    ctx.move_to(flowsCoord[i]["x"], flowsCoord[i]["y"]-space)
+    ctx.line_to(flowsCoord[i]["x"], flowsCoord[i]["y"]) 
     ctx.stroke()
 
 # Draw points
@@ -67,14 +87,27 @@ for i in range(5):
     ctx.set_line_width(2)
     ctx.set_source_rgb(0, 0, 0)
     ctx.set_dash([])
-    ctx.translate(coord[i]["x"], coord[i]["y"])
+    ctx.translate(flowsCoord[i]["x"], flowsCoord[i]["y"])
     ctx.arc(0, 0, 2, 0, 2*math.pi)
     ctx.stroke_preserve()
     ctx.set_source_rgb(0, 0, 0)
     ctx.fill()
     # go back to origin
-    ctx.translate(-coord[i]["x"], -coord[i]["y"])
+    ctx.translate(-flowsCoord[i]["x"], -flowsCoord[i]["y"])
 
+
+# Draw flows labels
+for i in range(5):
+    ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+    ctx.rectangle(flowsCoord[i]["x"]-len(flowsCoord[i]["label"])*3, flowsCoord[i]["y"]-space/2-12, 
+                  len(flowsCoord[i]["label"])*6, 18)
+    ctx.fill()
+    
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.select_font_face("Anivers", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.set_font_size(12)
+    ctx.move_to(flowsCoord[i]["x"]-len(flowsCoord[i]["label"])*2.5, flowsCoord[i]["y"]-space/2)
+    ctx.show_text(flowsCoord[i]["label"])
 
 
 surface.write_to_png ("test.png") # Output to PNG
