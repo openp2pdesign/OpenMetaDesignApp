@@ -34,18 +34,18 @@ class FlowTab(wx.Panel):
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         tc2 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
         box.Add(tc2, flag=wx.ALL|wx.EXPAND, border=10)
-        label3 = wx.StaticText(self, label="First agent of the flow:")
+        label3 = wx.StaticText(self, label="First actor of the flow:")
         box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         tc3 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
         box.Add(tc3, flag=wx.ALL|wx.EXPAND, border=10)
-        label4 = wx.StaticText(self, label="Second agent of the flow:")
+        label4 = wx.StaticText(self, label="Second actor of the flow:")
         box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         tc4 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
         box.Add(tc4, flag=wx.ALL|wx.EXPAND, border=10)
         
         flowdirection = ["Both directions",
-                         "From A to B",
-                         "From B to A"]
+                         "From the first actor to the second one",
+                         "From the second actor to the first one"]
         
         label5 = wx.StaticText(self, label="Direction of the flow:")
         box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)

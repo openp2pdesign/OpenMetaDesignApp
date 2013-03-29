@@ -27,10 +27,11 @@ ctx.set_font_size(32)
 ctx.move_to(10, 32)
 ctx.show_text("System Map")
 
+stepsize = 200
 space = 40
 barsize = 50
 barsOriginX = 20
-barsOriginY = 50
+barsOriginY = 70
 flowsOriginX = 40
 flowsOriginY = barsOriginY + barsize + space
 
@@ -44,8 +45,10 @@ for i in range(5):
     coord[i]["x"] = barsOriginX
     if i == 0:
         coord[i]["y"] = barsOriginY
+        coord[i]["x"] = barsOriginX
     else:
         coord[i]["y"] = coord[i-1]["y"] + barsize + space
+        coord[i]["x"] = stepsize * i
     print "X:",coord[i]["x"]
     print "Y:",coord[i]["y"]
     print ""
@@ -56,6 +59,7 @@ for i in range(5):
     flowsCoord[i]["x"] = flowsOriginX
     if i == 0:
         flowsCoord[i]["y"] = flowsOriginY
+        flowsCoord[i]["x"] = flowsOriginX
     else:
         flowsCoord[i]["y"] = flowsCoord[i-1]["y"] + barsize + space
     print "X:",flowsCoord[i]["x"]
@@ -69,8 +73,8 @@ for i in range(5):
 # Draw bars
 for i in range(5):
     ctx.set_source_rgb(0.12, 0.6, 1) # blue
-    ctx.rectangle(coord[i]["x"], coord[i]["y"], 
-                  300, barsize)
+    ctx.rectangle(barsOriginX, coord[i]["y"], 
+                  coord[i]["x"]-flowsOriginX, barsize)
     ctx.fill()
 
 # Draw lines
