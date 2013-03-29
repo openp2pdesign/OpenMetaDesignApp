@@ -213,7 +213,6 @@ class BusinessModelPage(scrolled.ScrolledPanel):
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc1 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
         box.Add(self.tc1, flag=wx.ALL|wx.EXPAND, border=10)
-        
         label2 = wx.StaticText(self, label="Customer segments:")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc2 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
@@ -394,7 +393,6 @@ class Main(wx.Frame):
         
     def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
-        print self.page3.tc1.GetValue()
         dlg.ShowModal()
         dlg.Destroy()
         
@@ -409,7 +407,23 @@ class Main(wx.Frame):
         
     def onSaveFile(self):
         
-        # Here save the current opened file
+        # Here save the current project
+        
+        # Load the current values for General information
+        temp.businessmodel.valueproposition = self.page3.tc1.GetValue()
+        
+        # Load the current values for Business model
+        temp.businessmodel.valueproposition = self.page3.tc1.GetValue()
+        temp.businessmodel.customersegments = self.page3.tc2.GetValue()
+        temp.businessmodel.customerrelationships = self.page3.tc3.GetValue()
+        temp.businessmodel.channels = self.page3.tc4.GetValue()
+        temp.businessmodel.keypartners = self.page3.tc5.GetValue()
+        temp.businessmodel.keyactivities =  self.page3.tc6.GetValue()
+        temp.businessmodel.keyresources = self.page3.tc7.GetValue()
+        temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
+        temp.businessmodel.coststructure = self.page3.tc9.GetValue()
+        
+ 
         
         pass
         
