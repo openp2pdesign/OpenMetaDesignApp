@@ -300,28 +300,30 @@ class project:
                 
         return
 
-p = project()
-print p.license
-print p.businessmodel.channels
-print p.steps[0].title
-print p.steps[0].flows[0].what
-#p.save("test.meta")
-print ""
 
-a = project()
-a.title = "prova"
-a.businessmodel.valueproposition = "X"
-a.load("test.meta")
-print a.title
-print a.founders
-print a.businessmodel.valueproposition
-print a.community.locality
-print a.steps[0].title
-print a.steps[1].title
-print a.steps[0].participation
-print a.steps[1].participation
-
-print a.steps[0].flows[0].type
-print a.steps[1].flows[0].type
-print a.steps[1].flows[1].type
-print a.steps[1].flows[1].what
+if __name__ == "__main__":
+    p = project()
+    print p.license
+    print p.businessmodel.channels
+    print p.steps[0].title
+    print p.steps[0].flows[0].what
+    p.save("test.meta")
+    print ""
+    
+    a = project()
+    a.title = "prova"
+    a.businessmodel.valueproposition = "X"
+    a.load("test.meta")
+    print a.title
+    print a.founders
+    print a.businessmodel.valueproposition
+    print a.community.locality
+    print a.steps[0].title
+    print a.steps[1].title
+    print a.steps[0].participation
+    print a.steps[1].participation
+    
+    print a.steps[0].flows[0].type
+    print a.steps[1].flows[0].type
+    print a.steps[1].flows[1].type
+    print a.steps[1].flows[1].what
