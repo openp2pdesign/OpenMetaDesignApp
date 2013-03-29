@@ -22,7 +22,7 @@ ctx.fill()
 
 # Write a text
 ctx.set_source_rgb(0, 0, 0)
-ctx.select_font_face("Anivers", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
 ctx.set_font_size(32)
 ctx.move_to(10, 32)
 ctx.show_text("System Map")
@@ -108,7 +108,7 @@ for i in range(5):
     ctx.fill()
     
     ctx.set_source_rgb(0, 0, 0)
-    ctx.select_font_face("Anivers", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     ctx.set_font_size(12)
     ctx.move_to(flowsCoord[i]["x"]-len(flowsCoord[i]["label"])*2.5, flowsCoord[i]["y"]-space/2)
     ctx.show_text(flowsCoord[i]["label"])
