@@ -28,6 +28,7 @@ class businessmodel():
         self.customerrelationships = customerrelationships
         self.channels = channels
         self.customersegments = customersegments
+        self.revenuestreams = revenuestreams
         self.coststructure = coststructure
         self.keyactivities = keyactivities
         self.keyresources = keyresources
@@ -171,6 +172,8 @@ class project:
         channels.text = self.businessmodel.channels
         customersegments = etree.SubElement(businessmodel,"customersegments")
         customersegments.text = self.businessmodel.customersegments
+        revenuestreams = etree.SubElement(businessmodel,"revenuestreams")
+        revenuestreams.text = self.businessmodel.revenuestreams
         coststructure = etree.SubElement(businessmodel,"coststructure")
         coststructure.text = self.businessmodel.coststructure
         keyactivities = etree.SubElement(businessmodel,"keyactivities")
@@ -251,6 +254,7 @@ class project:
         self.businessmodel.customerrelationships = doc.xpath("//project/businessmodel/customerrelationships/text()")
         self.businessmodel.channels = doc.xpath("//project/businessmodel/channels/text()")
         self.businessmodel.customersegments = doc.xpath("//project/businessmodel/customersegments/text()")
+        self.businessmodel.revenuestreams = doc.xpath("//project/businessmodel/revenuestreams/text()")
         self.businessmodel.coststructure = doc.xpath("//project/businessmodel/coststructure/text()")
         self.businessmodel.keyactivities = doc.xpath("//project/businessmodel/keyactivities/text()")
         self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")
