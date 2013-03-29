@@ -118,8 +118,10 @@ class StepPage(scrolled.ScrolledPanel):
         
         self.box.Add(buttons,flag=wx.ALL|wx.EXPAND, border=10)
         
+        self.tabs = {}
         self.nestednb = wx.Notebook(self)
         self.tab = FlowTab(self.nestednb)
+        self.tabs[0] = self.tab
         self.nestednb.AddPage(self.tab, "Flow n. 1") 
         self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
@@ -132,6 +134,7 @@ class StepPage(scrolled.ScrolledPanel):
         print choice
         
     def onRemoveFlow(self, event):
+        del self.tabs[self.flowsnumber]
         self.flowsnumber -= 1
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
@@ -143,6 +146,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.label6.SetLabel(self.flowmessage)
         tab = FlowTab(self.nestednb)
         self.nestednb.AddPage(tab, "Flow n. " + str(self.flowsnumber)) 
+        self.tabs[self.flowsnumber] = tab
 
 
 class WelcomePage(scrolled.ScrolledPanel):
@@ -317,13 +321,18 @@ class Main(wx.Frame):
         vbox    = wx.BoxSizer(wx.VERTICAL)
         
         # Initializing the notebook
+        self.pages = {}
         self.pageCounter = 3
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
         self.page0 = WelcomePage(self.nb)
+        self.pages[0] = self.page0
         self.page1 = GeneralPage(self.nb)
+        self.pages[1] = self.page1
         self.page2 = CommunityPage(self.nb)
+        self.pages[2] = self.page2
         self.page3 = BusinessModelPage(self.nb)
+        self.pages[3] = self.page3
         self.nb.AddPage(self.page0, "Welcome!") 
         self.nb.AddPage(self.page1, "General Information")
         self.nb.AddPage(self.page2, "Community Analysis")
@@ -442,11 +451,25 @@ class Main(wx.Frame):
         temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
-        for i in range(3,self.pageCounter):
-            print i
- 
-        
-       
+        # Load the current values for the Steps
+        for j,i in enumerate(range(4,self.pageCounter+1)):
+            temp.steps[j] = step()
+            temp.steps[j].stepnumber = j 
+            temp.steps[j].title = self.pages[i].tc1.GetValue()
+            temp.steps[j].participation = self.pages[i].tc2.GetSelection()
+            temp.steps[j].tools = self.pages[i].tc3.GetValue()
+            temp.steps[j].rules = self.pages[i].tc4.GetValue()
+            temp.steps[j].roles = self.pages[i].tc5.GetValue()
+            
+            # Load the current values for the Flows
+            for k in range(self.pages[i].flowsnumber):
+                temp.steps[j].flows[k] = flow()
+                temp.steps[j].flows[k].type = self.pages[i].tabs[k].tc1.GetSelection()
+                temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
+                temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
+                temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
+                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
+               
         
     def onSaveFileAs(self, event):
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
@@ -468,13 +491,15 @@ class Main(wx.Frame):
     def addNotebookPage(self):
         self.pageCounter += 1
         pageTitle = "Step: {0}".format(str(self.pageCounter-3))
-        page      = StepPage(self.nb, pageTitle)
+        page = StepPage(self.nb, pageTitle)
         self.nb.AddPage(page, pageTitle)
+        self.pages[self.pageCounter] = page
         self.pageTitleCounter += 1
 
     def onStepRemove(self, event):   
         if self.pageCounter > 4:
             self.nb.DeletePage(self.pageTitleCounter)
+            del self.pages[self.pageCounter]
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
         else:
