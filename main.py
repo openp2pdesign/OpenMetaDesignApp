@@ -573,9 +573,9 @@ class Main(wx.Frame):
         self.pages[self.pageCounter] = page
         self.pageTitleCounter += 1
 
-    def onStepRemove(self, event):   
-        if self.pageCounter > 4:
-            self.nb.DeletePage(self.pageTitleCounter)
+    def onStepRemove(self, event):  
+        if self.nb.GetSelection() > 4:
+            self.nb.DeletePage(self.nb.GetSelection())
             del self.pages[self.pageCounter]
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
