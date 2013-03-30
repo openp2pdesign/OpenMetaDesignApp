@@ -25,13 +25,13 @@ class FlowTab(wx.Panel):
         wx.Panel.__init__(self, parent)
         box = wx.BoxSizer(wx.VERTICAL)
         
-        flowtype = ["Financial flow",
+        self.flowtype = ["Financial flow",
                    "Physical resources flow",
                    "Information flow"]
         
         label1 = wx.StaticText(self, label="Flow type:")
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc1 = wx.Choice(self, -1, choices = flowtype)
+        self.tc1 = wx.Choice(self, -1, choices = self.flowtype)
         self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc1)
         box.Add(self.tc1, flag=wx.ALL, border=10)
         label2 = wx.StaticText(self, label="What does flow?")
@@ -47,13 +47,13 @@ class FlowTab(wx.Panel):
         self.tc4 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
         box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
         
-        flowdirection = ["Both directions",
+        self.flowdirection = ["Both directions",
                          "From the first actor to the second one",
                          "From the second actor to the first one"]
         
         label5 = wx.StaticText(self, label="Direction of the flow:")
         box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc5 = wx.Choice(self, -1, choices = flowdirection)
+        self.tc5 = wx.Choice(self, -1, choices = self.flowdirection)
         self.Bind(wx.EVT_CHOICE, self.onChoice2, self.tc5)
         box.Add(self.tc5, flag=wx.ALL, border=10)
         
@@ -74,7 +74,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.panel = wx.Panel(self, -1)
         self.box = wx.BoxSizer(wx.VERTICAL)
         
-        participationlevels = ["None",
+        self.participationlevels = ["None",
                               "Indirect",
                               "Consultative",
                               "Shared control", 
@@ -86,7 +86,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(self.tc1, flag=wx.ALL|wx.EXPAND, border=10)
         label2 = wx.StaticText(self, label="Participation of the Open Design community:")
         self.box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc2 = wx.Choice(self, -1, choices = participationlevels)
+        self.tc2 = wx.Choice(self, -1, choices = self.participationlevels)
         self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc2)
         self.box.Add(self.tc2, flag=wx.ALL, border=10)
         label3 = wx.StaticText(self, label="Tools:")
@@ -173,7 +173,7 @@ class GeneralPage(scrolled.ScrolledPanel):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="General Information")
         box = wx.BoxSizer(wx.VERTICAL)
         
-        licenses = ["Creative Commons - Attribution (CC BY)",
+        self.licenses = ["Creative Commons - Attribution (CC BY)",
                     "Creative Commons - Attribution Share Alike (CC BY-SA)",
                     "Creative Commons - Attribution No Derivatives (CC BY-ND)",
                     "Creative Commons - Attribution Non-Commercial (CC BY-NC)", 
@@ -195,7 +195,7 @@ class GeneralPage(scrolled.ScrolledPanel):
         box.Add(self.tc3, flag=wx.ALL|wx.EXPAND, border=10)
         label4 = wx.StaticText(self, label="License:")
         box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc4 = wx.Choice(self, -1, choices = licenses)
+        self.tc4 = wx.Choice(self, -1, choices = self.licenses)
         box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc4)
@@ -206,7 +206,7 @@ class GeneralPage(scrolled.ScrolledPanel):
     
     def onChoice(self, event):
         choice = event.GetString()
-        print choice
+        temp.license = choice
 
 
 class BusinessModelPage(scrolled.ScrolledPanel):
@@ -413,6 +413,7 @@ class Main(wx.Frame):
         
         # Load the project in the current file
         temp.load(paths[0])
+        global currentFile
         currentFile = paths[0]
         
         # Update the values in the GUI
@@ -455,7 +456,9 @@ class Main(wx.Frame):
                 self.pages[i].tabs[k].tc3.SetValue(temp.steps[j].flows[k].fromrole)
                 self.pages[i].tabs[k].tc4.SetValue(temp.steps[j].flows[k].torole)
                 self.pages[i].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
-            
+        
+        self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
+    
         dlg.Destroy()
         
     def onSaveFile(self,event):
@@ -464,7 +467,7 @@ class Main(wx.Frame):
         temp.version = self.page1.tc2.GetValue()
         
         temp.founders = [x.strip() for x in self.page1.tc3.GetValue().split(',')]
-        temp.license = self.page1.tc4.GetSelection()
+        temp.license = self.page1.licenses[self.page1.tc4.GetCurrentSelection()]
         
         # Add automatically url of license
         if temp.license == "Creative Commons - Attribution (CC BY)":
@@ -511,7 +514,7 @@ class Main(wx.Frame):
             temp.steps[j] = step()
             temp.steps[j].stepnumber = j 
             temp.steps[j].title = self.pages[i].tc1.GetValue()
-            temp.steps[j].participation = self.pages[i].tc2.GetSelection()
+            temp.steps[j].participation = self.pages[i].participationlevels[self.pages[i].tc2.GetSelection()]
             temp.steps[j].tools = self.pages[i].tc3.GetValue()
             temp.steps[j].rules = self.pages[i].tc4.GetValue()
             temp.steps[j].roles = self.pages[i].tc5.GetValue()
@@ -519,14 +522,16 @@ class Main(wx.Frame):
             # Load the current values for the Flows
             for k in range(self.pages[i].flowsnumber):
                 temp.steps[j].flows[k] = flow()
-                temp.steps[j].flows[k].type = self.pages[i].tabs[k].tc1.GetSelection()
+                temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
                 temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
                 temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
-                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
+                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
         
         # Save file
-        temp.save.save(currentFile)
+        global currentFile
+        temp.save(currentFile)
+        self.statusBar.SetStatusText("Saved successfully file "+currentFile)
         
     def onSaveFileAs(self, event):
                 # Load the current values for General information
@@ -534,7 +539,7 @@ class Main(wx.Frame):
         temp.version = self.page1.tc2.GetValue()
         
         temp.founders = [x.strip() for x in self.page1.tc3.GetValue().split(',')]
-        temp.license = self.page1.tc4.GetSelection()
+        temp.license = self.page1.licenses[self.page1.tc4.GetCurrentSelection()]
         
         # Add automatically url of license
         if temp.license == "Creative Commons - Attribution (CC BY)":
@@ -581,7 +586,7 @@ class Main(wx.Frame):
             temp.steps[j] = step()
             temp.steps[j].stepnumber = j 
             temp.steps[j].title = self.pages[i].tc1.GetValue()
-            temp.steps[j].participation = self.pages[i].tc2.GetSelection()
+            temp.steps[j].participation = self.pages[i].participationlevels[self.pages[i].tc2.GetSelection()]
             temp.steps[j].tools = self.pages[i].tc3.GetValue()
             temp.steps[j].rules = self.pages[i].tc4.GetValue()
             temp.steps[j].roles = self.pages[i].tc5.GetValue()
@@ -589,18 +594,21 @@ class Main(wx.Frame):
             # Load the current values for the Flows
             for k in range(self.pages[i].flowsnumber):
                 temp.steps[j].flows[k] = flow()
-                temp.steps[j].flows[k].type = self.pages[i].tabs[k].tc1.GetSelection()
+                temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
                 temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
                 temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
-                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
+                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
         
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             
         # Save file
+        global currentFile
         temp.save(path+".meta")
+        currentFile = path+".meta"
+        self.statusBar.SetStatusText("Saved successfully file "+currentFile)
             
         dlg.Destroy()
         
