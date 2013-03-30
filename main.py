@@ -155,7 +155,7 @@ class WelcomePage(scrolled.ScrolledPanel):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Welcome")
         box = wx.BoxSizer(wx.VERTICAL)
         
-        self.bitmap = wx.Bitmap('images/openmetadesign.png')
+        self.bitmap = wx.Bitmap('images/welcome.png')
         wx.EVT_PAINT(self, self.OnPaint)
 
         
