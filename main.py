@@ -410,8 +410,51 @@ class Main(wx.Frame):
         dlg = wx.FileDialog(self, message="Choose a file",defaultDir=self.currentDirectory, defaultFile="",wildcard="*.meta",style=wx.OPEN | wx.CHANGE_DIR)
         if dlg.ShowModal() == wx.ID_OK:
             paths = dlg.GetPaths()
+        
+        # Load the project in the current file
+        temp.load(paths[0])
+        currentFile = paths[0]
+        
+        # Update the values in the GUI
+        self.page1.tc1.SetValue(temp.title)
+        self.page1.tc2.SetValue(temp.version) 
+        self.page1.tc3.SetValue(", ".join(temp.founders))
+        self.page1.tc4.SetStringSelection(temp.license)
+        
+        self.page2.tc1.SetValue(temp.community.locality[0])
+        self.page2.tc2.SetValue(temp.community.activity[0])
+        self.page2.tc3.SetValue(temp.community.subject[0])
+        self.page2.tc4.SetValue(temp.community.object[0])
+        self.page2.tc5.SetValue(temp.community.outcome[0])
+        self.page2.tc6.SetValue(temp.community.needs[0])
+        self.page2.tc7.SetValue(temp.community.tools[0])
+        self.page2.tc8.SetValue(temp.community.rules[0])
+        self.page2.tc9.SetValue(temp.community.roles[0])
+        self.page2.tc10.SetValue(temp.community.context[0])
+        
+        self.page3.tc1.SetValue(temp.businessmodel.valueproposition[0])
+        self.page3.tc2.SetValue(temp.businessmodel.customersegments[0])
+        self.page3.tc3.SetValue(temp.businessmodel.customerrelationships[0])
+        self.page3.tc4.SetValue(temp.businessmodel.channels[0])
+        self.page3.tc5.SetValue(temp.businessmodel.keypartners[0])
+        self.page3.tc6.SetValue(temp.businessmodel.keyactivities[0])
+        self.page3.tc7.SetValue(temp.businessmodel.keyresources[0])
+        self.page3.tc8.SetValue(temp.businessmodel.revenuestreams[0])
+        self.page3.tc9.SetValue(temp.businessmodel.coststructure[0])
+        
+        for j,i in enumerate(range(4,self.pageCounter+1)): 
+            self.pages[i].tc1.SetValue(temp.steps[j].title)
+            self.pages[i].tc2.SetStringSelection(temp.steps[j].participation)
+            self.pages[i].tc3.SetValue(temp.steps[j].tools)
+            self.pages[i].tc4.SetValue(temp.steps[j].rules)
+            self.pages[i].tc5.SetValue(temp.steps[j].roles)
             
-        # Here save the file
+            for k in range(self.pages[i].flowsnumber):
+                self.pages[i].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
+                self.pages[i].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
+                self.pages[i].tabs[k].tc3.SetValue(temp.steps[j].flows[k].fromrole)
+                self.pages[i].tabs[k].tc4.SetValue(temp.steps[j].flows[k].torole)
+                self.pages[i].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
         dlg.Destroy()
         
@@ -552,14 +595,12 @@ class Main(wx.Frame):
                 temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
                 temp.steps[j].flows[k].direction = self.pages[i].tabs[k].tc5.GetSelection()
         
-        
-        
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             
         # Save file
-        temp.save(path)
+        temp.save(path+".meta")
             
         dlg.Destroy()
         
