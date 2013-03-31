@@ -142,6 +142,11 @@ class StepPage(scrolled.ScrolledPanel):
         self.tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
         self.tab.tc3.SetItems(self.tab.actors)
         self.tab.tc4.SetItems(self.tab.actors)
+        
+    def onUpdateCtrlLoadFile(self):
+        self.tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+        self.tab.tc3.SetItems(self.tab.actors)
+        self.tab.tc4.SetItems(self.tab.actors)
     
     def onChoice(self, event):
         choice = event.GetString()
@@ -461,13 +466,14 @@ class Main(wx.Frame):
             self.pages[i].tc2.SetStringSelection(temp.steps[j].participation)
             self.pages[i].tc3.SetValue(temp.steps[j].tools)
             self.pages[i].tc4.SetValue(temp.steps[j].rules)
-            self.pages[i].tc5.SetValue(temp.steps[j].actors)
+            self.pages[i].tc5.SetValue(", ".join(temp.steps[j].actors))
             
             for k in range(self.pages[i].flowsnumber):
                 self.pages[i].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[i].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
-                self.pages[i].tabs[k].tc3.SetValue(temp.steps[j].flows[k].actor1)
-                self.pages[i].tabs[k].tc4.SetValue(temp.steps[j].flows[k].actor2)
+                self.pages[i].onUpdateCtrlLoadFile()
+                self.pages[i].tabs[k].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
+                self.pages[i].tabs[k].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
                 self.pages[i].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
         
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
@@ -530,7 +536,7 @@ class Main(wx.Frame):
             temp.steps[j].participation = self.pages[i].participationlevels[self.pages[i].tc2.GetSelection()]
             temp.steps[j].tools = self.pages[i].tc3.GetValue()
             temp.steps[j].rules = self.pages[i].tc4.GetValue()
-            temp.steps[j].actors = self.pages[i].tc5.GetValue()
+            temp.steps[j].actors = [x.strip() for x in self.pages[i].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
             for k in range(self.pages[i].flowsnumber):

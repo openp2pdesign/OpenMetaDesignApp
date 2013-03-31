@@ -40,9 +40,9 @@ class flow():
                  number = "0",
                  type = "flow type", 
                  what = "none", 
-                 direction = "direction",
-                 actor1 = "actor1",
-                 actor2 =  "actor2" ): 
+                 direction = "Both",
+                 actor1 = "first actor",
+                 actor2 =  "second actor" ): 
         
         self.number = number
         self.type = type
@@ -59,7 +59,7 @@ class step():
                  participation = "none", 
                  tools = "tools",
                  rules = "rules",
-                 actors = ["first actor"],
+                 actors = ["first actor","second actor"],
                  picture = "none",
                  flows = {0:flow()}): 
         
@@ -196,7 +196,7 @@ class project:
             tools.text = self.steps[n].tools
             rules = etree.SubElement(step, "rules")
             rules.text = self.steps[n].rules
-            actors = etree.SubElement(project, "actors")
+            actors = etree.SubElement(step, "actors")
             for j in self.steps[n].actors:
                 actor = etree.SubElement(actors, "actor")
                 actor.text = j
@@ -279,12 +279,8 @@ class project:
                 elif l.tag == "rules":
                     self.steps[k].rules = l.text
                 elif l.tag == "actors":
-                    self.steps[k].actors = l.text
-                    # modify this
-                    for j,i in enumerate(l.text):
-                        if j == 0:
-                            self.steps[k].actors[j] = i
-                        self.actors.append(i)
+                    for j,i in enumerate(l.getchildren()):
+                        self.steps[k].actors[j] = l.getchildren()[j].text
                 elif l.tag == "picture":
                     self.steps[k].picture = l.text
                 elif l.tag == "flow":
@@ -331,6 +327,7 @@ if __name__ == "__main__":
     print a.community.locality
     print a.steps[0].title
     print a.steps[0].actors
+    
     print a.steps[1].title
     
     print a.steps[0].participation
