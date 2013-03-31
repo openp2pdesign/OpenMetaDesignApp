@@ -41,15 +41,15 @@ class flow():
                  type = "flow type", 
                  what = "none", 
                  direction = "direction",
-                 fromrole = "from",
-                 torole =  "to" ): 
+                 actor1 = "actor1",
+                 actor2 =  "actor2" ): 
         
         self.number = number
         self.type = type
         self.what = what
         self.direction = direction
-        self.fromrole = fromrole
-        self.torole = torole 
+        self.actor1 = actor2
+        self.actor2 = actor2 
 
 class step():
     "A class for each step in the design process"
@@ -59,7 +59,7 @@ class step():
                  participation = "none", 
                  tools = "tools",
                  rules = "rules",
-                 roles = "roles",
+                 actors = ["first actor"],
                  picture = "none",
                  flows = {0:flow()}): 
         
@@ -68,7 +68,7 @@ class step():
         self.participation = participation
         self.tools = tools
         self.rules = rules
-        self.roles = roles
+        self.actors = actors
         self.picture = picture
         self.flows = flows
 
@@ -196,8 +196,10 @@ class project:
             tools.text = self.steps[n].tools
             rules = etree.SubElement(step, "rules")
             rules.text = self.steps[n].rules
-            roles = etree.SubElement(step, "roles")
-            roles.text = self.steps[n].roles
+            actors = etree.SubElement(project, "actors")
+            for j in self.steps[n].actors:
+                actor = etree.SubElement(actors, "actor")
+                actor.text = j
             picture = etree.SubElement(step, "picture")
             picture.text = self.steps[n].picture
             
@@ -212,10 +214,10 @@ class project:
                 what.text = self.steps[n].flows[m].what
                 direction = etree.SubElement(flow, "direction")
                 direction.text = self.steps[n].flows[m].direction
-                fromrole = etree.SubElement(flow, "from")
-                fromrole.text = self.steps[n].flows[m].fromrole
-                torole = etree.SubElement(flow, "to")
-                torole.text = self.steps[n].flows[m].torole
+                actor1 = etree.SubElement(flow, "firstactor")
+                actor1.text = self.steps[n].flows[m].actor1
+                actor2 = etree.SubElement(flow, "secondactor")
+                actor2.text = self.steps[n].flows[m].actor2
             
         # save the file
         outFile = open(filename, 'w')
@@ -276,8 +278,13 @@ class project:
                     self.steps[k].tools = l.text
                 elif l.tag == "rules":
                     self.steps[k].rules = l.text
-                elif l.tag == "roles":
-                    self.steps[k].roles = l.text
+                elif l.tag == "actors":
+                    self.steps[k].actors = l.text
+                    # modify this
+                    for j,i in enumerate(l.text):
+                        if j == 0:
+                            self.steps[k].actors[j] = i
+                        self.actors.append(i)
                 elif l.tag == "picture":
                     self.steps[k].picture = l.text
                 elif l.tag == "flow":
@@ -297,10 +304,10 @@ class project:
                             self.steps[k].flows[f].what = j.text
                         elif j.tag == "direction":
                             self.steps[k].flows[f].direction = j.text
-                        elif j.tag == "from":
-                            self.steps[k].flows[f].fromrole = j.text
-                        elif j.tag == "to":
-                            self.steps[k].flows[f].torole = j.text
+                        elif j.tag == "firstactor":
+                            self.steps[k].flows[f].actor1 = j.text
+                        elif j.tag == "secondactor":
+                            self.steps[k].flows[f].actor2 = j.text
                 
         return
 
@@ -311,7 +318,7 @@ if __name__ == "__main__":
     print p.businessmodel.channels
     print p.steps[0].title
     print p.steps[0].flows[0].what
-    p.save("test.meta")
+    #p.save("test.meta")
     print ""
     
     a = project()
@@ -323,7 +330,9 @@ if __name__ == "__main__":
     print a.businessmodel.valueproposition
     print a.community.locality
     print a.steps[0].title
+    print a.steps[0].actors
     print a.steps[1].title
+    
     print a.steps[0].participation
     print a.steps[1].participation
     
