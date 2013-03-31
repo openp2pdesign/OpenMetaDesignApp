@@ -27,7 +27,6 @@ class FlowTab(wx.Panel):
         
         self.actors = []
         
-        
         self.flowtype = ["Financial flow",
                    "Physical resources flow",
                    "Information flow"]
@@ -164,9 +163,13 @@ class StepPage(scrolled.ScrolledPanel):
         self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
         tab = FlowTab(self.nestednb)
+        tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+        tab.tc3.SetItems(tab.actors)
+        tab.tc4.SetItems(tab.actors)
         self.nestednb.AddPage(tab, "Flow n. " + str(self.flowsnumber)) 
         self.tabs[self.flowsnumber] = tab
-
+        
+        
 
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
