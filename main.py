@@ -461,13 +461,13 @@ class Main(wx.Frame):
             self.pages[i].tc2.SetStringSelection(temp.steps[j].participation)
             self.pages[i].tc3.SetValue(temp.steps[j].tools)
             self.pages[i].tc4.SetValue(temp.steps[j].rules)
-            self.pages[i].tc5.SetValue(temp.steps[j].roles)
+            self.pages[i].tc5.SetValue(temp.steps[j].actors)
             
             for k in range(self.pages[i].flowsnumber):
                 self.pages[i].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[i].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
-                self.pages[i].tabs[k].tc3.SetValue(temp.steps[j].flows[k].fromrole)
-                self.pages[i].tabs[k].tc4.SetValue(temp.steps[j].flows[k].torole)
+                self.pages[i].tabs[k].tc3.SetValue(temp.steps[j].flows[k].actor1)
+                self.pages[i].tabs[k].tc4.SetValue(temp.steps[j].flows[k].actor2)
                 self.pages[i].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
         
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
@@ -530,15 +530,15 @@ class Main(wx.Frame):
             temp.steps[j].participation = self.pages[i].participationlevels[self.pages[i].tc2.GetSelection()]
             temp.steps[j].tools = self.pages[i].tc3.GetValue()
             temp.steps[j].rules = self.pages[i].tc4.GetValue()
-            temp.steps[j].roles = self.pages[i].tc5.GetValue()
+            temp.steps[j].actors = self.pages[i].tc5.GetValue()
             
             # Load the current values for the Flows
             for k in range(self.pages[i].flowsnumber):
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
-                temp.steps[j].flows[k].fromrole = self.pages[i].tabs[k].tc3.GetValue()
-                temp.steps[j].flows[k].torole = self.pages[i].tabs[k].tc4.GetValue()
+                temp.steps[j].flows[k].actor1 = self.pages[i].tabs[k].tc3.GetValue()
+                temp.steps[j].flows[k].actor2 = self.pages[i].tabs[k].tc4.GetValue()
                 temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
 
         
