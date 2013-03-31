@@ -542,7 +542,7 @@ class Main(wx.Frame):
             temp.steps[j].actors = [x.strip() for x in self.pages[i].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
-            for k in range(self.pages[i].flowsnumber):
+            for k in range(self.pages[i].flowsnumber-1):
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
