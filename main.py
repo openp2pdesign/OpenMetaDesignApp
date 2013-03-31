@@ -25,6 +25,9 @@ class FlowTab(wx.Panel):
         wx.Panel.__init__(self, parent)
         box = wx.BoxSizer(wx.VERTICAL)
         
+        self.actors = []
+        
+        
         self.flowtype = ["Financial flow",
                    "Physical resources flow",
                    "Information flow"]
@@ -40,12 +43,18 @@ class FlowTab(wx.Panel):
         box.Add(self.tc2, flag=wx.ALL|wx.EXPAND, border=10)
         label3 = wx.StaticText(self, label="First actor of the flow:")
         box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc3 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
-        box.Add(self.tc3, flag=wx.ALL|wx.EXPAND, border=10)
+        self.tc3 = wx.Choice(self, -1, choices = self.actors)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc3)
+        box.Add(self.tc3, flag=wx.ALL, border=10)
+        label31 = wx.StaticText(self, label="Please update and leave the field above about actors to refresh the list")
+        box.Add(label31, flag=wx.ALL|wx.EXPAND, border=10)
         label4 = wx.StaticText(self, label="Second actor of the flow:")
         box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc4 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
-        box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        self.tc4 = wx.Choice(self, -1, choices = self.actors)
+        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc4)
+        box.Add(self.tc4, flag=wx.ALL, border=10)
+        label41 = wx.StaticText(self, label="Please update and leave the field above about actors to refresh the list")
+        box.Add(label41, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.flowdirection = ["Both directions",
                          "From the first actor to the second one",
@@ -97,12 +106,11 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc4 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
-        label5 = wx.StaticText(self, label="Roles of this step of the Open Design process:")
+        label5 = wx.StaticText(self, label="Actors in this step of the Open Design process (separete them with a comma):")
         self.box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(self.tc5, flag=wx.ALL|wx.EXPAND, border=10)
-        
-        
+        self.tc5.Bind(wx.EVT_KILL_FOCUS, self.onUpdateCtrl)
         
         buttons = wx.BoxSizer(wx.HORIZONTAL)
         self.flowsnumber = 1
@@ -129,6 +137,11 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetSizer(self.box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
+        
+    def onUpdateCtrl(self,event):
+        self.tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+        self.tab.tc3.SetItems(self.tab.actors)
+        self.tab.tc4.SetItems(self.tab.actors)
     
     def onChoice(self, event):
         choice = event.GetString()
