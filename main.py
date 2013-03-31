@@ -105,7 +105,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc4 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
-        label5 = wx.StaticText(self, label="Actors in this step of the Open Design process (separete them with a comma):")
+        label5 = wx.StaticText(self, label="Actors in this step of the Open Design process (separate them with a comma):")
         self.box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc5 = wx.TextCtrl(self, size=(530,80), style=wx.TE_MULTILINE)
         self.box.Add(self.tc5, flag=wx.ALL|wx.EXPAND, border=10)
@@ -546,8 +546,8 @@ class Main(wx.Frame):
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
-                temp.steps[j].flows[k].actor1 = self.pages[i].tabs[k].tc3.GetValue()
-                temp.steps[j].flows[k].actor2 = self.pages[i].tabs[k].tc4.GetValue()
+                temp.steps[j].flows[k].actor1 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc3.GetSelection()]
+                temp.steps[j].flows[k].actor2 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc4.GetSelection()]
                 temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
 
         
