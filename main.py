@@ -579,6 +579,8 @@ class Main(wx.Frame):
             del self.pages[self.pageCounter]
             self.pageTitleCounter -= 1
             self.pageCounter -= 1
+            for j in range(self.nb.GetSelection(),self.pageCounter+1):
+                self.nb.SetPageText(j, "Step: "+str(j-3))
         else:
             pass
 
