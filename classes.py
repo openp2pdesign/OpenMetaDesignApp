@@ -281,8 +281,8 @@ class project:
                 elif l.tag == "rules":
                     self.steps[k].rules = l.text
                 elif l.tag == "actors":
+                    self.steps[k].actors = []
                     for j,i in enumerate(l.getchildren()):
-                        self.steps[k].actors = []
                         self.steps[k].actors.append(l.getchildren()[j].text)
                 elif l.tag == "picture":
                     self.steps[k].picture = l.text
