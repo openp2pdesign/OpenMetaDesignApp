@@ -355,7 +355,6 @@ class Main(wx.Frame):
         self.nb.AddPage(self.page2, "Community Analysis")
         self.nb.AddPage(self.page3, "Business Model")
         self.addNotebookPage()
-        self.nb.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         
         vbox.Add(self.nb, 2, flag=wx.EXPAND)
 
@@ -547,25 +546,27 @@ class Main(wx.Frame):
         temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
+        self.pageCounter -= 4
+        
         # Load the current values for the Steps
-        for j,i in enumerate(range(4,self.pageCounter+1)):
+        for j in range(self.pageCounter):
             temp.steps[j] = step()
             temp.steps[j].stepnumber = j 
-            temp.steps[j].title = self.pages[i].tc1.GetValue()
-            temp.steps[j].participation = self.pages[i].participationlevels[self.pages[i].tc2.GetSelection()]
-            temp.steps[j].tools = self.pages[i].tc3.GetValue()
-            temp.steps[j].rules = self.pages[i].tc4.GetValue()
-            temp.steps[j].actors = [x.strip() for x in self.pages[i].tc5.GetValue().split(',')]
+            temp.steps[j].title = self.pages[j].tc1.GetValue()
+            temp.steps[j].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
+            temp.steps[j].tools = self.pages[j].tc3.GetValue()
+            temp.steps[j].rules = self.pages[j].tc4.GetValue()
+            temp.steps[j].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
-            for k in range(self.pages[i].flowsnumber+1):
+            for k in range(self.pages[j].flowsnumber):
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].number = str(k)
-                temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
-                temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
-                temp.steps[j].flows[k].actor1 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc3.GetSelection()]
-                temp.steps[j].flows[k].actor2 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc4.GetSelection()]
-                temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
+                temp.steps[j].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
+                temp.steps[j].flows[k].what = self.pages[j].tabs[k].tc2.GetValue()
+                temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
+                temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
+                temp.steps[j].flows[k].direction = self.pages[j].tabs[k].flowdirection[self.pages[j].tabs[k].tc5.GetSelection()]
         
     def onSaveFile(self,event):
         # Load temporary project
@@ -590,13 +591,8 @@ class Main(wx.Frame):
         temp.save(path)
         currentFile = path
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
-            
-        dlg.Destroy()
         
-    def onTabChanged(self,event):
-        tab = event.EventObject.GetChildren()[event.Selection]
-        currentTab = tab.GetName()
-        event.Skip()     
+        dlg.Destroy()   
     
     def onQuit(self, event):
         self.Close()
