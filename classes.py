@@ -204,8 +204,9 @@ class project:
             picture.text = self.steps[n].picture
             
             # build the flows
-            flow = etree.SubElement(step, "flow")
+            flows = etree.SubElement(step, "flows")            
             for m,k in enumerate(self.steps[n].flows):
+                flow = etree.SubElement(flows, "flow")
                 flownumber = etree.SubElement(flow, "number")
                 flownumber.text = self.steps[n].flows[m].number
                 flowtype = etree.SubElement(flow, "type")
@@ -280,30 +281,33 @@ class project:
                     self.steps[k].rules = l.text
                 elif l.tag == "actors":
                     for j,i in enumerate(l.getchildren()):
-                        self.steps[k].actors[j] = l.getchildren()[j].text
+                        self.steps[k].actors = []
+                        self.steps[k].actors.append(l.getchildren()[j].text)
                 elif l.tag == "picture":
                     self.steps[k].picture = l.text
-                elif l.tag == "flow":
-                    flowelements = l.getchildren()
-                    f = 0
-                    for j in flowelements:
-                        if j.tag == "number" and j.text == "0":
-                            f = int(j.text)
-                            self.steps[k].flows[f].number = j.text
-                        elif j.tag == "number" and j.text != "0":
-                            f = int(j.text)
-                            self.steps[k].flows[f] = flow()
-                            self.steps[k].flows[f].number = j.text
-                        elif j.tag == "type":
-                            self.steps[k].flows[f].type = j.text
-                        elif j.tag == "what":
-                            self.steps[k].flows[f].what = j.text
-                        elif j.tag == "direction":
-                            self.steps[k].flows[f].direction = j.text
-                        elif j.tag == "firstactor":
-                            self.steps[k].flows[f].actor1 = j.text
-                        elif j.tag == "secondactor":
-                            self.steps[k].flows[f].actor2 = j.text
+                elif l.tag == "flows":
+                    for h,i in enumerate(l.getchildren()):
+                        flowelements = l.getchildren()
+                        print flowelements
+                        f = 0
+                        for j in flowelements[h]:
+                            if j.tag == "number" and j.text == "0":
+                                f = int(j.text)
+                                self.steps[k].flows[f].number = j.text
+                            elif j.tag == "number" and j.text != "0":
+                                f = int(j.text)
+                                self.steps[k].flows[f] = flow()
+                                self.steps[k].flows[f].number = j.text
+                            elif j.tag == "type":
+                                self.steps[k].flows[f].type = j.text
+                            elif j.tag == "what":
+                                self.steps[k].flows[f].what = j.text
+                            elif j.tag == "direction":
+                                self.steps[k].flows[f].direction = j.text
+                            elif j.tag == "firstactor":
+                                self.steps[k].flows[f].actor1 = j.text
+                            elif j.tag == "secondactor":
+                                self.steps[k].flows[f].actor2 = j.text
                 
         return
 
@@ -327,6 +331,8 @@ if __name__ == "__main__":
     print a.community.locality
     print a.steps[0].title
     print a.steps[0].actors
+    print a.steps[0].flows[0].type
+    print a.steps[0].flows[1].type
     
     print a.steps[1].title
     
