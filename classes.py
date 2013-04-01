@@ -288,7 +288,6 @@ class project:
                 elif l.tag == "flows":
                     for h,i in enumerate(l.getchildren()):
                         flowelements = l.getchildren()
-                        print flowelements
                         f = 0
                         for j in flowelements[h]:
                             if j.tag == "number" and j.text == "0":

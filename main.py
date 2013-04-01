@@ -120,7 +120,7 @@ class StepPage(scrolled.ScrolledPanel):
         buttons.Add(addflow, flag=wx.ALL, border=10)
         addflow.Bind(wx.EVT_BUTTON, self.onAddFlow, addflow)
         
-        removeflow = wx.Button(self, 20, "Remove a flow")
+        removeflow = wx.Button(self, 20, "Remove the current flow")
         buttons.Add(removeflow, flag=wx.ALL, border=10)
         removeflow.Bind(wx.EVT_BUTTON, self.onRemoveFlow, removeflow)
         
@@ -153,11 +153,16 @@ class StepPage(scrolled.ScrolledPanel):
         print choice
         
     def onRemoveFlow(self, event):
-        del self.tabs[self.flowsnumber]
-        self.flowsnumber -= 1
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
-        self.label6.SetLabel(self.flowmessage)
-        self.nestednb.DeletePage(self.flowsnumber)
+        if self.flowsnumber >= 0:
+            self.flowsnumber -= 1
+            self.nestednb.DeletePage(self.nestednb.GetSelection())
+            #del self.tabs[self.nestednb.GetSelection()]
+            self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
+            self.label6.SetLabel(self.flowmessage)
+            for j in range(self.flowsnumber+1):
+                self.nestednb.SetPageText(j, "Flow: "+str(j+1))
+        else:
+            pass
         
     def onAddFlow(self, event):
         self.flowsnumber += 1
@@ -341,18 +346,14 @@ class Main(wx.Frame):
         self.pageCounter = 3
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
-        self.page0 = WelcomePage(self.nb)
-        self.pages[0] = self.page0
-        self.page1 = GeneralPage(self.nb)
-        self.pages[1] = self.page1
-        self.page2 = CommunityPage(self.nb)
-        self.pages[2] = self.page2
-        self.page3 = BusinessModelPage(self.nb)
-        self.pages[3] = self.page3
-        self.nb.AddPage(self.page0, "Welcome!") 
-        self.nb.AddPage(self.page1, "General Information")
-        self.nb.AddPage(self.page2, "Community Analysis")
-        self.nb.AddPage(self.page3, "Business Model")
+        self.pages[0] = WelcomePage(self.nb)
+        self.pages[1] = GeneralPage(self.nb)
+        self.pages[2] = CommunityPage(self.nb)
+        self.pages[3] = BusinessModelPage(self.nb)
+        self.nb.AddPage(self.pages[0], "Welcome!") 
+        self.nb.AddPage(self.pages[1], "General Information")
+        self.nb.AddPage(self.pages[2], "Community Analysis")
+        self.nb.AddPage(self.pages[3], "Business Model")
         self.addNotebookPage()
         self.nb.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         
@@ -455,13 +456,18 @@ class Main(wx.Frame):
         self.page3.tc9.SetValue(temp.businessmodel.coststructure[0])
         
         for j,i in enumerate(range(4,self.pageCounter+1)): 
+            # NEED TO ADD PAGES FOR EACH STEP
             self.pages[i].tc1.SetValue(temp.steps[j].title)
             self.pages[i].tc2.SetStringSelection(temp.steps[j].participation)
             self.pages[i].tc3.SetValue(temp.steps[j].tools)
             self.pages[i].tc4.SetValue(temp.steps[j].rules)
             self.pages[i].tc5.SetValue(", ".join(temp.steps[j].actors))
             
-            for k in range(self.pages[i].flowsnumber):
+            for k in range(self.pages[i].flowsnumber+1):
+                # NEED TO ADD TABS FOR EACH FLOW
+                print "here"
+                if k > 0:
+                    print "add a new one"
                 self.pages[i].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[i].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
                 self.pages[i].onUpdateCtrlLoadFile()
