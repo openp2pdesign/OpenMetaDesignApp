@@ -346,14 +346,14 @@ class Main(wx.Frame):
         self.pageCounter = 3
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
-        self.pages[0] = WelcomePage(self.nb)
-        self.pages[1] = GeneralPage(self.nb)
-        self.pages[2] = CommunityPage(self.nb)
-        self.pages[3] = BusinessModelPage(self.nb)
-        self.nb.AddPage(self.pages[0], "Welcome!") 
-        self.nb.AddPage(self.pages[1], "General Information")
-        self.nb.AddPage(self.pages[2], "Community Analysis")
-        self.nb.AddPage(self.pages[3], "Business Model")
+        self.page0 = WelcomePage(self.nb)
+        self.page1 = GeneralPage(self.nb)
+        self.page2 = CommunityPage(self.nb)
+        self.page3 = BusinessModelPage(self.nb)
+        self.nb.AddPage(self.page0, "Welcome!") 
+        self.nb.AddPage(self.page1, "General Information")
+        self.nb.AddPage(self.page2, "Community Analysis")
+        self.nb.AddPage(self.page3, "Business Model")
         self.addNotebookPage()
         self.nb.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,self.onTabChanged)
         
@@ -429,51 +429,63 @@ class Main(wx.Frame):
         currentFile = paths[0]
         
         # Update the values in the GUI
-        self.pages[1].tc1.SetValue(temp.title)
-        self.pages[1].tc2.SetValue(temp.version) 
-        self.pages[1].tc3.SetValue(", ".join(temp.founders))
-        self.pages[1].tc4.SetStringSelection(temp.license)
+        self.page1.tc1.SetValue(temp.title)
+        self.page1.tc2.SetValue(temp.version) 
+        self.page1.tc3.SetValue(", ".join(temp.founders))
+        self.page1.tc4.SetStringSelection(temp.license)
         
-        self.pages[2].tc1.SetValue(temp.community.locality[0])
-        self.pages[2].tc2.SetValue(temp.community.activity[0])
-        self.pages[2].tc3.SetValue(temp.community.subject[0])
-        self.pages[2].tc4.SetValue(temp.community.object[0])
-        self.pages[2].tc5.SetValue(temp.community.outcome[0])
-        self.pages[2].tc6.SetValue(temp.community.needs[0])
-        self.pages[2].tc7.SetValue(temp.community.tools[0])
-        self.pages[2].tc8.SetValue(temp.community.rules[0])
-        self.pages[2].tc9.SetValue(temp.community.roles[0])
-        self.pages[2].tc10.SetValue(temp.community.context[0])
+        self.page2.tc1.SetValue(temp.community.locality[0])
+        self.page2.tc2.SetValue(temp.community.activity[0])
+        self.page2.tc3.SetValue(temp.community.subject[0])
+        self.page2.tc4.SetValue(temp.community.object[0])
+        self.page2.tc5.SetValue(temp.community.outcome[0])
+        self.page2.tc6.SetValue(temp.community.needs[0])
+        self.page2.tc7.SetValue(temp.community.tools[0])
+        self.page2.tc8.SetValue(temp.community.rules[0])
+        self.page2.tc9.SetValue(temp.community.roles[0])
+        self.page2.tc10.SetValue(temp.community.context[0])
         
-        self.pages[3].tc1.SetValue(temp.businessmodel.valueproposition[0])
-        self.pages[3].tc2.SetValue(temp.businessmodel.customersegments[0])
-        self.pages[3].tc3.SetValue(temp.businessmodel.customerrelationships[0])
-        self.pages[3].tc4.SetValue(temp.businessmodel.channels[0])
-        self.pages[3].tc5.SetValue(temp.businessmodel.keypartners[0])
-        self.pages[3].tc6.SetValue(temp.businessmodel.keyactivities[0])
-        self.pages[3].tc7.SetValue(temp.businessmodel.keyresources[0])
-        self.pages[3].tc8.SetValue(temp.businessmodel.revenuestreams[0])
-        self.pages[3].tc9.SetValue(temp.businessmodel.coststructure[0])
+        self.page3.tc1.SetValue(temp.businessmodel.valueproposition[0])
+        self.page3.tc2.SetValue(temp.businessmodel.customersegments[0])
+        self.page3.tc3.SetValue(temp.businessmodel.customerrelationships[0])
+        self.page3.tc4.SetValue(temp.businessmodel.channels[0])
+        self.page3.tc5.SetValue(temp.businessmodel.keypartners[0])
+        self.page3.tc6.SetValue(temp.businessmodel.keyactivities[0])
+        self.page3.tc7.SetValue(temp.businessmodel.keyresources[0])
+        self.page3.tc8.SetValue(temp.businessmodel.revenuestreams[0])
+        self.page3.tc9.SetValue(temp.businessmodel.coststructure[0])
+    
         
-        for j,i in enumerate(range(4,self.pageCounter+1)): 
-            # NEED TO ADD PAGES FOR EACH STEP
-            self.pages[i].tc1.SetValue(temp.steps[j].title)
-            self.pages[i].tc2.SetStringSelection(temp.steps[j].participation)
-            self.pages[i].tc3.SetValue(temp.steps[j].tools)
-            self.pages[i].tc4.SetValue(temp.steps[j].rules)
-            self.pages[i].tc5.SetValue(", ".join(temp.steps[j].actors))
+        # Remove existing step pages before loading the new ones
+        for j in range(4,self.pageCounter+1):
+            self.nb.DeletePage(j)
+            del self.pages[self.pageCounter]        
+        self.pageCounter = 4
+        
+        for j in range(len(temp.steps)): 
+            print "J:",j
+            pageTitle = "Step: {0}".format(str(self.pageCounter-3))
+            self.pages[j] = StepPage(self.nb, pageTitle)
+            self.nb.AddPage(self.pages[j], pageTitle)
+            self.pageCounter += 1
+            self.pages[j].tc1.SetValue(temp.steps[j].title)
+            self.pages[j].tc2.SetStringSelection(temp.steps[j].participation)
+            self.pages[j].tc3.SetValue(temp.steps[j].tools)
+            self.pages[j].tc4.SetValue(temp.steps[j].rules)
+            self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
             
-            for k in range(self.pages[i].flowsnumber+1):
+            for k in range(self.pages[j].flowsnumber+1):
+                # load number of flows and put it into the iterator
                 # NEED TO ADD TABS FOR EACH FLOW
-                print "here"
+                print "here", k
                 if k > 0:
                     print "add a new one"
-                self.pages[i].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
-                self.pages[i].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
-                self.pages[i].onUpdateCtrlLoadFile()
-                self.pages[i].tabs[k].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
-                self.pages[i].tabs[k].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
-                self.pages[i].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
+                self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
+                self.pages[j].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
+                self.pages[j].onUpdateCtrlLoadFile()
+                self.pages[j].tabs[k].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
+                self.pages[j].tabs[k].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
+                self.pages[j].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
         
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
     
