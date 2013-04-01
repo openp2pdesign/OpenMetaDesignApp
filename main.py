@@ -112,8 +112,8 @@ class StepPage(scrolled.ScrolledPanel):
         self.tc5.Bind(wx.EVT_KILL_FOCUS, self.onUpdateCtrl)
         
         buttons = wx.BoxSizer(wx.HORIZONTAL)
-        self.flowsnumber = 1
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.flowsnumber = 0
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
         self.label6 = wx.StaticText(self, label=self.flowmessage)
         buttons.Add(self.label6, flag=wx.ALL|wx.EXPAND, border=10)
         addflow = wx.Button(self, 20, "Add a flow")
@@ -128,9 +128,8 @@ class StepPage(scrolled.ScrolledPanel):
         
         self.tabs = {}
         self.nestednb = wx.Notebook(self)
-        self.tab = FlowTab(self.nestednb)
-        self.tabs[0] = self.tab
-        self.nestednb.AddPage(self.tab, "Flow n. 1") 
+        self.tabs[0] = FlowTab(self.nestednb)
+        self.nestednb.AddPage(self.tabs[0], "Flow n. 1") 
         self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
         self.SetSizer(self.box)
@@ -138,14 +137,16 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetupScrolling()
         
     def onUpdateCtrl(self,event):
-        self.tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
-        self.tab.tc3.SetItems(self.tab.actors)
-        self.tab.tc4.SetItems(self.tab.actors)
+        for k in range(self.flowsnumber+1):
+            self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+            self.tabs[k].tc3.SetItems(self.tabs[k].actors)
+            self.tabs[k].tc4.SetItems(self.tabs[k].actors)
         
     def onUpdateCtrlLoadFile(self):
-        self.tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
-        self.tab.tc3.SetItems(self.tab.actors)
-        self.tab.tc4.SetItems(self.tab.actors)
+        for k in range(self.flowsnumber+1):
+            self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+            self.tabs[k].tc3.SetItems(self.tabs[k].actors)
+            self.tabs[k].tc4.SetItems(self.tabs[k].actors)
     
     def onChoice(self, event):
         choice = event.GetString()
@@ -154,23 +155,21 @@ class StepPage(scrolled.ScrolledPanel):
     def onRemoveFlow(self, event):
         del self.tabs[self.flowsnumber]
         self.flowsnumber -= 1
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
         self.label6.SetLabel(self.flowmessage)
         self.nestednb.DeletePage(self.flowsnumber)
         
     def onAddFlow(self, event):
         self.flowsnumber += 1
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
         self.label6.SetLabel(self.flowmessage)
-        tab = FlowTab(self.nestednb)
-        tab.actors = [x.strip() for x in self.tc5.GetValue().split(',')]
-        tab.tc3.SetItems(tab.actors)
-        tab.tc4.SetItems(tab.actors)
-        self.nestednb.AddPage(tab, "Flow n. " + str(self.flowsnumber)) 
-        self.tabs[self.flowsnumber] = tab
+        self.tabs[self.flowsnumber] = FlowTab(self.nestednb)
+        self.tabs[self.flowsnumber].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
+        self.tabs[self.flowsnumber].tc3.SetItems(self.tabs[self.flowsnumber].actors)
+        self.tabs[self.flowsnumber].tc4.SetItems(self.tabs[self.flowsnumber].actors)
+        self.nestednb.AddPage(self.tabs[self.flowsnumber], "Flow n. " + str(self.flowsnumber+1)) 
         
         
-
 class WelcomePage(scrolled.ScrolledPanel):
     def __init__(self, parent):
         scrolled.ScrolledPanel.__init__(self, parent, -1,size=(570,400),name="Welcome")
@@ -179,7 +178,6 @@ class WelcomePage(scrolled.ScrolledPanel):
         self.bitmap = wx.Bitmap('images/welcome.png')
         wx.EVT_PAINT(self, self.OnPaint)
 
-        
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -272,7 +270,6 @@ class BusinessModelPage(scrolled.ScrolledPanel):
         self.tc9 = wx.TextCtrl(self, size=(550,120), style=wx.TE_MULTILINE)
         box.Add(self.tc9, flag=wx.ALL|wx.EXPAND, border=10)
 
-
         self.SetSizer(box)
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -328,9 +325,6 @@ class CommunityPage(scrolled.ScrolledPanel):
         self.SetAutoLayout(1)
         self.SetupScrolling()
 
-        
-        
-        
 
 class Main(wx.Frame):
     def __init__(self):
@@ -367,7 +361,6 @@ class Main(wx.Frame):
         pannel.SetSizer(vbox)
         
         # Initializing the Menu
-        
         self.statusBar = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
         self.m_menubar1 = wx.MenuBar( 0 )
         self.m_menu1 = wx.Menu()
@@ -409,10 +402,7 @@ class Main(wx.Frame):
         
         self.SetMenuBar( self.m_menubar1 )
         
-
-        
         # Set events for the Menu
-        
         self.Bind(wx.EVT_MENU, self.onOpenFile, self.m_menuItem1)
         self.Bind(wx.EVT_MENU, self.onSaveFile, self.m_menuItem2)
         self.Bind(wx.EVT_MENU, self.onSaveFileAs, self.m_menuItem3)
@@ -506,7 +496,6 @@ class Main(wx.Frame):
             temp.licenseurl = "http://creativecommons.org/licenses/by-nc-nd/3.0"
         elif temp.license == "Creative Commons - No Rights Reserved (CC0)":
             temp.licenseurl = "http://creativecommons.org/publicdomain/zero/1.0/"
-         
         
         # Load the current values for Community analysis
         temp.community.locality = self.page2.tc1.GetValue()
@@ -542,17 +531,16 @@ class Main(wx.Frame):
             temp.steps[j].actors = [x.strip() for x in self.pages[i].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
-            for k in range(self.pages[i].flowsnumber-1):
+            for k in range(self.pages[i].flowsnumber+1):
                 temp.steps[j].flows[k] = flow()
+                temp.steps[j].flows[k].number = str(k)
                 temp.steps[j].flows[k].type = self.pages[i].tabs[k].flowtype[self.pages[i].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[i].tabs[k].tc2.GetValue()
                 temp.steps[j].flows[k].actor1 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc3.GetSelection()]
                 temp.steps[j].flows[k].actor2 = self.pages[i].tabs[k].actors[self.pages[i].tabs[k].tc4.GetSelection()]
                 temp.steps[j].flows[k].direction = self.pages[i].tabs[k].flowdirection[self.pages[i].tabs[k].tc5.GetSelection()]
-
         
     def onSaveFile(self,event):
-        
         # Load temporary project
         self.SaveFile()
         
@@ -563,7 +551,6 @@ class Main(wx.Frame):
         
             
     def onSaveFileAs(self, event):
-        
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -590,9 +577,8 @@ class Main(wx.Frame):
     def addNotebookPage(self):
         self.pageCounter += 1
         pageTitle = "Step: {0}".format(str(self.pageCounter-3))
-        page = StepPage(self.nb, pageTitle)
-        self.nb.AddPage(page, pageTitle)
-        self.pages[self.pageCounter] = page
+        self.pages[self.pageCounter] = StepPage(self.nb, pageTitle)
+        self.nb.AddPage(self.pages[self.pageCounter], pageTitle)
         self.pageTitleCounter += 1
 
     def onStepRemove(self, event):  
