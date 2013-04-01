@@ -236,7 +236,8 @@ class project:
         for j,i in enumerate(founders):
             if j == 0:
                 self.founders[j] = i
-            self.founders.append(i)
+            else:
+                self.founders.append(i)
         self.license = doc.findtext("license")
         self.licenseurl = doc.findtext("licenseurl")
         

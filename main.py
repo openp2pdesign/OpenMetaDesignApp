@@ -429,7 +429,7 @@ class Main(wx.Frame):
         
         # Update the values in the GUI
         self.page1.tc1.SetValue(temp.title)
-        self.page1.tc2.SetValue(temp.version) 
+        self.page1.tc2.SetValue(temp.version)
         self.page1.tc3.SetValue(", ".join(temp.founders))
         self.page1.tc4.SetStringSelection(temp.license)
         
