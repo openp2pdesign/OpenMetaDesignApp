@@ -11,6 +11,18 @@
 
 import cairo
 import math
+from classes import *
+
+temp = project()
+temp.load("test2.meta")
+
+for j,i in enumerate(temp.steps):
+    print "---"
+    print temp.steps[j].title
+    for l,k in enumerate(temp.steps[j].flows):
+        print temp.steps[j].flows[l].actor1
+        print temp.steps[j].flows[l].actor2
+        print temp.steps[j].flows[l].direction
 
 surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, 1400, 1200)
 ctx = cairo.Context (surface)
