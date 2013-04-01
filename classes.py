@@ -40,7 +40,7 @@ class flow():
                  number = "0",
                  type = "flow type", 
                  what = "none", 
-                 direction = "Both",
+                 direction = "Both directions",
                  actor1 = "first actor",
                  actor2 =  "second actor" ): 
         
@@ -48,7 +48,7 @@ class flow():
         self.type = type
         self.what = what
         self.direction = direction
-        self.actor1 = actor2
+        self.actor1 = actor1
         self.actor2 = actor2 
 
 class step():
@@ -290,24 +290,28 @@ class project:
                     for h,i in enumerate(l.getchildren()):
                         flowelements = l.getchildren()
                         f = 0
+                        print "H:",h
                         for j in flowelements[h]:
                             if j.tag == "number" and j.text == "0":
                                 f = int(j.text)
-                                self.steps[k].flows[f].number = j.text
+                                self.steps[k].flows[h].number = j.text
                             elif j.tag == "number" and j.text != "0":
                                 f = int(j.text)
-                                self.steps[k].flows[f] = flow()
-                                self.steps[k].flows[f].number = j.text
+                                self.steps[k].flows[h] = flow()
+                                self.steps[k].flows[h].number = j.text
                             elif j.tag == "type":
-                                self.steps[k].flows[f].type = j.text
+                                self.steps[k].flows[h].type = j.text
                             elif j.tag == "what":
-                                self.steps[k].flows[f].what = j.text
+                                self.steps[k].flows[h].what = j.text
                             elif j.tag == "direction":
-                                self.steps[k].flows[f].direction = j.text
+                                self.steps[k].flows[h].direction = j.text
+                                print "DIR 1:", j.text
                             elif j.tag == "firstactor":
-                                self.steps[k].flows[f].actor1 = j.text
+                                self.steps[k].flows[h].actor1 = j.text
+                                print "ACTOR 1:", j.text
                             elif j.tag == "secondactor":
-                                self.steps[k].flows[f].actor2 = j.text
+                                self.steps[k].flows[h].actor2 = j.text
+                                print "ACTOR 2:", j.text
                 
         return
 
@@ -324,22 +328,26 @@ if __name__ == "__main__":
     a = project()
     a.title = "prova"
     a.businessmodel.valueproposition = "X"
-    a.load("test.meta")
+    a.load("test2.meta")
     print a.title
     print a.founders
     print a.businessmodel.valueproposition
     print a.community.locality
     print a.steps[0].title
     print a.steps[0].actors
-    print a.steps[0].flows[0].type
+    print a.steps[1].actors
+    print "-"
+    print a.steps[0].flows[1].direction
+    print a.steps[0].flows[1].actor1
+    print a.steps[0].flows[1].actor2
     print a.steps[0].flows[1].type
+    print a.steps[0].flows[1].what
     
-    print a.steps[1].title
-    
-    print a.steps[0].participation
-    print a.steps[1].participation
-    
-    print a.steps[0].flows[0].type
-    print a.steps[1].flows[0].type
-    print a.steps[1].flows[1].type
-    print a.steps[1].flows[1].what
+    for i in range(len(a.steps)):
+        print "---"
+        for k in range(len(a.steps[i].flows)):
+            print "DIR",a.steps[i].flows[k].direction
+            print "AR1",a.steps[i].flows[k].actor1
+            print "AR2",a.steps[i].flows[k].actor2
+            print "-"
+

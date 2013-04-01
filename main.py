@@ -483,6 +483,7 @@ class Main(wx.Frame):
                 self.pages[j].label6.SetLabel(self.pages[j].flowmessage)
                 self.pages[j].tabs[k] = FlowTab(self.pages[j].nestednb)
                 
+                self.pages[j].tabs[k].actors = temp.steps[j].actors
                 self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
                 self.pages[j].tabs[k].tc3.SetItems(self.pages[j].tabs[k].actors)
                 self.pages[j].tabs[k].tc4.SetItems(self.pages[j].tabs[k].actors)
@@ -491,16 +492,17 @@ class Main(wx.Frame):
 
                 self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[j].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
-                #self.pages[j].onUpdateCtrlLoadFile()
+                
                 for f in range(self.pages[j].flowsnumber):
                     load = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
                     self.pages[j].tabs[f].tc3.SetItems(load)
                     self.pages[j].tabs[f].tc4.SetItems(load)
+                    print "Actor 1:", temp.steps[j].flows[k].actor1
+                    print "Actor 2:", temp.steps[j].flows[k].actor2
+                    self.pages[j].tabs[f].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
+                    self.pages[j].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
+                    self.pages[j].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
-                self.pages[j].tabs[k].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
-                self.pages[j].tabs[k].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
-                self.pages[j].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
-        
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
     
         dlg.Destroy()
@@ -568,6 +570,11 @@ class Main(wx.Frame):
             for k in range(self.pages[j].flowsnumber):
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].number = str(k)
+                print self.pages[j].tabs[k].tc3.GetSelection()
+                print self.pages[j].tabs[k].actors
+                print self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
+                #temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors
+                #temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors
                 temp.steps[j].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
                 temp.steps[j].flows[k].what = self.pages[j].tabs[k].tc2.GetValue()
                 temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
