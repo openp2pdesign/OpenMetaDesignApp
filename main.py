@@ -492,6 +492,11 @@ class Main(wx.Frame):
                 self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[j].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
                 #self.pages[j].onUpdateCtrlLoadFile()
+                for f in range(self.pages[j].flowsnumber):
+                    load = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
+                    self.pages[j].tabs[f].tc3.SetItems(load)
+                    self.pages[j].tabs[f].tc4.SetItems(load)
+            
                 self.pages[j].tabs[k].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
                 self.pages[j].tabs[k].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
                 self.pages[j].tabs[k].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
