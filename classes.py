@@ -287,67 +287,44 @@ class project:
                 elif l.tag == "picture":
                     self.steps[k].picture = l.text
                 elif l.tag == "flows":
-                    for h,i in enumerate(l.getchildren()):
-                        flowelements = l.getchildren()
-                        f = 0
-                        print "H:",h
-                        for j in flowelements[h]:
-                            if j.tag == "number" and j.text == "0":
-                                f = int(j.text)
-                                self.steps[k].flows[h].number = j.text
-                            elif j.tag == "number" and j.text != "0":
-                                f = int(j.text)
-                                self.steps[k].flows[h] = flow()
-                                self.steps[k].flows[h].number = j.text
-                            elif j.tag == "type":
-                                self.steps[k].flows[h].type = j.text
-                            elif j.tag == "what":
-                                self.steps[k].flows[h].what = j.text
-                            elif j.tag == "direction":
-                                self.steps[k].flows[h].direction = j.text
-                                print "DIR 1:", j.text
-                            elif j.tag == "firstactor":
-                                self.steps[k].flows[h].actor1 = j.text
-                                print "ACTOR 1:", j.text
-                            elif j.tag == "secondactor":
-                                self.steps[k].flows[h].actor2 = j.text
-                                print "ACTOR 2:", j.text
-                
+                    for s,r in enumerate(l.getchildren()):
+                        self.steps[k].flows[s] = flow()
+                        self.steps[k].flows[s].number = r.getchildren()[0].text
+                        self.steps[k].flows[s].type = r.getchildren()[1].text
+                        self.steps[k].flows[s].what = r.getchildren()[2].text
+                        self.steps[k].flows[s].direction = r.getchildren()[3].text
+                        self.steps[k].flows[s].actor1 = r.getchildren()[4].text
+                        self.steps[k].flows[s].actor2 = r.getchildren()[5].text
+                        
+                                       
         return
 
 
 if __name__ == "__main__":
-    p = project()
-    print p.license
-    print p.businessmodel.channels
-    print p.steps[0].title
-    print p.steps[0].flows[0].what
+    #p = project()
     #p.save("test.meta")
     print ""
     
     a = project()
-    a.title = "prova"
-    a.businessmodel.valueproposition = "X"
     a.load("test2.meta")
-    print a.title
-    print a.founders
-    print a.businessmodel.valueproposition
-    print a.community.locality
-    print a.steps[0].title
-    print a.steps[0].actors
-    print a.steps[1].actors
+    print "sake0",a.steps[0].flows
+    print "sake1",a.steps[1].flows
+    print "sake2",a.steps[2].flows
     print "-"
-    print a.steps[0].flows[1].direction
-    print a.steps[0].flows[1].actor1
-    print a.steps[0].flows[1].actor2
-    print a.steps[0].flows[1].type
-    print a.steps[0].flows[1].what
+    #print a.steps[0].flows[0].direction
+    #print a.steps[0].flows[0].actor1
+    #print a.steps[0].flows[0].actor2
+    #print a.steps[0].flows[0].type
+    #print a.steps[0].flows[0].what
     
     for i in range(len(a.steps)):
         print "---"
-        for k in range(len(a.steps[i].flows)):
-            print "DIR",a.steps[i].flows[k].direction
-            print "AR1",a.steps[i].flows[k].actor1
-            print "AR2",a.steps[i].flows[k].actor2
+        print "I",i
+        for u in range(len(a.steps[i].flows)):
+            print "v:",u
+            print "n.",a.steps[i].flows[u].number
+            print "DIR",a.steps[i].flows[u].direction
+            print "AR1",a.steps[i].flows[u].actor1
+            print "AR2",a.steps[i].flows[u].actor2
             print "-"
 
