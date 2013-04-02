@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <title>project title</title>
+  <version>0.1</version>
+  <founders>
+    <founder>founder</founder>
+  </founders>
+  <license>Creative Commons - Attribution (CC BY)</license>
+  <licenseurl>http://creativecommons.org/licenses/by/3.0/</licenseurl>
+  <community>
+    <locality>Locality</locality>
+    <activity>Activity</activity>
+    <subject>Subject</subject>
+    <object>Object</object>
+    <outcome>Outcome</outcome>
+    <needs>Needs</needs>
+    <communitytools>Tools</communitytools>
+    <communityrules>Rules</communityrules>
+    <communityroles>Roles</communityroles>
+    <context>Larger context</context>
+  </community>
+  <businessmodel>
+    <valueproposition>Value proposition</valueproposition>
+    <customerrelationships>Customer relationships</customerrelationships>
+    <channels>Channels</channels>
+    <customersegments>Customer segments</customersegments>
+    <revenuestreams>Revenue streams</revenuestreams>
+    <coststructure>Cost structure</coststructure>
+    <keyactivities>Key activities</keyactivities>
+    <keyresources>Key resources</keyresources>
+    <keypartners>Key partners</keypartners>
+  </businessmodel>
+  <step>
+    <stepnumber>0</stepnumber>
+    <steptitle>first step</steptitle>
+    <participation>None</participation>
+    <tools>tools</tools>
+    <rules>rules</rules>
+    <actors>
+      <actor>first actor</actor>
+      <actor>second actor</actor>
+    </actors>
+    <picture>none</picture>
+    <flows>
+      <flow>
+        <number>0</number>
+        <type>Information flow</type>
+        <what>bits</what>
+        <direction>From the first actor to the second one</direction>
+        <firstactor>second actor</firstactor>
+        <secondactor>first actor</secondactor>
+      </flow>
+    </flows>
+  </step>
+  <step>
+    <stepnumber>1</stepnumber>
+    <steptitle>second step</steptitle>
+    <participation>None</participation>
+    <tools>tools</tools>
+    <rules>rules</rules>
+    <actors>
+      <actor>first actor</actor>
+      <actor>second actor</actor>
+      <actor>third actor</actor>
+    </actors>
+    <picture>none</picture>
+    <flows>
+      <flow>
+        <number>0</number>
+        <type>Financial flow</type>
+        <what>none</what>
+        <direction>From the first actor to the second one</direction>
+        <firstactor>third actor</firstactor>
+        <secondactor>first actor</secondactor>
+      </flow>
+      <flow>
+        <number>1</number>
+        <type>Information flow</type>
+        <what>bits</what>
+        <direction>From the first actor to the second one</direction>
+        <firstactor>second actor</firstactor>
+        <secondactor>first actor</secondactor>
+      </flow>
+    </flows>
+  </step>
+  <step>
+    <stepnumber>2</stepnumber>
+    <steptitle>third step</steptitle>
+    <participation>None</participation>
+    <tools>tools</tools>
+    <rules>rules</rules>
+    <actors>
+      <actor>first actor</actor>
+      <actor>second actor</actor>
+    </actors>
+    <picture>none</picture>
+    <flows>
+      <flow>
+        <number>0</number>
+        <type>Financial flow</type>
+        <what>none</what>
+        <direction>Both directions</direction>
+        <firstactor>first actor</firstactor>
+        <secondactor>second actor</secondactor>
+      </flow>
+      <flow>
+        <number>1</number>
+        <type>Information flow</type>
+        <what>bits</what>
+        <direction>From the first actor to the second one</direction>
+        <firstactor>first actor</firstactor>
+        <secondactor>second actor</secondactor>
+      </flow>
+      <flow>
+        <number>2</number>
+        <type>Information flow</type>
+        <what>bits</what>
+        <direction>Both directions</direction>
+        <firstactor>first actor</firstactor>
+        <secondactor>second actor</secondactor>
+      </flow>
+    </flows>
+  </step>
+</project>
