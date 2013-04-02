@@ -13,113 +13,68 @@ from lxml import etree
 
 class businessmodel():
     "A class for the business model of the project"
-    def __init__(self, 
-                 valueproposition = "Value proposition", 
-                 customerrelationships = "Customer relationships", 
-                 channels = "Channels",
-                 customersegments = "Customer segments",
-                 revenuestreams = "Revenue streams",
-                 coststructure = "Cost structure",
-                 keyactivities = "Key activities",
-                 keyresources = "Key resources",
-                 keypartners = "Key partners"): 
-        
-        self.valueproposition = valueproposition
-        self.customerrelationships = customerrelationships
-        self.channels = channels
-        self.customersegments = customersegments
-        self.revenuestreams = revenuestreams
-        self.coststructure = coststructure
-        self.keyactivities = keyactivities
-        self.keyresources = keyresources
-        self.keypartners = keypartners
+    def __init__(self): 
+        self.valueproposition = "Value proposition"
+        self.customerrelationships = "Customer relationships"
+        self.channels = "Channels"
+        self.customersegments = "Customer segments"
+        self.revenuestreams = "Revenue streams"
+        self.coststructure = "Cost structure"
+        self.keyactivities = "Key activities"
+        self.keyresources = "Key resources"
+        self.keypartners = "Key partners"
+   
    
 class flow():
     "A class for each flow in the design process"
-    def __init__(self, 
-                 number = "0",
-                 type = "flow type", 
-                 what = "none", 
-                 direction = "Both directions",
-                 actor1 = "first actor",
-                 actor2 =  "second actor" ): 
-        
-        self.number = number
-        self.type = type
-        self.what = what
-        self.direction = direction
-        self.actor1 = actor1
-        self.actor2 = actor2 
+    def __init__(self): 
+        self.number = "0"
+        self.type = "flow type"
+        self.what = "what"
+        self.direction = "Both directions"
+        self.actor1 = "first actor"
+        self.actor2 = "second actor" 
+
 
 class step():
     "A class for each step in the design process"
-    def __init__(self, 
-                 stepnumber = "0",
-                 title = "step title", 
-                 participation = "none", 
-                 tools = "tools",
-                 rules = "rules",
-                 actors = ["first actor","second actor"],
-                 picture = "none",
-                 flows = {0:flow()}): 
-        
-        self.stepnumber = stepnumber
-        self.title = title
-        self.participation = participation
-        self.tools = tools
-        self.rules = rules
-        self.actors = actors
-        self.picture = picture
-        self.flows = flows
+    def __init__(self): 
+        self.stepnumber = "0"
+        self.title = "step title"
+        self.participation = "none"
+        self.tools = "tools"
+        self.rules = "rules"
+        self.actors = "actors"
+        self.picture = "picture"
+        self.flows = {} 
 
 
 class community:
     "A class for a community analysis"
-    def __init__(self, 
-                 locality = "Locality",
-                 activity = "Activity", 
-                 subject = "Subject", 
-                 activityobject = "Object",
-                 outcome = "Outcome",
-                 needs = "Needs",
-                 tools = "Tools",
-                 rules = "Rules",
-                 roles = "Roles",
-                 context = "Larger context"): 
-        
-        self.locality = locality
-        self.activity = activity
-        self.subject = subject
-        self.object = activityobject
-        self.outcome = outcome
-        self.needs = needs
-        self.tools = tools
-        self.rules = rules
-        self.roles = roles
-        self.context = context
+    def __init__(self): 
+        self.locality = "Locality"
+        self.activity = "Activity"
+        self.subject = "Subject"
+        self.object = "Object"
+        self.outcome = "Outcome"
+        self.needs = "Needs"
+        self.tools = "Tools"
+        self.rules = "Rules"
+        self.roles = "Roles"
+        self.context = "Context"
 
 
 class project:
     "A class for a metadesign project"
-    
-    def __init__(self, 
-                 title = "project title", 
-                 version = "0.1", 
-                 founders = ["founder"],
-                 license = "CC",
-                 licenseurl = "http://",
-                 community = community(),
-                 businessmodel = businessmodel(),
-                 steps = {0:step()}):
-        
-        self.title = title
-        self.version = version
-        self.founders = founders
-        self.license = license
-        self.licenseurl = licenseurl
-        self.community = community
-        self.businessmodel = businessmodel
-        self.steps = steps
+    def __init__(self):
+        self.title = "project title"
+        self.version = "0.1"
+        self.founders = ["founder"]
+        self.license = "license"
+        self.licenseurl = "http://"
+        self.community = community()
+        self.businessmodel = businessmodel()
+        self.steps = {}
     
     def save(self,filename):
         project = etree.Element('project')
@@ -307,9 +262,9 @@ if __name__ == "__main__":
     
     a = project()
     a.load("test2.meta")
-    print "sake0",a.steps[0].flows
-    print "sake1",a.steps[1].flows
-    print "sake2",a.steps[2].flows
+    print "Flows0",a.steps[0].flows
+    print "Flows1",a.steps[1].flows
+    print "Flows2",a.steps[2].flows
     print "-"
     #print a.steps[0].flows[0].direction
     #print a.steps[0].flows[0].actor1
