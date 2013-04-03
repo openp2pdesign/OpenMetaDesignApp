@@ -28,7 +28,7 @@ for j in range(len(temp.steps)):
 
 whiteBorder = 10
 stepSize = 400
-actorSize = 200
+actorSize = 150
 canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
 canvasY = 50+len(totalActors)*actorSize
 
@@ -65,17 +65,17 @@ ctx.line_to(10+final*400, 50+len(totalActors)*200)
 ctx.stroke()
 
 
-barsize = 50
+barsize = 70
 
 # Draw bars for actors in each step when they are present
 for j in range(len(temp.steps)):     
     print temp.steps[j].title
     print "---"
-    for g in totalActors:
+    for y,g in enumerate(totalActors):
         if g in temp.steps[j].actors:
             ctx.set_source_rgb(0.12, 0.6, 1)
             ctx.rectangle((whiteBorder)+j*stepSize, 
-                          200+j*100, 
+                          50+y*150, 
                           stepSize, 
                           barsize)
             ctx.fill()
