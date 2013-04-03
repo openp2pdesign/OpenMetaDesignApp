@@ -12,7 +12,8 @@
 
 
 import cairo
-import math
+from math import pi
+from random import uniform
 from classes import *
 
 # Load data
@@ -20,11 +21,11 @@ temp = project()
 temp.load("test2.meta")
 
 # Calculate total actors
-totalActors = []
+totalActors = {}
 for j in range(len(temp.steps)):
     for k in temp.steps[j].actors:
         if k not in totalActors:
-            totalActors.append(k)
+            totalActors[k] = [uniform(0.1,0.9),uniform(0.1,0.9),uniform(0.1,0.9)]
 
 whiteBorder = 10
 stepSize = 400
@@ -72,8 +73,9 @@ for j in range(len(temp.steps)):
     print temp.steps[j].title
     print "---"
     for y,g in enumerate(totalActors):
+        print "g",g
         if g in temp.steps[j].actors:
-            ctx.set_source_rgb(0.12, 0.6, 1)
+            ctx.set_source_rgb(totalActors[g][0], totalActors[g][1], totalActors[g][2])
             ctx.rectangle((whiteBorder)+j*stepSize, 
                           50+y*150, 
                           stepSize, 
