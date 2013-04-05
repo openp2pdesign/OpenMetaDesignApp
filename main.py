@@ -38,8 +38,9 @@ class FlowTab(wx.Panel):
         box.Add(self.tc1, flag=wx.ALL, border=10)
         label2 = wx.StaticText(self, label="What does flow?")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
-        self.tc2 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
-        box.Add(self.tc2, flag=wx.ALL|wx.EXPAND, border=10)
+        self.tc2 = wx.TextCtrl(self, size=(100,20))
+        self.tc2.SetMaxLength(15)
+        box.Add(self.tc2, flag=wx.ALL, border=10)
         label3 = wx.StaticText(self, label="First actor of the flow:")
         box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc3 = wx.Choice(self, -1, choices = self.actors)
@@ -501,7 +502,7 @@ class Main(wx.Frame):
                     self.pages[j].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
                     self.pages[j].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
-            # Fix the numbering bug       
+                   
             self.pages[j].flowsnumber -=1
             
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
