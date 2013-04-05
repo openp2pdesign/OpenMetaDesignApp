@@ -156,7 +156,7 @@ class StepPage(scrolled.ScrolledPanel):
         if self.flowsnumber >= 0:
             self.flowsnumber -= 1
             self.nestednb.DeletePage(self.nestednb.GetSelection())
-            #del self.tabs[self.nestednb.GetSelection()]
+            del self.tabs[self.nestednb.GetSelection()]
             self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
             self.label6.SetLabel(self.flowmessage)
             for j in range(self.flowsnumber+1):
@@ -475,7 +475,7 @@ class Main(wx.Frame):
             
             # Delete the first default flow before loading the flows
             self.pages[j].nestednb.DeletePage(0)
-            #del self.tabs[self.nestednb.GetSelection()]
+            #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
       
             # Load the flows
             for k in range(len(temp.steps[j].flows)):
@@ -500,6 +500,9 @@ class Main(wx.Frame):
                     self.pages[j].tabs[f].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
                     self.pages[j].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
                     self.pages[j].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
+            
+            # Fix the numbering bug       
+            self.pages[j].flowsnumber -=1
             
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
     
