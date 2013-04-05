@@ -52,7 +52,7 @@ def system_map_render(temp, filename):
     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     ctx.set_font_size(32)
     ctx.move_to(10, 32)
-    ctx.show_text("System Map")
+    ctx.show_text("Actors and flows in the Open Design process")
     
     # Draw the borders of the areas for the steps
     for j in range(len(temp.steps)):    
@@ -269,11 +269,84 @@ def system_map_render(temp, filename):
                     ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1+20)
                     ctx.show_text(temp.steps[j].flows[l].what)
             
-            
-    surface.write_to_png(filename) # Output to PNG
+    # Write the canvas as a .png file
+    surface.write_to_png(filename)
     
+    
+def process_participation_render(temp,filename):
+    originY = 70
+    originAreaY = 130
+    whiteBorder = 10
+    stepSize = 400
+    actorSize = 150
+    barSize = 70
+    canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
+    canvasY = 600
+    
+    # Initialize canvas
+    surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, canvasX, canvasY+whiteBorder)
+    ctx = cairo.Context (surface)
+    
+    # Paint background
+    ctx.set_source_rgb(1, 1, 1) # blue
+    ctx.rectangle(0, 0, canvasX, canvasY+whiteBorder)
+    ctx.fill()
+    
+    # Write the canvas title
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.set_font_size(32)
+    ctx.move_to(10, 32)
+    ctx.show_text("Participation and speed of the Open Design process")
+    
+    # Draw the borders of the areas for the steps
+    for j in range(len(temp.steps)):    
+        ctx.set_source_rgb(0, 0, 0)
+        ctx.set_line_width(2)
+        ctx.set_dash([1.0])
+        ctx.move_to(10+j*400, originY)
+        ctx.line_to(10+j*400, canvasY) 
+        ctx.stroke()
+    # Draw last border
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.set_line_width(2)
+    ctx.set_dash([1.0])
+    final = len(temp.steps)
+    ctx.move_to(10+final*400, originY)
+    ctx.line_to(10+final*400, originY+len(temp.steps)*200) 
+    ctx.stroke()
+    
+    # Draw the titles of the steps
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.set_font_size(24)
+    for j in range(len(temp.steps)):
+        ctx.move_to(whiteBorder + stepSize/2-len(temp.steps[j].title)*6 + j*stepSize, originY+24)
+        ctx.show_text(temp.steps[j].title)
+        
+    # Draw bars for each cell in the participation levels
+    for j in range(len(temp.steps)):
+        ctx.set_source_rgb(0.7,0.7,0.7)
+        ctx.rectangle((whiteBorder)+j*stepSize, 
+                      originAreaY+j*100, 
+                      stepSize, 
+                      barSize)
+        ctx.fill()
+    
+    
+    # Write the canvas as a .png file
+    surface.write_to_png(filename)
+    
+    
+def business_model_render(temp,filename):
+    # Initialize canvas
+    surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, canvasX, canvasY+whiteBorder)
+    ctx = cairo.Context (surface)
+    
+    # Write the canvas as a .png file
+    surface.write_to_png(filename)
     
 if __name__ == "__main__":
     p = project()
     p.load("test2.meta")
-    system_map_render(p,"test.png")
+    process_participation_render(p,"test2.png")
