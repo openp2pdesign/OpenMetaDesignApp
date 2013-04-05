@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Open MetaDesign 0.1
 #

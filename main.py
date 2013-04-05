@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Open MetaDesign 0.1
 #
@@ -36,7 +37,7 @@ class FlowTab(wx.Panel):
         self.tc1 = wx.Choice(self, -1, choices = self.flowtype)
         self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc1)
         box.Add(self.tc1, flag=wx.ALL, border=10)
-        label2 = wx.StaticText(self, label="What does flow?")
+        label2 = wx.StaticText(self, label="What does flow? (Less than 15 characters)")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc2 = wx.TextCtrl(self, size=(100,20))
         self.tc2.SetMaxLength(15)
