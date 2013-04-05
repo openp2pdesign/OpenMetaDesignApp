@@ -9,8 +9,6 @@
 # License: GPL v.3
 #
 
-
-
 import cairo
 from math import pi
 from classes import *
@@ -136,6 +134,18 @@ for j in range(len(temp.steps)):
                 # go back to origin
                 ctx.translate(-coordX, -coordY1)
                 
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
+                ctx.show_text(temp.steps[j].flows[l].what)
+                
             elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
                 # Arrow must be drawn on the first actor
                 ctx.translate(coordX, coordY2)
@@ -144,6 +154,18 @@ for j in range(len(temp.steps)):
                 ctx.fill()
                 # go back to origin
                 ctx.translate(-coordX, -coordY2)
+                
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY2+8, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY2+20)
+                ctx.show_text(temp.steps[j].flows[l].what)
                 
             elif temp.steps[j].flows[l].direction == "Both directions":
                 ctx.translate(coordX, coordY2)
@@ -158,6 +180,18 @@ for j in range(len(temp.steps)):
                 ctx.fill()
                 # go back to origin
                 ctx.translate(-coordX, -coordY1)
+                
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
+                ctx.show_text(temp.steps[j].flows[l].what)
         
         else:
             print "First actor has a smaller ordering number"
@@ -176,6 +210,18 @@ for j in range(len(temp.steps)):
                 # go back to origin
                 ctx.translate(-coordX, -coordY1)
                 
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
+                ctx.show_text(temp.steps[j].flows[l].what)
+                
             elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
                 # Arrow must be drawn on the first actor
                 ctx.translate(coordX, coordY2)
@@ -184,6 +230,18 @@ for j in range(len(temp.steps)):
                 ctx.fill()
                 # go back to origin
                 ctx.translate(-coordX, -coordY2)
+                
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
+                ctx.show_text(temp.steps[j].flows[l].what)
                 
             elif temp.steps[j].flows[l].direction == "Both directions":
                 ctx.translate(coordX, coordY2)
@@ -198,6 +256,18 @@ for j in range(len(temp.steps)):
                 ctx.fill()
                 # go back to origin
                 ctx.translate(-coordX, -coordY1)
+                
+                # Draw label box
+                ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
+                ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1+8, 
+                              len(temp.steps[j].flows[l].what)*8, 18)
+                ctx.fill()
+                # Draw label
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+                ctx.set_font_size(12)
+                ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1+20)
+                ctx.show_text(temp.steps[j].flows[l].what)
         
         
         
