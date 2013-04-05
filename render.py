@@ -35,10 +35,11 @@ for k in totalActors:
     print k,"-",totalActors[k]["order"]
 
 
+originY = 50
 whiteBorder = 10
 stepSize = 400
 actorSize = 150
-barsize = 70
+barSize = 70
 canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
 canvasY = 50+len(totalActors)*actorSize
 
@@ -62,7 +63,7 @@ for j in range(len(temp.steps)):
     ctx.set_source_rgb(0, 0, 0)
     ctx.set_line_width(2)
     ctx.set_dash([1.0])
-    ctx.move_to(10+j*400, 50)
+    ctx.move_to(10+j*400, originY)
     ctx.line_to(10+j*400, canvasY) 
     ctx.stroke()
 # Draw last border
@@ -70,8 +71,8 @@ ctx.set_source_rgb(0, 0, 0)
 ctx.set_line_width(2)
 ctx.set_dash([1.0])
 final = len(temp.steps)
-ctx.move_to(10+final*400, 50)
-ctx.line_to(10+final*400, 50+len(totalActors)*200) 
+ctx.move_to(10+final*400, originY)
+ctx.line_to(10+final*400, originY+len(totalActors)*200) 
 ctx.stroke()
 
 # Draw bars for actors in each step when they are present
@@ -80,9 +81,9 @@ for j in range(len(temp.steps)):
         if g in temp.steps[j].actors:
             ctx.set_source_rgb(0.7,0.7,0.7)
             ctx.rectangle((whiteBorder)+j*stepSize, 
-                          50+y*150, 
+                          originY+y*150, 
                           stepSize, 
-                          barsize)
+                          barSize)
             ctx.fill()
 
 # Position the name of each actor
@@ -92,7 +93,7 @@ for j in range(len(temp.steps)):
             ctx.set_source_rgb(0,0,0)
             ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
             ctx.set_font_size(16)
-            ctx.move_to((whiteBorder)+20, 50+39+y*150)
+            ctx.move_to(whiteBorder+(stepSize/2)-32+j*stepSize, originY+39+y*150)
             ctx.show_text(g)
 
 
@@ -114,8 +115,14 @@ for j in range(len(temp.steps)):
         ctx.set_source_rgb(0, 0, 0)
         ctx.set_line_width(4)
         ctx.set_dash([1.0,0.2,0.4])
-        ctx.move_to(whiteBorder+j*450, 50+totalActors[temp.steps[j].flows[l].actor1]["order"]*100)
-        ctx.line_to(whiteBorder+j*450, 50+totalActors[temp.steps[j].flows[l].actor2]["order"]*100) 
+        #ctx.move_to(whiteBorder+20+j*400+l*50, originY+totalActors[temp.steps[j].flows[l].actor1]["order"]*150)
+        #ctx.line_to(whiteBorder+20+j*400+l*50, originY+barSize+totalActors[temp.steps[j].flows[l].actor2]["order"]*150) 
+        if totalActors[temp.steps[j].flows[l].actor1]["order"] == 0:
+            ctx.move_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"]*2)*75)
+            ctx.line_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
+        else:
+            ctx.move_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor1]["order"]*2)*75)
+            ctx.line_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
         ctx.stroke()
         
 
