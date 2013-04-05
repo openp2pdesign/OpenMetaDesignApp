@@ -103,13 +103,8 @@ for j in range(len(temp.steps)):
         print k
         print temp.steps[j].flows[l].actor1, totalActors[temp.steps[j].flows[l].actor1]["order"]
         print temp.steps[j].flows[l].actor2, totalActors[temp.steps[j].flows[l].actor2]["order"]
-        
-        if temp.steps[j].flows[l].direction == "From the first actor to the second one":
-            pass
-        elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
-            pass
-        elif temp.steps[j].flows[l].direction == "Both directions":
-            pass
+        print temp.steps[j].flows[l].direction
+
         
         # Connect the actors with a line, here we start
         ctx.set_source_rgb(0, 0, 0)
@@ -126,14 +121,85 @@ for j in range(len(temp.steps)):
         # Draw the flow lines, add the barSize according to the order of the actors
         if totalActors[temp.steps[j].flows[l].actor1]["order"] > totalActors[temp.steps[j].flows[l].actor2]["order"]:
             print "First actor has a greater ordering number"
-            ctx.move_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150)
-            ctx.line_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
+            coordX = whiteBorder+20+j*400+l*50
+            coordY1 = originY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
+            coordY2 = originY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+            ctx.move_to(coordX, coordY1)
+            ctx.line_to(coordX, coordY2)
+            ctx.stroke()
+            if temp.steps[j].flows[l].direction == "From the first actor to the second one":
+                # Arrow must be drawn on the second actor
+                ctx.translate(coordX, coordY1)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY1)
+                
+            elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
+                # Arrow must be drawn on the first actor
+                ctx.translate(coordX, coordY2)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY2)
+                
+            elif temp.steps[j].flows[l].direction == "Both directions":
+                ctx.translate(coordX, coordY2)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY2)
+                ctx.translate(coordX, coordY1)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY1)
+        
         else:
             print "First actor has a smaller ordering number"
-            ctx.move_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150)
-            ctx.line_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
-        # Actually draw the flows
-        ctx.stroke()
+            coordX = whiteBorder+20+j*400+l*50
+            coordY1 = originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
+            coordY2 = originY+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+            ctx.move_to(coordX, coordY1)
+            ctx.line_to(coordX, coordY2)
+            ctx.stroke()
+            if temp.steps[j].flows[l].direction == "From the first actor to the second one":
+                # Arrow must be drawn on the second actor
+                ctx.translate(coordX, coordY1)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY1)
+                
+            elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
+                # Arrow must be drawn on the first actor
+                ctx.translate(coordX, coordY2)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY2)
+                
+            elif temp.steps[j].flows[l].direction == "Both directions":
+                ctx.translate(coordX, coordY2)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY2)
+                ctx.translate(coordX, coordY1)
+                ctx.arc(0, 0, 4, 0, 3*pi)
+                ctx.set_source_rgb(0, 0, 0)
+                ctx.fill()
+                # go back to origin
+                ctx.translate(-coordX, -coordY1)
+        
+        
         
 
 surface.write_to_png ("test.png") # Output to PNG
