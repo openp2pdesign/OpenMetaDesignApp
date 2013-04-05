@@ -103,7 +103,7 @@ for j in range(len(temp.steps)):
         print k
         print temp.steps[j].flows[l].actor1, totalActors[temp.steps[j].flows[l].actor1]["order"]
         print temp.steps[j].flows[l].actor2, totalActors[temp.steps[j].flows[l].actor2]["order"]
-        print temp.steps[j].flows[l].direction
+        
         if temp.steps[j].flows[l].direction == "From the first actor to the second one":
             pass
         elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
@@ -111,21 +111,29 @@ for j in range(len(temp.steps)):
         elif temp.steps[j].flows[l].direction == "Both directions":
             pass
         
-        # Connect the actors with a line
+        # Connect the actors with a line, here we start
         ctx.set_source_rgb(0, 0, 0)
-        ctx.set_line_width(4)
-        ctx.set_dash([1.0,0.2,0.4])
-        #ctx.move_to(whiteBorder+20+j*400+l*50, originY+totalActors[temp.steps[j].flows[l].actor1]["order"]*150)
-        #ctx.line_to(whiteBorder+20+j*400+l*50, originY+barSize+totalActors[temp.steps[j].flows[l].actor2]["order"]*150) 
-        if totalActors[temp.steps[j].flows[l].actor1]["order"] == 0:
-            ctx.move_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"]*2)*75)
-            ctx.line_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
-        else:
-            ctx.move_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor1]["order"]*2)*75)
+        ctx.set_line_width(2)
+        
+        # Set the type of flow as a line style
+        if temp.steps[j].flows[l].type == "Information flow":
+            ctx.set_dash([2.0])
+        elif temp.steps[j].flows[l].type == "Financial flow":
+            ctx.set_dash([6.0])
+        elif temp.steps[j].flows[l].type == "Physical resources flow":
+            ctx.set_dash([1.0,0.2,0.4])
+        
+        # Draw the flow lines, add the barSize according to the order of the actors
+        if totalActors[temp.steps[j].flows[l].actor1]["order"] > totalActors[temp.steps[j].flows[l].actor2]["order"]:
+            print "First actor has a greater ordering number"
+            ctx.move_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150)
             ctx.line_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
+        else:
+            print "First actor has a smaller ordering number"
+            ctx.move_to(whiteBorder+20+j*400+l*50, originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150)
+            ctx.line_to(whiteBorder+20+j*400+l*50, originY+(totalActors[temp.steps[j].flows[l].actor2]["order"]*2)*75)
+        # Actually draw the flows
         ctx.stroke()
         
-
-
 
 surface.write_to_png ("test.png") # Output to PNG
