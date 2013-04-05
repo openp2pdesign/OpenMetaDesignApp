@@ -281,7 +281,7 @@ def process_participation_render(temp,filename):
     actorSize = 150
     barSize = 70
     canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
-    canvasY = 600
+    canvasY = 500
     
     # Initialize canvas
     surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, canvasX, canvasY+whiteBorder)
@@ -305,7 +305,7 @@ def process_participation_render(temp,filename):
         ctx.set_line_width(2)
         ctx.set_dash([1.0])
         ctx.move_to(10+j*400, originY)
-        ctx.line_to(10+j*400, canvasY) 
+        ctx.line_to(10+j*400, canvasY-whiteBorder*2) 
         ctx.stroke()
     # Draw last border
     ctx.set_source_rgb(0, 0, 0)
@@ -326,12 +326,45 @@ def process_participation_render(temp,filename):
         
     # Draw bars for each cell in the participation levels
     for j in range(len(temp.steps)):
-        ctx.set_source_rgb(0.7,0.7,0.7)
-        ctx.rectangle((whiteBorder)+j*stepSize, 
-                      originAreaY+j*100, 
+        for k in range(5):
+            ctx.set_source_rgb(0.7,0.7,0.7)
+            ctx.rectangle((whiteBorder)+j*stepSize, 
+                          originAreaY+k*70, 
+                          stepSize, 
+                          barSize)
+            ctx.stroke()
+        
+        #ctx.set_source_rgb(0.7,0.7,0.7)
+        #ctx.rectangle((whiteBorder)+j*stepSize, 
+        #              originAreaY+j*70, 
+        #              stepSize, 
+        #              barSize)
+        #ctx.fill()
+    
+    # Check each participation level in each step 
+    participationCell = {}
+    ctx.set_source_rgb(0.7,0.7,0.7)
+    
+    for j in range(len(temp.steps)):
+        posX = (whiteBorder)+j*stepSize
+        if temp.steps[j].participation == "None":
+            posY = originAreaY+0*70
+        elif temp.steps[j].participation == "Indirect":
+            posY = originAreaY+1*70
+        elif temp.steps[j].participation == "Consultative":
+            posY = originAreaY+2*70
+        elif temp.steps[j].participation == "Shared control":
+            posY = originAreaY+3*70
+        elif temp.steps[j].participation == "Full control":
+            posY = originAreaY+4*70
+        
+        ctx.rectangle(posX, 
+                      posY, 
                       stepSize, 
                       barSize)
         ctx.fill()
+    
+        
     
     
     # Write the canvas as a .png file
