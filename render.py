@@ -33,14 +33,16 @@ for k in totalActors:
     print k,"-",totalActors[k]["order"]
 
 
-originY = 50
+originY = 70
+originAreaY = 130
 whiteBorder = 10
 stepSize = 400
 actorSize = 150
 barSize = 70
 canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
-canvasY = 50+len(totalActors)*actorSize
+canvasY = originAreaY+len(totalActors)*actorSize
 
+# Initialize canvas
 surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, canvasX, canvasY+whiteBorder)
 ctx = cairo.Context (surface)
 
@@ -73,13 +75,24 @@ ctx.move_to(10+final*400, originY)
 ctx.line_to(10+final*400, originY+len(totalActors)*200) 
 ctx.stroke()
 
+
+
+# Draw the titles of the steps
+ctx.set_source_rgb(0, 0, 0)
+ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+ctx.set_font_size(24)
+for j in range(len(temp.steps)):
+    ctx.move_to(whiteBorder + stepSize/2-len(temp.steps[j].title)*6 + j*stepSize, originY+24)
+    ctx.show_text(temp.steps[j].title)
+
+
 # Draw bars for actors in each step when they are present
 for j in range(len(temp.steps)):
     for y,g in enumerate(sorted(totalActors)):
         if g in temp.steps[j].actors:
             ctx.set_source_rgb(0.7,0.7,0.7)
             ctx.rectangle((whiteBorder)+j*stepSize, 
-                          originY+y*150, 
+                          originAreaY+y*150, 
                           stepSize, 
                           barSize)
             ctx.fill()
@@ -91,18 +104,12 @@ for j in range(len(temp.steps)):
             ctx.set_source_rgb(0,0,0)
             ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
             ctx.set_font_size(16)
-            ctx.move_to(whiteBorder+(stepSize/2)-32+j*stepSize, originY+39+y*150)
+            ctx.move_to(whiteBorder+(stepSize/2)-32+j*stepSize, originAreaY+39+y*150)
             ctx.show_text(g)
 
 
 for j in range(len(temp.steps)):       
     for l,k in enumerate(temp.steps[j].flows):
-        print "---"
-        print k
-        print temp.steps[j].flows[l].actor1, totalActors[temp.steps[j].flows[l].actor1]["order"]
-        print temp.steps[j].flows[l].actor2, totalActors[temp.steps[j].flows[l].actor2]["order"]
-        print temp.steps[j].flows[l].direction
-
         
         # Connect the actors with a line, here we start
         ctx.set_source_rgb(0, 0, 0)
@@ -120,8 +127,8 @@ for j in range(len(temp.steps)):
         if totalActors[temp.steps[j].flows[l].actor1]["order"] > totalActors[temp.steps[j].flows[l].actor2]["order"]:
             print "First actor has a greater ordering number"
             coordX = whiteBorder+20+j*400+l*50
-            coordY1 = originY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
-            coordY2 = originY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+            coordY1 = originAreaY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
+            coordY2 = originAreaY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
             ctx.move_to(coordX, coordY1)
             ctx.line_to(coordX, coordY2)
             ctx.stroke()
@@ -196,8 +203,8 @@ for j in range(len(temp.steps)):
         else:
             print "First actor has a smaller ordering number"
             coordX = whiteBorder+20+j*400+l*50
-            coordY1 = originY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
-            coordY2 = originY+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+            coordY1 = originAreaY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
+            coordY2 = originAreaY+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
             ctx.move_to(coordX, coordY1)
             ctx.line_to(coordX, coordY2)
             ctx.stroke()
