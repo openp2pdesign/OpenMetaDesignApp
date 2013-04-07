@@ -367,9 +367,23 @@ def process_participation_render(temp,filename):
     
     
 def business_model_render(temp,filename):
+    originY = 70
+    originAreaY = 130
+    whiteBorder = 10
+    stepSize = 400
+    actorSize = 150
+    barSize = 70
+    canvasX = (whiteBorder*2)+len(temp.steps)*stepSize
+    canvasY = 500
+    
     # Initialize canvas
-    surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, canvasX, canvasY+whiteBorder)
+    surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, 5000, 3055)
     ctx = cairo.Context (surface)
+    
+    # Load and place the background .png image
+    background = cairo.ImageSurface.create_from_png('images/bmc.png')  
+    ctx.set_source_surface(background, 0, 0) 
+    ctx.paint()
     
     # Write the canvas as a .png file
     surface.write_to_png(filename)
@@ -377,4 +391,4 @@ def business_model_render(temp,filename):
 if __name__ == "__main__":
     p = project()
     p.load("test2.meta")
-    process_participation_render(p,"test2.png")
+    business_model_render(p,"test3.png")
