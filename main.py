@@ -16,6 +16,7 @@ import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
 from classes import *
+from render import *
 
 temp = project()
 currentFile = ""
@@ -367,57 +368,82 @@ class Main(wx.Frame):
         self.m_menubar1 = wx.MenuBar( 0 )
         self.m_menu1 = wx.Menu()
         
-        self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Open", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Initialize a project", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem1 )
-        self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Open", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem2 )
-        self.m_menuItem3 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save As", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem3 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem3 )
-        self.m_menuItem4 = wx.MenuItem( self.m_menu1, 12, u"Exit", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem4 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Save As", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem4 )
+        self.m_menuItem5 = wx.MenuItem( self.m_menu1, 12, u"Exit", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu1.AppendItem( self.m_menuItem5 )
         self.m_menubar1.Append( self.m_menu1, u"File" ) 
         
         self.m_menu2 = wx.Menu()
-        self.m_menuItem5 = wx.MenuItem( self.m_menu2, 13, u"Add a step in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu2.AppendItem( self.m_menuItem5 )
-        self.m_menuItem6 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem6 = wx.MenuItem( self.m_menu2, 13, u"Add a step in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem6 )
+        self.m_menuItem7 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu2.AppendItem( self.m_menuItem7 )
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
         self.m_menu3 = wx.Menu()
-        self.m_menuItem7 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the participation in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu3.AppendItem( self.m_menuItem7 )
+        self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the participation in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem8 )
         self.m_menuItem9 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the business model of the Open Design project and process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem9 )
-        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem10 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu3.AppendItem( self.m_menuItem10 )
+        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem11 )
-        self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu3.AppendItem( self.m_menuItem8 )
         self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem12 )
         self.m_menubar1.Append( self.m_menu3, u"View" ) 
         
         self.m_menu4 = wx.Menu()
-        self.m_menuItem10 = wx.MenuItem( self.m_menu4, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu4.AppendItem( self.m_menuItem10 )
+        self.m_menuItem13 = wx.MenuItem( self.m_menu4, wx.ID_ANY, u"About", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu4.AppendItem( self.m_menuItem13 )
         self.m_menubar1.Append( self.m_menu4, u"Help" ) 
         
         self.SetMenuBar( self.m_menubar1 )
         
         # Set events for the Menu
-        self.Bind(wx.EVT_MENU, self.onOpenFile, self.m_menuItem1)
-        self.Bind(wx.EVT_MENU, self.onSaveFile, self.m_menuItem2)
-        self.Bind(wx.EVT_MENU, self.onSaveFileAs, self.m_menuItem3)
-        self.Bind(wx.EVT_MENU, self.onQuit, self.m_menuItem4)
-        self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem5)
-        self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem6)
-        self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem10)
+        self.Bind(wx.EVT_MENU, self.onInitialize, self.m_menuItem1)
+        self.Bind(wx.EVT_MENU, self.onOpenFile, self.m_menuItem2)
+        self.Bind(wx.EVT_MENU, self.onSaveFile, self.m_menuItem3)
+        self.Bind(wx.EVT_MENU, self.onSaveFileAs, self.m_menuItem4)
+        self.Bind(wx.EVT_MENU, self.onQuit, self.m_menuItem5)
+        self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
+        self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
+        self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
                 
         
     def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
         dlg.ShowModal()
         dlg.Destroy()
+        
+    def onInitialize(self,event):
+        dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
+        if dlg.ShowModal() == wx.ID_OK:
+            mypath = dlg.GetPath() + "/metadesign"
+        
+        if not os.path.isdir(mypath):
+            os.makedirs(mypath)  
+            
+        self.statusBar.SetStatusText("Project initiated successfully in "+mypath)  
+        
+        dlg.Destroy()
+        
+        # Load temporary project
+        self.SaveFile()
+        
+        # Save file
+        global currentFile
+        initializedFile = "metadesign.meta"
+        currentFile = mypath + "/"+initializedFile
+        temp.save(currentFile)
+
         
     def onOpenFile(self, event):
         dlg = wx.FileDialog(self, message="Choose a file",defaultDir=self.currentDirectory, defaultFile="",wildcard="*.meta",style=wx.OPEN | wx.CHANGE_DIR)
