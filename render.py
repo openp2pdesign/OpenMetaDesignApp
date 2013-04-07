@@ -387,44 +387,156 @@ def business_model_render(temp,filename):
     ctx.set_source_surface(background, 0, 0) 
     ctx.paint()
     
-    # Color of the text areas
-    ctx.set_source_rgb(0.7,0.7,0.7)
     
     # Key Partners text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(50, 440, 920, 1680)
     ctx.fill()
     
+    # Draw text in the Key Partners text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(50,440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.keypartners)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-50,-440)
+    
     # Key Activities text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(1040, 440, 920, 600)
     ctx.fill()
     
+    # Draw text in the Key Activities text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(1040,440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.keyactivities)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-1040,-440)
+    
     # Key Resources text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(1040, 1440, 920, 680)
     ctx.fill()
     
+    # Draw text in the Key Resources text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(1040,1440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.keyresources)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-1040,-1440)
+    
     # Value Propositions text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(2030, 440, 920, 1680)
     ctx.fill()
     
+    # Draw text in the Value Proposition text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(2030,440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.valueproposition)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-2030,-440)
+    
     # Customer Relationships text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(3030, 440, 920, 600)
     ctx.fill()
     
+    # Draw text in the Customer Relationships text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(3030,440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.customerrelationships)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-3030,-440)
+    
     # Channels text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(3030, 1440, 920, 680)
     ctx.fill()
     
+    # Draw text in the Channels text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(3030,1440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.channels)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-3030,-1440)
+    
     # Customer Segments text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(4030, 440, 920, 1680)
     ctx.fill()
     
+    # Draw text in the Customer Segments text area
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(4030,440)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(temp.businessmodel.customersegments)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-4030,-440)
+    
     # Cost Structure text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(50, 2450, 920, 450)
     ctx.fill()
     ctx.rectangle(1100, 2450, 920, 450)
     ctx.fill()
     
     # Revenue Stream text area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(2530, 2530, 920, 370)
     ctx.fill()
     ctx.rectangle(3600, 2530, 920, 370)
