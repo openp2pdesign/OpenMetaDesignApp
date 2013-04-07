@@ -389,7 +389,7 @@ class Main(wx.Frame):
         self.m_menu3.AppendItem( self.m_menuItem7 )
         self.m_menuItem9 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the business model of the Open Design project and process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem9 )
-        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the System Map of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem11 )
         self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem8 )
