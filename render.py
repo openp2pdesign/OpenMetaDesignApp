@@ -333,9 +333,9 @@ def process_participation_render(temp,filename):
 
     # Check each participation level in each step 
     participationCell = {}
-    ctx.set_source_rgb(0.7,0.7,0.7)
     
     for j in range(len(temp.steps)):
+        ctx.set_source_rgb(0.7,0.7,0.7)
         posX = (whiteBorder)+j*stepSize
         if temp.steps[j].participation == "None":
             posY = originAreaY+0*70
@@ -353,8 +353,13 @@ def process_participation_render(temp,filename):
                       stepSize, 
                       barSize)
         ctx.fill()
-    
         
+        # Draw labels for the specific participation level
+        ctx.set_source_rgb(0, 0, 0)
+        ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        ctx.set_font_size(16)
+        ctx.move_to(posX+stepSize/2-4*len(temp.steps[j].participation), posY+40)
+        ctx.show_text(temp.steps[j].participation)
     
     
     # Write the canvas as a .png file
