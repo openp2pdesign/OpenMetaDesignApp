@@ -532,15 +532,94 @@ def business_model_render(temp,filename):
     ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(50, 2450, 920, 450)
     ctx.fill()
+    
+    # Draw text in the Cost Structure first text area
+    if len(temp.businessmodel.coststructure) > 1250:
+        firstareatext = temp.businessmodel.coststructure[0:1250]
+        secondareatext = temp.businessmodel.coststructure[1251:2500]
+    else:
+        firstareatext = temp.businessmodel.coststructure
+        secondareatext = ""
+    
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(50,2450)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(firstareatext)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-50,-2450)
+    
+    # Second Area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(1100, 2450, 920, 450)
     ctx.fill()
+    
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(1100,2450)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(secondareatext)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-1100,-2450)
+    
     
     # Revenue Stream text area
     ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(2530, 2530, 920, 370)
     ctx.fill()
+    
+    # Draw text in the Revenue Stream first text area
+    if len(temp.businessmodel.revenuestreams) > 989:
+        firstareatext = temp.businessmodel.revenuestreams[0:989]
+        secondareatext = temp.businessmodel.revenuestreams[990:1978]
+    else:
+        firstareatext = temp.businessmodel.revenuestreams
+        secondareatext = ""
+        
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(2530,2530)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(firstareatext)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-2530,-2530)
+    
+    # Second Area
+    ctx.set_source_rgb(0.9,0.9,0.9)
     ctx.rectangle(3600, 2530, 920, 370)
     ctx.fill()
+    
+    ctx.set_source_rgb(0,0,0)
+    ctx.translate(3600,2530)
+    pangocairo_context = pangocairo.CairoContext(ctx)
+    layout = pangocairo_context.create_layout()
+    layout.set_width(920)
+    layout.set_alignment(pango.ALIGN_LEFT)
+    layout.set_wrap(pango.WRAP_WORD)
+    layout.set_width(pango.SCALE * 920)
+    layout.set_font_description(pango.FontDescription("TitilliumText25L 25"))
+    layout.set_text(secondareatext)
+    pangocairo_context.update_layout(layout)
+    pangocairo_context.show_layout(layout)
+    ctx.translate(-3600,-2530)
     
     # Write the canvas as a .png file
     surface.write_to_png(filename)
