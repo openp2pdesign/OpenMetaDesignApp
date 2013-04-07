@@ -12,6 +12,8 @@
 
 
 import cairo
+import pango
+import pangocairo
 from math import pi
 from classes import *
 
@@ -384,6 +386,49 @@ def business_model_render(temp,filename):
     background = cairo.ImageSurface.create_from_png('images/bmc.png')  
     ctx.set_source_surface(background, 0, 0) 
     ctx.paint()
+    
+    # Color of the text areas
+    ctx.set_source_rgb(0.7,0.7,0.7)
+    
+    # Key Partners text area
+    ctx.rectangle(50, 440, 920, 1680)
+    ctx.fill()
+    
+    # Key Activities text area
+    ctx.rectangle(1040, 440, 920, 600)
+    ctx.fill()
+    
+    # Key Resources text area
+    ctx.rectangle(1040, 1440, 920, 680)
+    ctx.fill()
+    
+    # Value Propositions text area
+    ctx.rectangle(2030, 440, 920, 1680)
+    ctx.fill()
+    
+    # Customer Relationships text area
+    ctx.rectangle(3030, 440, 920, 600)
+    ctx.fill()
+    
+    # Channels text area
+    ctx.rectangle(3030, 1440, 920, 680)
+    ctx.fill()
+    
+    # Customer Segments text area
+    ctx.rectangle(4030, 440, 920, 1680)
+    ctx.fill()
+    
+    # Cost Structure text area
+    ctx.rectangle(50, 2450, 920, 450)
+    ctx.fill()
+    ctx.rectangle(1100, 2450, 920, 450)
+    ctx.fill()
+    
+    # Revenue Stream text area
+    ctx.rectangle(2530, 2530, 920, 370)
+    ctx.fill()
+    ctx.rectangle(3600, 2530, 920, 370)
+    ctx.fill()
     
     # Write the canvas as a .png file
     surface.write_to_png(filename)
