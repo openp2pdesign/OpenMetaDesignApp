@@ -313,7 +313,7 @@ def process_participation_render(temp,filename):
     ctx.set_dash([1.0])
     final = len(temp.steps)
     ctx.move_to(10+final*400, originY)
-    ctx.line_to(10+final*400, originY+len(temp.steps)*200) 
+    ctx.line_to(10+final*400, canvasY-whiteBorder*2) 
     ctx.stroke()
     
     # Draw the titles of the steps
