@@ -210,15 +210,15 @@ class project:
         self.community.context = doc.xpath("//project/community/context/text()")
         
         # load business model
-        self.businessmodel.valueproposition = doc.xpath("//project/businessmodel/valueproposition/text()")
-        self.businessmodel.customerrelationships = doc.xpath("//project/businessmodel/customerrelationships/text()")
-        self.businessmodel.channels = doc.xpath("//project/businessmodel/channels/text()")
-        self.businessmodel.customersegments = doc.xpath("//project/businessmodel/customersegments/text()")
-        self.businessmodel.revenuestreams = doc.xpath("//project/businessmodel/revenuestreams/text()")
-        self.businessmodel.coststructure = doc.xpath("//project/businessmodel/coststructure/text()")
-        self.businessmodel.keyactivities = doc.xpath("//project/businessmodel/keyactivities/text()")
-        self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")
-        self.businessmodel.keypartners = doc.xpath("//project/businessmodel/keypartners/text()")
+        self.businessmodel.valueproposition = doc.xpath("//project/businessmodel/valueproposition/text()")[0]
+        self.businessmodel.customerrelationships = doc.xpath("//project/businessmodel/customerrelationships/text()")[0]
+        self.businessmodel.channels = doc.xpath("//project/businessmodel/channels/text()")[0]
+        self.businessmodel.customersegments = doc.xpath("//project/businessmodel/customersegments/text()")[0]
+        self.businessmodel.revenuestreams = doc.xpath("//project/businessmodel/revenuestreams/text()")[0]
+        self.businessmodel.coststructure = doc.xpath("//project/businessmodel/coststructure/text()")[0]
+        self.businessmodel.keyactivities = doc.xpath("//project/businessmodel/keyactivities/text()")[0]
+        self.businessmodel.keyresources = doc.xpath("//project/businessmodel/keyresources/text()")[0]
+        self.businessmodel.keypartners = doc.xpath("//project/businessmodel/keypartners/text()")[0]
         
         # load steps 
         steplist = doc.xpath("//project/step")
