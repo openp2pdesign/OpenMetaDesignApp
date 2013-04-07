@@ -324,23 +324,13 @@ def process_participation_render(temp,filename):
         ctx.move_to(whiteBorder + stepSize/2-len(temp.steps[j].title)*6 + j*stepSize, originY+24)
         ctx.show_text(temp.steps[j].title)
         
-    # Draw bars for each cell in the participation levels
-    for j in range(len(temp.steps)):
-        for k in range(5):
-            ctx.set_source_rgb(0.7,0.7,0.7)
-            ctx.rectangle((whiteBorder)+j*stepSize, 
-                          originAreaY+k*70, 
-                          stepSize, 
-                          barSize)
-            ctx.stroke()
-        
-        #ctx.set_source_rgb(0.7,0.7,0.7)
-        #ctx.rectangle((whiteBorder)+j*stepSize, 
-        #              originAreaY+j*70, 
-        #              stepSize, 
-        #              barSize)
-        #ctx.fill()
-    
+    # Draw lines for creating a table layout
+    for k in range(6):
+        ctx.set_source_rgb(0.7,0.7,0.7)
+        ctx.move_to(whiteBorder, originAreaY+k*70)
+        ctx.line_to(whiteBorder++len(temp.steps)*stepSize, originAreaY+k*70) 
+        ctx.stroke()
+
     # Check each participation level in each step 
     participationCell = {}
     ctx.set_source_rgb(0.7,0.7,0.7)
