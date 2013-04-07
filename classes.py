@@ -198,16 +198,16 @@ class project:
         self.licenseurl = doc.findtext("licenseurl")
         
         # load community analysis
-        self.community.locality = doc.xpath("//project/community/locality/text()")
-        self.community.activity = doc.xpath("//project/community/activity/text()")
-        self.community.subject = doc.xpath("//project/community/subject/text()")
-        self.community.object = doc.xpath("//project/community/object/text()")
-        self.community.outcome = doc.xpath("//project/community/outcome/text()")
-        self.community.needs = doc.xpath("//project/community/needs/text()")
-        self.community.tools = doc.xpath("//project/community/communitytools/text()")
-        self.community.rules = doc.xpath("//project/community/communityrules/text()")
-        self.community.roles = doc.xpath("//project/community/communityroles/text()")
-        self.community.context = doc.xpath("//project/community/context/text()")
+        self.community.locality = doc.xpath("//project/community/locality/text()")[0]
+        self.community.activity = doc.xpath("//project/community/activity/text()")[0]
+        self.community.subject = doc.xpath("//project/community/subject/text()")[0]
+        self.community.object = doc.xpath("//project/community/object/text()")[0]
+        self.community.outcome = doc.xpath("//project/community/outcome/text()")[0]
+        self.community.needs = doc.xpath("//project/community/needs/text()")[0]
+        self.community.tools = doc.xpath("//project/community/communitytools/text()")[0]
+        self.community.rules = doc.xpath("//project/community/communityrules/text()")[0]
+        self.community.roles = doc.xpath("//project/community/communityroles/text()")[0]
+        self.community.context = doc.xpath("//project/community/context/text()")[0]
         
         # load business model
         self.businessmodel.valueproposition = doc.xpath("//project/businessmodel/valueproposition/text()")[0]
