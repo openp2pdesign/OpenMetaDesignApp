@@ -15,7 +15,7 @@ import cairo
 import pango
 import pangocairo
 from math import pi
-from classes import *
+from modules.classes import *
 
 
 def system_map_render(temp, filename):    

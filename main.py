@@ -15,8 +15,8 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
-from classes import *
-from render import *
+from modules.classes import *
+from modules.render import *
 
 temp = project()
 currentFile = ""
