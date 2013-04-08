@@ -15,6 +15,7 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
+from github import Github
 from modules.classes import *
 from modules.render import *
 
@@ -224,6 +225,12 @@ class GeneralPage(scrolled.ScrolledPanel):
         box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc4 = wx.Choice(self, -1, choices = self.licenses)
         box.Add(self.tc4, flag=wx.ALL|wx.EXPAND, border=10)
+        
+        
+        label5 = wx.StaticText(self, label="The online repository on GitHub for this project:")
+        box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
+        self.tc5 = wx.TextCtrl(self, size=(530,20), style=wx.TE_MULTILINE)
+        box.Add(self.tc5, flag=wx.ALL|wx.EXPAND, border=10)
         
         self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc4)
         
@@ -460,6 +467,7 @@ class Main(wx.Frame):
         self.page1.tc2.SetValue(temp.version)
         self.page1.tc3.SetValue(", ".join(temp.founders))
         self.page1.tc4.SetStringSelection(temp.license)
+        self.page1.tc5.SetValue(temp.repo)
         
         self.page2.tc1.SetValue(temp.community.locality)
         self.page2.tc2.SetValue(temp.community.activity)
@@ -540,9 +548,9 @@ class Main(wx.Frame):
         # Load the current values for General information
         temp.title = self.page1.tc1.GetValue()
         temp.version = self.page1.tc2.GetValue()
-        
         temp.founders = [x.strip() for x in self.page1.tc3.GetValue().split(',')]
         temp.license = self.page1.licenses[self.page1.tc4.GetCurrentSelection()]
+        temp.repo = self.page1.tc5.GetValue()
         
         # Add automatically url of license
         if temp.license == "Creative Commons - Attribution (CC BY)":
@@ -604,7 +612,23 @@ class Main(wx.Frame):
                 temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
                 temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
                 temp.steps[j].flows[k].direction = self.pages[j].tabs[k].flowdirection[self.pages[j].tabs[k].tc5.GetSelection()]
-        
+    
+    def onRepoList(self, evt):
+        lst = [ 'apple', 'pear', 'banana', 'coconut', 'orange', 'grape', 'pineapple',
+                'blueberry', 'raspberry', 'blackberry', 'snozzleberry',
+                'etc', 'etc..', 'etc...' ]
+
+        dlg = wx.MultiChoiceDialog( self, 
+                                   "Choose the online repository on GitHub\nfor this project:",
+                                   "wx.MultiChoiceDialog", lst)
+
+        if (dlg.ShowModal() == wx.ID_OK):
+            selections = dlg.GetSelections()
+            strings = [lst[x] for x in selections]
+            print selections, strings
+
+        dlg.Destroy()
+    
     def onSaveFile(self,event):
         # Load temporary project
         self.SaveFile()
