@@ -50,7 +50,7 @@ class step():
         self.flows = {} 
 
 
-class community:
+class community():
     "A class for a community analysis"
     def __init__(self): 
         self.locality = "Locality"
@@ -65,7 +65,7 @@ class community:
         self.context = "Context"
 
 
-class project:
+class project():
     "A class for a metadesign project"
     def __init__(self):
         self.title = "project title"
@@ -73,6 +73,7 @@ class project:
         self.founders = ["founder"]
         self.license = "license"
         self.licenseurl = "http://"
+        self.repo = "http://"
         self.community = community()
         self.businessmodel = businessmodel()
         self.steps = {}
@@ -94,6 +95,8 @@ class project:
         license.text = self.license
         licenseurl = etree.SubElement(project, "licenseurl")
         licenseurl.text = self.licenseurl
+        repourl = etree.SubElement(project, "repo")
+        repourl.text = self.repo
         
         # build the community analysis
         community = etree.SubElement(project, "community")
@@ -196,6 +199,7 @@ class project:
                 self.founders.append(i)
         self.license = doc.findtext("license")
         self.licenseurl = doc.findtext("licenseurl")
+        self.repo = doc.findtext("repo")
         
         # load community analysis
         self.community.locality = doc.xpath("//project/community/locality/text()")[0]
