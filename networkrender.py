@@ -35,8 +35,6 @@ nx.set_node_attributes(G,'pos',pos)
 # Max y coordinate:
 # max(data[1] for data in pos.values())
 
-
-
 # Initialize canvas
 surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, originAreaX+max_width+whiteBorder, max_height+originAreaY+whiteBorder)
 ctx = cairo.Context (surface)
@@ -53,11 +51,20 @@ ctx.set_font_size(32)
 ctx.move_to(10, 32)
 ctx.show_text("Networks of interactions in the Open Design process")
 
-print G.node
 
 # Draw the legend
-for i in G.nodes_iter():
-    print G[i]["label"]
+legendX = whiteBorder
+for k,i in enumerate(G.nodes_iter()):
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.set_font_size(10)
+    if originAreaY+k*10 > max_height+originAreaY+whiteBorder:
+        legendX = 300
+    else: 
+        legendX = whiteBorder
+    ctx.move_to(legendX, originAreaY+k*10)
+    legend = str(k) +" = "+ str(i)
+    ctx.show_text(legend)
 
 # Draw edges
 for j in G.edges_iter():
@@ -69,36 +76,36 @@ for j in G.edges_iter():
     ctx.stroke()
 
     # Draw arrows
+    # To be done...
 
-    
+# Assign betweenness to the nodes
+bet = nx.betweenness_centrality(G)
+for i in G.nodes_iter():
+    G[i]["betweenness"] = bet[i]
 
 # Assign degree to the nodes
 deg = nx.degree_centrality(G)
 for i in G.nodes_iter():
     G[i]["weight"] = deg[i]
 
-# Assign betweenness to the nodes
-#bet = nx.betweenness_centrality(G)
-#for i in G.nodes_iter():
-#    G[i]["betweenness"] = bet[i]
 
 # Draw nodes
 for i in G.nodes_iter():
     ctx.set_line_width(4)
-    ctx.set_source_rgb(0.7, 0.2, 0.0)
+    ctx.set_source_rgb(0.3, 0.3, 0.3)
     ctx.arc(int(originAreaX+max_width*pos[i][0]), int(originAreaY + max_height*pos[i][1]), G[i]["weight"]*50, 0, 2*math.pi)
     ctx.stroke_preserve()
-    ctx.set_source_rgb(0.3, 0.4, 0.6)
+    ctx.set_source_rgb(0.9, 0.9, 0.9)
     ctx.fill()
 
 
 # Draw labels
-for i in G.nodes_iter():
+for k,i in enumerate(G.nodes_iter()):
     ctx.set_source_rgb(0, 0, 0)
     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     ctx.set_font_size(font_size)
-    ctx.move_to(int(originAreaX+max_width*pos[i][0])+5+G[i]["weight"]*50, int(originAreaY+max_height*pos[i][1]))
-    ctx.show_text(i)
+    ctx.move_to(int(originAreaX+max_width*pos[i][0]-15+G[i]["weight"]*25), int(originAreaY-5-G[i]["weight"]*50+max_height*pos[i][1]))
+    ctx.show_text(str(k))
 
 
 
