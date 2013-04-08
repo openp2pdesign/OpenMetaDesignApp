@@ -1,9 +1,16 @@
+# -*- coding: utf-8 -*-
 #
-# Social analysis of an Organization repository in GitHub
+# Open MetaDesign 0.1
 #
 # Author: Massimo Menichinelli
-# Homepage: http://www.openp2pdesign.org
+# Website:
+# http://openmetadesign.org
+# http://openp2pdesign.org
+#
 # License: GPL v.3
+#
+#
+# Social analysis of an Organization repository in GitHub
 #
 # Requisite: 
 # install pyGithub with pip install PyGithub
@@ -15,32 +22,22 @@
 
 from github import Github
 import networkx as nx
-import getpass
 
-from repoanalysis import analyse_repo
-
-# Variables for the whole program
-
-graph = nx.MultiDiGraph()
-issue = {}
-issue = {0:{"author":"none", "comments":{}}}
-commits = {0:{"commit","sha"}}
-repos = {}
+from analysis import analyse_repo
 
 
+def github_mining(userlogin,password):
+    
+    graph = nx.MultiDiGraph()
+    issue = {}
+    issue = {0:{"author":"none", "comments":{}}}
+    commits = {0:{"commit","sha"}}
+    repos = {}
 
-if __name__ == "__main__":
-    print "Social Network Analisys of your GitHub Organization"
-    print ""
-    userlogin = raw_input("Login: Enter your username: ")
-    password = getpass.getpass("Login: Enter yor password: ")
-    username = raw_input("Enter the username you want to analyse: ")
-    print ""
     g = Github( userlogin, password )
     
-    
     print "ORGANIZATIONS:"
-    for i in g.get_user(username).get_orgs():
+    for i in g.get_user(userlogin).get_orgs():
         print "-", i.login
     print ""
     
@@ -98,3 +95,9 @@ if __name__ == "__main__":
     print "Saving the network..."
     nx.write_gexf(graph2, username+"_"+repo_to_mine+"_social_interactions_analysis.gexf")
     print "Done. Saved as "+username+"_"+repo_to_mine+"_social_interactions_analysis.gexf"
+    
+    return
+    
+    
+if __name__ == "__main__":
+    pass
