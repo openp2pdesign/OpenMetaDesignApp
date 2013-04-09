@@ -21,6 +21,8 @@ from modules.render import *
 
 temp = project()
 currentFile = ""
+githubUsername = ""
+githubPassword = ""
 
 
 class GitHubLogin(wx.Dialog):
@@ -36,28 +38,36 @@ class GitHubLogin(wx.Dialog):
 
         label = wx.StaticText(self, -1, "Username:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        text = wx.TextCtrl(self, -1, "", size=(80,-1))
-        box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.text1 = wx.TextCtrl(self, -1, "", size=(80,-1))
+        box.Add(self.text1, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         box = wx.BoxSizer(wx.HORIZONTAL)
 
         label = wx.StaticText(self, -1, "Password:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        text = wx.TextCtrl(self, -1, "", size=(80,-1))
-        box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.text2 = wx.TextCtrl(self, -1, "", size=(80,-1))
+        box.Add(self.text2, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         btnsizer = wx.StdDialogButtonSizer()        
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
+        btn1 = wx.Button(self, wx.ID_OK)
+        btn1.SetDefault()
+        btnsizer.AddButton(btn1)
+        btn2 = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn2)
         btnsizer.Realize()
         sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        btn1.Bind(wx.EVT_BUTTON, self.onOK)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
+        
+    def onOK(self,event):
+        global githubUsername
+        global githubPassword
+        githubUsername = self.text1.GetValue()
+        githubPassword = self.text2.GetValue()
+        self.Destroy()
         
     def onClose(self, e):
         self.Destroy()
@@ -462,6 +472,11 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
+        
+        # Prompt for GitHub username and login at the beginning 
+        logdlg = GitHubLogin(self, -1, size=(350, 200))
+        logdlg.ShowModal()
+        logdlg.Destroy()
                 
         
     def onAbout(self,event):
@@ -470,11 +485,6 @@ class Main(wx.Frame):
         dlg.Destroy()
         
     def onInitialize(self,event):
-        
-        dia = GitHubLogin(self, -1, size=(350, 200))
-        dia.ShowModal()
-        dia.Destroy()
-        
         dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             mypath = dlg.GetPath() + "/metadesign"
@@ -656,22 +666,6 @@ class Main(wx.Frame):
                 temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
                 temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
                 temp.steps[j].flows[k].direction = self.pages[j].tabs[k].flowdirection[self.pages[j].tabs[k].tc5.GetSelection()]
-    
-    def onRepoList(self, evt):
-        lst = [ 'apple', 'pear', 'banana', 'coconut', 'orange', 'grape', 'pineapple',
-                'blueberry', 'raspberry', 'blackberry', 'snozzleberry',
-                'etc', 'etc..', 'etc...' ]
-
-        dlg = wx.MultiChoiceDialog( self, 
-                                   "Choose the online repository on GitHub\nfor this project:",
-                                   "wx.MultiChoiceDialog", lst)
-
-        if (dlg.ShowModal() == wx.ID_OK):
-            selections = dlg.GetSelections()
-            strings = [lst[x] for x in selections]
-            print selections, strings
-
-        dlg.Destroy()
     
     def onSaveFile(self,event):
         # Load temporary project
