@@ -23,6 +23,45 @@ temp = project()
 currentFile = ""
 
 
+class GitHubLogin(wx.Dialog):
+    def __init__(self, parent, ID, size=wx.DefaultSize, pos=wx.DefaultPosition):
+        pre = wx.PreDialog()
+        pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
+        pre.Create(parent, ID, "Login to GitHub", pos, size)
+
+        self.PostCreate(pre)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+
+        label = wx.StaticText(self, -1, "Username:")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        text = wx.TextCtrl(self, -1, "", size=(80,-1))
+        box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        box = wx.BoxSizer(wx.HORIZONTAL)
+
+        label = wx.StaticText(self, -1, "Password:")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        text = wx.TextCtrl(self, -1, "", size=(80,-1))
+        box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()        
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+        
+    def onClose(self, e):
+        self.Destroy()
+
 class FlowTab(wx.Panel):
     def __init__(self, parent,pagename="Flow"):
         wx.Panel.__init__(self, parent)
@@ -431,6 +470,11 @@ class Main(wx.Frame):
         dlg.Destroy()
         
     def onInitialize(self,event):
+        
+        dia = GitHubLogin(self, -1, size=(350, 200))
+        dia.ShowModal()
+        dia.Destroy()
+        
         dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             mypath = dlg.GetPath() + "/metadesign"
