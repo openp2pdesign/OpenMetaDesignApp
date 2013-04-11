@@ -33,7 +33,6 @@ class GitHubLogin(wx.Dialog):
 
         self.PostCreate(pre)
         sizer = wx.BoxSizer(wx.VERTICAL)
-
         box = wx.BoxSizer(wx.HORIZONTAL)
 
         label = wx.StaticText(self, -1, "Username:")
@@ -57,8 +56,8 @@ class GitHubLogin(wx.Dialog):
         btnsizer.AddButton(btn2)
         btnsizer.Realize()
         sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        btn1.Bind(wx.EVT_BUTTON, self.onOK)
-
+        self.Bind(wx.EVT_BUTTON, self.onOK, btn1)
+        
         self.SetSizer(sizer)
         sizer.Fit(self)
         
@@ -67,9 +66,10 @@ class GitHubLogin(wx.Dialog):
         global githubPassword
         githubUsername = self.text1.GetValue()
         githubPassword = self.text2.GetValue()
+        self.Close(True)
         self.Destroy()
         
-    def onClose(self, e):
+    def onClose(self, event):
         self.Destroy()
 
 class FlowTab(wx.Panel):
@@ -472,6 +472,8 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
+        
+        self.Show()
         
         # Prompt for GitHub username and login at the beginning 
         logdlg = GitHubLogin(self, -1, size=(350, 200))
