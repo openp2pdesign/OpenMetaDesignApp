@@ -195,13 +195,10 @@ def analyse_repo(repository,graph):
         
         # We should look at the comments on the pull request, but a pull request is automatically translated
         # as an issue, so we are already looking at the issue comments
-
     return
 
 
-
-
-def github_mining(project,userlogin,password):
+def github_mining(project,userlogin,password,path):
     graph = nx.MultiDiGraph()
     issue = {}
     issue = {0:{"author":"none", "comments":{}}}
@@ -215,43 +212,33 @@ def github_mining(project,userlogin,password):
     else:
         githubusername = urlparts[3]
         githubrepo = urlparts[4]
-        print "username:",githubusername
-        print "repo:",githubrepo
 
     g = Github( userlogin, password )
     
     try:
+        # If successfull and type = User, the username exists and is a single user
         a = g.get_user(githubusername).type
-        print a
-        print "it is a user"
     except:
-        print "it is not a user"
+        # Not found
+        pass
     
     try:
+        # If successfull, the username is an organization
         a = g.get_organization(githubusername).type
-        print "it is an organization"
     except:
-        print "it is not an organization"
+        # Not found
+        pass
     
+    # Load repository for analysis
     b = g.get_user(githubusername).get_repo(githubrepo)
-    print "URL",b.html_url
-    
+        
+    # Analyse the repo
     analyse_repo(b,graph)
     
     # Getting rid of the node "None", it was used to catch the errors of users that are NoneType
     graph.remove_node('None')
     
-    print ""
-    print "NODES..."
-    print graph.nodes()
-    print ""
-    print "EDGES..."
-    print graph.edges()
-    print ""
-    
-    print "Converting multiple edges to weighted edges..."
-    print ""
-    
+    # Converting multiple edges to weighted edges..."   
     graph2 = nx.DiGraph()
     
     for j in list(graph.nodes_iter(data=True)):
@@ -266,14 +253,9 @@ def github_mining(project,userlogin,password):
             graph2[subject_id][object_id]['weight'] += 1
         elif graph.has_edge(subject_id, object_id) and not graph2.has_edge(subject_id, object_id):
             graph2.add_edge(subject_id, object_id, weight=1)
-            
-    print "EDGES..."
-    print graph2.edges()
-    print ""
-
-    print "Saving the network..."
-    nx.write_gexf(graph2, username+"_"+repo_to_mine+"_social_interactions_analysis.gexf")
-    print "Done. Saved as "+username+"_"+repo_to_mine+"_social_interactions_analysis.gexf"
+    
+    # Save the network as .graphml. When there will be no bugs with .gexf in networkx, save it as .gexf        
+    nx.write_graphml(graph2, path+"github_social_interactions_analysis.graphml")
     
     return
     
@@ -281,5 +263,4 @@ def github_mining(project,userlogin,password):
 if __name__ == "__main__":
     a = project()
     a.load("test2.meta")
-    print a.repo
-    github_mining(a,"","")
+    github_mining(a,"","", "/")
