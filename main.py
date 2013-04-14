@@ -495,6 +495,10 @@ class Main(wx.Frame):
                                )
         dlg.ShowModal()
         
+        global githubUsername
+        global githubPassword
+        global currentFolder
+        
         github_mining(temp,githubUsername,githubPassword, currentFolder)
         dlg.Destroy()
         
