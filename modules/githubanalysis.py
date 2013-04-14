@@ -21,7 +21,6 @@
 #
 
 from github import Github
-import wx
 import networkx as nx
 from classes import *
 

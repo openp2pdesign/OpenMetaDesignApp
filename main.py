@@ -15,7 +15,6 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
-import threading
 from github import Github
 from modules.classes import *
 from modules.render import *
@@ -489,9 +488,9 @@ class Main(wx.Frame):
         
     def onGitHubAnalysis(self):
         self.statusBar.SetStatusText("Analysing your repository, please wait...")
-        dlg = wx.MessageDialog(self, 'Processing',
-                               'Currently analysing your repository, please wait...',
-                               wx.OK | wx.ICON_INFORMATION 
+        dlg = wx.MessageDialog(self, 'Processing...',
+                               'Currently analysing your repository, please wait... Check the messages on the status bar in the bottom',
+                               style = wx.OK | wx.ICON_INFORMATION 
                                )
         dlg.ShowModal()
         
