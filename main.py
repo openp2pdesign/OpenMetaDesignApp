@@ -83,7 +83,7 @@ class GitHubLogin(wx.Dialog):
 
         label = wx.StaticText(self, -1, "Password:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.text2 = wx.TextCtrl(self, -1, "", size=(80,-1))
+        self.text2 = wx.TextCtrl(self, -1, "", style=wx.TE_PASSWORD, size=(80,-1))
         box.Add(self.text2, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
