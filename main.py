@@ -15,6 +15,7 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
+from threading import *
 from github import Github
 from modules.classes import *
 from modules.render import *
@@ -25,6 +26,42 @@ currentFile = ""
 currentFolder = ""
 githubUsername = ""
 githubPassword = ""
+
+
+# Multithreading and wxPython, from http://wiki.wxpython.org/LongRunningTasks
+
+def EVT_RESULT(win, func):
+    win.Connect(-1, -1, EVT_RESULT_ID, func)
+
+class ResultEvent(wx.PyEvent):
+    def __init__(self, data):
+        wx.PyEvent.__init__(self)
+        self.SetEventType(EVT_RESULT_ID)
+        self.data = data
+
+# Thread class that executes processing
+class WorkerThread(Thread):
+    def __init__(self, notify_window):
+        Thread.__init__(self)
+        self._notify_window = notify_window
+        self._want_abort = 0
+        self.start()
+
+    def run(self):
+        """Run Worker Thread."""
+        # This is the code executing in the new thread. 
+        global githubUsername
+        global githubPassword
+        global currentFolder
+        
+        github_mining(temp,githubUsername,githubPassword, currentFolder)
+        self.statusBar.SetStatusText('Done...')
+        
+
+    def abort(self):
+        # Method for use by main thread to signal an abort
+        self._want_abort = 1
+
 
 
 class GitHubLogin(wx.Dialog):
@@ -440,6 +477,8 @@ class Main(wx.Frame):
         self.m_menu2.AppendItem( self.m_menuItem6 )
         self.m_menuItem7 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem7 )
+        self.m_menuItem7b = wx.MenuItem( self.m_menu2, 14, u"Analyse your GitHub repository", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu2.AppendItem( self.m_menuItem7b )
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
         self.m_menu3 = wx.Menu()
@@ -471,6 +510,7 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
+        self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem7b)
         
         self.Show()
         
@@ -478,27 +518,20 @@ class Main(wx.Frame):
         logdlg = GitHubLogin(self, -1, size=(350, 200))
         logdlg.ShowModal()
         logdlg.Destroy()
-                
+        
+        # And indicate we don't have a worker thread yet
+        self.worker = None
+
+
+    def onStart(self,event):
+        # Trigger the worker thread unless it's already busy
+        if not self.worker:
+            self.statusBar.SetStatusText('Analysing your GitHub repository...')
+            self.worker = WorkerThread(self)
         
     def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
         dlg.ShowModal()
-        dlg.Destroy()
-        
-        
-    def onGitHubAnalysis(self):
-        self.statusBar.SetStatusText("Analysing your repository, please wait...")
-        dlg = wx.MessageDialog(self, 'Processing...',
-                               'Currently analysing your repository, please wait... Check the messages on the status bar in the bottom',
-                               style = wx.OK | wx.ICON_INFORMATION 
-                               )
-        dlg.ShowModal()
-        
-        global githubUsername
-        global githubPassword
-        global currentFolder
-        
-        github_mining(temp,githubUsername,githubPassword, currentFolder)
         dlg.Destroy()
         
     def onInitialize(self,event):        
@@ -711,8 +744,6 @@ class Main(wx.Frame):
         temp.save(path)
         currentFile = path
         currentFolder = os.path.dirname(path)
-        
-        self.onGitHubAnalysis()
         
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
         
