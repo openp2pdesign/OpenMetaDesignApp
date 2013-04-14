@@ -15,12 +15,15 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
+import threading
 from github import Github
 from modules.classes import *
 from modules.render import *
+from modules.githubanalysis import *
 
 temp = project()
 currentFile = ""
+currentFolder = ""
 githubUsername = ""
 githubPassword = ""
 
@@ -67,9 +70,6 @@ class GitHubLogin(wx.Dialog):
         githubUsername = self.text1.GetValue()
         githubPassword = self.text2.GetValue()
         self.Close(True)
-        self.Destroy()
-        
-    def onClose(self, event):
         self.Destroy()
 
 class FlowTab(wx.Panel):
@@ -486,7 +486,19 @@ class Main(wx.Frame):
         dlg.ShowModal()
         dlg.Destroy()
         
-    def onInitialize(self,event):
+        
+    def onGitHubAnalysis(self):
+        self.statusBar.SetStatusText("Analysing your repository, please wait...")
+        dlg = wx.MessageDialog(self, 'Processing',
+                               'Currently analysing your repository, please wait...',
+                               wx.OK | wx.ICON_INFORMATION 
+                               )
+        dlg.ShowModal()
+        
+        github_mining(temp,githubUsername,githubPassword, currentFolder)
+        dlg.Destroy()
+        
+    def onInitialize(self,event):        
         dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             mypath = dlg.GetPath() + "/metadesign"
@@ -503,8 +515,10 @@ class Main(wx.Frame):
         
         # Save file
         global currentFile
+        global currentFolder
         initializedFile = "metadesign.meta"
         currentFile = mypath + "/"+initializedFile
+        currentFolder = mypath
         temp.save(currentFile)
 
         
@@ -516,6 +530,8 @@ class Main(wx.Frame):
         # Load the project in the current file
         temp.load(paths[0])
         global currentFile
+        global currentFolder
+        currentFolder = os.path.dirname(paths[0])
         currentFile = paths[0]
         
         # Update the values in the GUI
@@ -691,6 +707,10 @@ class Main(wx.Frame):
         global currentFile
         temp.save(path)
         currentFile = path
+        currentFolder = os.path.dirname(path)
+        
+        self.onGitHubAnalysis()
+        
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
         
         dlg.Destroy()   
