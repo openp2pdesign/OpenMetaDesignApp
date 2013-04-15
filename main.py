@@ -422,8 +422,8 @@ class Main(wx.Frame):
         # Initializing the Menu
         self.statusBar = self.CreateStatusBar( 1, wx.ST_SIZEGRIP, wx.ID_ANY )
         self.m_menubar1 = wx.MenuBar( 0 )
-        self.m_menu1 = wx.Menu()
         
+        self.m_menu1 = wx.Menu()
         self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Initialize a project", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu1.AppendItem( self.m_menuItem1 )
         self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Open", wx.EmptyString, wx.ITEM_NORMAL )
@@ -441,19 +441,23 @@ class Main(wx.Frame):
         self.m_menu2.AppendItem( self.m_menuItem6 )
         self.m_menuItem7 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem7 )
-        self.m_menuItem7b = wx.MenuItem( self.m_menu2, 14, u"Analyse the GitHub repository of the project", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu2.AppendItem( self.m_menuItem7b )
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
+        self.m_menu4 = wx.Menu()
+        self.m_menuItem12 = wx.MenuItem( self.m_menu4, 20, u"Analyse the GitHub repository of the project", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu4.AppendItem( self.m_menuItem12 )
+        self.m_menubar1.Append( self.m_menu4, u"Analyse" ) 
+        
         self.m_menu3 = wx.Menu()
-        self.m_menuItem8 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the participation in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem8 = wx.MenuItem( self.m_menu3, 15, u"View the participation in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem8 )
-        self.m_menuItem9 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the business model of the Open Design project and process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem9 = wx.MenuItem( self.m_menu3, 16, u"View the business model of the Open Design project and process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem9 )
-        self.m_menuItem10 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem10 = wx.MenuItem( self.m_menu3, 17, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem10 )
-        self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem11 = wx.MenuItem( self.m_menu3, 18, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem11 )
+      
         #self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         #self.m_menu3.AppendItem( self.m_menuItem12 )
         self.m_menubar1.Append( self.m_menu3, u"View" ) 
@@ -474,7 +478,7 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
-        self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem7b)
+        self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem12)
         
         self.Show()
         
@@ -499,7 +503,6 @@ class Main(wx.Frame):
         global temp
         
         urlparts = temp.repo.split('/')
-
         if urlparts[2] != "github.com":
             dlg = wx.MessageDialog( self, "The link of the repository is not correct. Please insert the link of a repository on GitHub.", "Error", wx.OK)
             dlg.ShowModal()
@@ -534,6 +537,7 @@ class Main(wx.Frame):
         initializedFile = "metadesign.meta"
         currentFile = mypath + "/"+initializedFile
         currentFolder = mypath
+
         temp.save(currentFile)
 
         
@@ -628,7 +632,7 @@ class Main(wx.Frame):
             self.pages[j].flowsnumber -=1
             
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
-    
+
         dlg.Destroy()
         
     def SaveFile(self):
@@ -705,10 +709,10 @@ class Main(wx.Frame):
         self.SaveFile()
         
         # Save file
+        global currentFolder
         global currentFile
         temp.save(currentFile)
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
-        
             
     def onSaveFileAs(self, event):
         dlg = wx.FileDialog(self, message="Save file as ...", defaultDir=self.currentDirectory, defaultFile="", wildcard="*.meta", style=wx.SAVE)
@@ -720,10 +724,10 @@ class Main(wx.Frame):
             
         # Save file
         global currentFile
+        global currentFolder
         temp.save(path)
         currentFile = path
         currentFolder = os.path.dirname(path)
-        
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
         
         dlg.Destroy()   
