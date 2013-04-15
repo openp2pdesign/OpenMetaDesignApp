@@ -159,8 +159,9 @@ class project():
             for j in self.steps[n].actors:
                 actor = etree.SubElement(actors, "actor")
                 actor.text = j
-            picture = etree.SubElement(step, "picture")
-            picture.text = self.steps[n].picture
+            # Not implemented in this version
+            #picture = etree.SubElement(step, "picture")
+            #picture.text = self.steps[n].picture
             
             # build the flows
             flows = etree.SubElement(step, "flows")            
@@ -244,8 +245,9 @@ class project():
                     self.steps[k].actors = []
                     for j,i in enumerate(l.getchildren()):
                         self.steps[k].actors.append(l.getchildren()[j].text)
-                elif l.tag == "picture":
-                    self.steps[k].picture = l.text
+                # Not implemented in this version
+                #elif l.tag == "picture":
+                #    self.steps[k].picture = l.text
                 elif l.tag == "flows":
                     for s,r in enumerate(l.getchildren()):
                         self.steps[k].flows[s] = flow()
