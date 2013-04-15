@@ -441,7 +441,7 @@ class Main(wx.Frame):
         self.m_menu2.AppendItem( self.m_menuItem6 )
         self.m_menuItem7 = wx.MenuItem( self.m_menu2, 14, u"Remove the current step from the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem7 )
-        self.m_menuItem7b = wx.MenuItem( self.m_menu2, 14, u"Analyse your GitHub repository", wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem7b = wx.MenuItem( self.m_menu2, 14, u"Analyse the GitHub repository of the project", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu2.AppendItem( self.m_menuItem7b )
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
@@ -454,8 +454,8 @@ class Main(wx.Frame):
         self.m_menu3.AppendItem( self.m_menuItem10 )
         self.m_menuItem11 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem11 )
-        self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu3.AppendItem( self.m_menuItem12 )
+        #self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        #self.m_menu3.AppendItem( self.m_menuItem12 )
         self.m_menubar1.Append( self.m_menu3, u"View" ) 
         
         self.m_menu4 = wx.Menu()
@@ -497,6 +497,14 @@ class Main(wx.Frame):
         global githubPassword
         global currentFolder
         global temp
+        
+        urlparts = temp.repo.split('/')
+
+        if urlparts[2] != "github.com":
+            dlg = wx.MessageDialog( self, "The link of the repository is not correct. Please insert the link of a repository on GitHub.", "Error", wx.OK)
+            dlg.ShowModal()
+            dlg.Destroy()
+        
         github_mining(temp,githubUsername,githubPassword, currentFolder)
         wx.CallAfter(self.onLongRunDone)
         
