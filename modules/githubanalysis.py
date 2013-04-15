@@ -31,6 +31,8 @@ def analyse_repo(repository,graph):
     issue = {0:{"author":"none", "comments":{}}}
     commits = {0:{"commit","sha"}}
     repos = {}
+    
+    print "Check users"
  
     # Add owner
     graph.add_node(str(unicode(repository.owner.login)),owner="Yes")
@@ -55,6 +57,7 @@ def analyse_repo(repository,graph):
         else:
             graph.node["None"]["collaborator"]="Yes"
     
+    print "Check issues"
     # Check issues..
     if repository.has_issues == True:
         for i in repository.get_issues(state="open"):
@@ -110,6 +113,7 @@ def analyse_repo(repository,graph):
         else:
             graph.node["None"]["contributor"]="Yes"
 
+    print "Check commits"
     # Check commits and interactions among them    
     repos[0]={0:""}
     for k,i in enumerate(repository.get_commits()):
@@ -128,8 +132,7 @@ def analyse_repo(repository,graph):
             graph.node[i]["collaborator"] = "No"
         if "watcher" not in graph.node[i]:
             graph.node[i]["watcher"] = "No"
-            
-            
+                 
     # Add an edge from a commiter to a previous one,
     # i.e. if you are committing after somebody has commited,
     # you are interacting with him/her
@@ -179,6 +182,7 @@ def analyse_repo(repository,graph):
     #    print ""
     #print "-----"
     
+    print "Check pull requests"
     # Check pull requests
     for i in repository.get_pulls():
         if i.assignee != None:
@@ -256,7 +260,7 @@ def github_mining(project,userlogin,password,path):
     
     # Save the network as .graphml. When there will be no bugs with .gexf in networkx, save it as .gexf        
     nx.write_graphml(graph2, path+"github_social_interactions_analysis.graphml")
-    
+    print "Network saved"
     return
     
     
