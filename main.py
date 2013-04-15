@@ -15,7 +15,7 @@ import os
 import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
-from threading import *
+import thread
 from github import Github
 from modules.classes import *
 from modules.render import *
@@ -26,42 +26,6 @@ currentFile = ""
 currentFolder = ""
 githubUsername = ""
 githubPassword = ""
-
-
-# Multithreading and wxPython, from http://wiki.wxpython.org/LongRunningTasks
-
-# Define notification event for thread completion
-EVT_RESULT_ID = wx.NewId()
-
-def EVT_RESULT(win, func):
-    win.Connect(-1, -1, EVT_RESULT_ID, func)
-
-class ResultEvent(wx.PyEvent):
-    def __init__(self, data):
-        wx.PyEvent.__init__(self)
-        self.SetEventType(EVT_RESULT_ID)
-        self.data = data
-
-# Thread class that executes processing
-class WorkerThread(Thread):
-    def __init__(self, notify_window):
-        Thread.__init__(self)
-        self._notify_window = notify_window
-        self._want_abort = 0
-        self.start()
-
-    def run(self):
-        # This is the code executing in the new thread. 
-        global githubUsername
-        global githubPassword
-        global currentFolder
-        global temp
-        github_mining(temp,githubUsername,githubPassword, currentFolder)
-
-    def abort(self):
-        # Method for use by main thread to signal an abort
-        self._want_abort = 1
-
 
 
 class GitHubLogin(wx.Dialog):
@@ -519,32 +483,22 @@ class Main(wx.Frame):
         logdlg.ShowModal()
         logdlg.Destroy()
         
-        # Set up event handler for any worker thread results
-        EVT_RESULT(self,self.onResult)
-        
-        # And indicate we don't have a worker thread yet
-        self.worker = None
 
-
-    def onStart(self,event):
-        # Trigger the worker thread unless it's already busy
-        if not self.worker:
-            self.statusBar.SetStatusText('Analysing your GitHub repository...')
-            try:
-                self.worker = WorkerThread(self)
-            except:
-                self.statusBar.SetStatusText("There was an error... try again")
-            
-    def onResult(self, event):
-        if event.data is None:
-            # Thread aborted (using our convention of None return)
-            print 'Computation aborted'
-        else:
-            # Process results here
-            print 'Computation Result: %s' % event.data
-        # In either event, the worker is done
-        self.worker = None
+    # Multithreading and wxPython, from http://wiki.wxpython.org/LongRunningTasks
+    def onStart(self, evt):
+        self.statusBar.SetStatusText('Analysing your GitHub repository...')
+        thread.start_new_thread(self.longRunning, ())
+    
+    def onLongRunDone(self):
         self.statusBar.SetStatusText("Github repository analysed and saved")
+    
+    def longRunning(self):
+        global githubUsername
+        global githubPassword
+        global currentFolder
+        global temp
+        github_mining(temp,githubUsername,githubPassword, currentFolder)
+        wx.CallAfter(self.onLongRunDone)
         
     def onAbout(self,event):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
