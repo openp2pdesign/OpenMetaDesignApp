@@ -18,7 +18,7 @@ from math import pi
 from modules.classes import *
 
 
-def system_map_render(temp, filename):    
+def actors_flows_system_render(temp, filename):    
     # Calculate total actors
     totalActors_pre = []
     totalActors = {}
@@ -625,6 +625,4 @@ def business_model_render(temp,filename):
     surface.write_to_png(filename)
     
 if __name__ == "__main__":
-    p = project()
-    p.load("test2.meta")
-    business_model_render(p,"test3.png")
+    pass

@@ -524,19 +524,46 @@ class Main(wx.Frame):
         dlg.Destroy()
         
     def onViewBusiness(self,event):
-        app = ImageViewerApp("bmc.png", "The business model of the Open Design project")
+        self.statusBar.SetStatusText('Generating your business model canvas...')
+        self.SaveFile()
+        thisFile = currentFolder + "/business_model_canvas.png"
+        business_model_render(temp,thisFile)
+        self.statusBar.SetStatusText('Business model canvas generated.')
+        app = ImageViewerApp(thisFile, "The business model of the Open Design project")
         app.MainLoop()
         
     def onViewParticipation(self,event):
-        app = ImageViewerApp("bmc.png", "The participation in the Open Design process")
+        self.statusBar.SetStatusText('Generating your participation process...')
+        self.SaveFile()
+        thisFile = currentFolder + "/participation_process.png"
+        process_participation_render(temp,thisFile)
+        self.statusBar.SetStatusText('Participation process generated.')
+        
+        app = ImageViewerApp(thisFile, "The participation in the Open Design process")
         app.MainLoop()
         
     def onViewActorsFlows(self,event):
-        app = ImageViewerApp("bmc.png", "The actors and flows in the Open Design process")
+        self.statusBar.SetStatusText('Generating your actors and flows system...')
+        self.SaveFile()
+        thisFile = currentFolder + "/actors_flows_system.png"
+        actors_flows_system_render(temp,thisFile)
+        self.statusBar.SetStatusText('Actors and flows system generated.')
+        
+        app = ImageViewerApp(thisFile, "The actors and flows in the Open Design process")
         app.MainLoop()
         
     def onViewNetwork(self,event):
-        app = ImageViewerApp("bmc.png", "The interactions that take place in the Open Design process")
+        self.statusBar.SetStatusText('Generating your network of interactions...')
+        self.SaveFile()
+        thisFile = currentFolder + "/network_interactions.png"
+        thisGraph = currentFolder + "/github_social_interactions_analysis.graphml"
+        
+        # Here check if thisGraph exists! else dialog that warns to first analyse the graph
+        
+        network_render(thisGraph,thisFile)
+        self.statusBar.SetStatusText('Network of interactions generated.')
+        
+        app = ImageViewerApp(thisFile, "The interactions that take place in the Open Design process")
         app.MainLoop()
         
     def onInitialize(self,event):        

@@ -251,7 +251,7 @@ def github_mining(project,userlogin,password,path):
             graph2.add_edge(subject_id, object_id, weight=1)
     
     # Save the network as .graphml. When there will be no bugs with .gexf in networkx, save it as .gexf        
-    nx.write_graphml(graph2, path+"_github_social_interactions_analysis.graphml")
+    nx.write_graphml(graph2, path+"/github_social_interactions_analysis.graphml")
 
     return
     
