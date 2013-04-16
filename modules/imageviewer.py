@@ -143,5 +143,4 @@ class ImageViewerApp(wx.App):
 
       
 if __name__ == "__main__":
-    app = DemoApp("bmc.png", "prova")
-    app.MainLoop()
+    pass
