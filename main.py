@@ -20,6 +20,8 @@ from github import Github
 from modules.classes import *
 from modules.render import *
 from modules.githubanalysis import *
+from modules.networkrender import *
+from modules.imageviewer import *
 
 temp = project()
 currentFile = ""
@@ -479,6 +481,11 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
         self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem12)
+        self.Bind(wx.EVT_MENU, self.onViewParticipation, self.m_menuItem8)
+        self.Bind(wx.EVT_MENU, self.onViewBusiness, self.m_menuItem9)
+        self.Bind(wx.EVT_MENU, self.onViewActorsFlows, self.m_menuItem10)
+        self.Bind(wx.EVT_MENU, self.onViewNetwork, self.m_menuItem11)
+        
         
         self.Show()
         
@@ -515,6 +522,22 @@ class Main(wx.Frame):
         dlg = wx.MessageDialog( self, "An open source app for designing the process of an Open Design project.\nLicense: GPL v.3\nhttp://www.openmetadesign.org", "About Open MetaDesign v. 0.1", wx.OK)
         dlg.ShowModal()
         dlg.Destroy()
+        
+    def onViewBusiness(self,event):
+        app = ImageViewerApp("bmc.png", "The business model of the Open Design project")
+        app.MainLoop()
+        
+    def onViewParticipation(self,event):
+        app = ImageViewerApp("bmc.png", "The participation in the Open Design process")
+        app.MainLoop()
+        
+    def onViewActorsFlows(self,event):
+        app = ImageViewerApp("bmc.png", "The actors and flows in the Open Design process")
+        app.MainLoop()
+        
+    def onViewNetwork(self,event):
+        app = ImageViewerApp("bmc.png", "The interactions that take place in the Open Design process")
+        app.MainLoop()
         
     def onInitialize(self,event):        
         dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
