@@ -46,7 +46,26 @@ fo.write(founders+"\n");
 fo.write("Its metadesign component, that here explains how the project works and how it has been developed is now at version "+temp.version+"\n")
 fo.write("\n")
 fo.write("The project has been developed together and for a community that:\n")
-fo.write("")
+if temp.community.locality != "":
+    fo.write(" + lives in "+temp.community.locality+"\n")
+if temp.community.activity != "":
+    fo.write(" + works in the activity of "+temp.community.activity+"\n")
+if temp.community.subject != "":
+    fo.write(" + is described as "+temp.community.subject+"\n")
+if temp.community.object != "":
+    fo.write(" + works in the activity upon "+temp.community.object+"\n")
+if temp.community.outcome != "":
+    fo.write(" + works in the activity in order to get "+temp.community.outcome+"\n")
+if temp.community.needs != "":
+    fo.write(" + works in the activity because its needs are "+temp.community.needs+"\n")
+if temp.community.tools != "":
+    fo.write(" + uses these tools in the activity: "+temp.community.tools+"\n")
+if temp.community.rules != "":
+    fo.write(" + uses these rules in the activity: "+temp.community.rules+"\n")
+if temp.community.roles != "":
+    fo.write(" + adopt these roles in the activity: "+temp.community.roles+"\n")
+if temp.community.context != "":
+    fo.write(" + works in the bigger context of: "+temp.community.context+"\n")
 fo.write("\n")
 
 
