@@ -43,7 +43,7 @@ for j,i in enumerate(temp.founders):
         founders += ", "
 founders += "."
 fo.write(founders+"\n");
-fo.write("Its metadesign component, that here explains how the project works and how it has been developed is now at version "+temp.version+"\n")
+fo.write("Its metadesign component (version "+temp.version+"), that here explains how the project works and how it has been developed is now at version "+temp.version+"\n")
 fo.write("\n")
 fo.write("The project has been developed together and for a community that:\n")
 if temp.community.locality != "":
