@@ -73,20 +73,42 @@ fo.write("\n")
 fo.write("# Participation Process\n")
 fo.write("\n")
 fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"participation_process.png"+'">'+"\n")
-
+fo.write("\n")
 
 # Write img tag for actors and flows
 fo.write("# Actors and Flows in the process\n")
 fo.write("\n")
 fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
+fo.write("\n")
 
-
-# Write img tag for business models, or text?
+# Write business model
+fo.write("# Business Model\n")
+fo.write("\n")
+if temp.businessmodel.valueproposition != "":
+    fo.write(" + its Value Proposition is: "+temp.businessmodel.valueproposition+"\n")
+if temp.businessmodel.customersegments != "":
+    fo.write(" + its Customer Segments are: "+temp.businessmodel.customersegments+"\n")
+if temp.businessmodel.customerrelationships != "":
+    fo.write(" + its Customer Relationships are: "+temp.businessmodel.customerrelationships+"\n")
+if temp.businessmodel.channels != "":
+    fo.write(" + its Channels are: "+temp.businessmodel.channels+"\n")
+if temp.businessmodel.revenuestreams != "":
+    fo.write(" + its Revenue Streams are: "+temp.businessmodel.revenuestreams+"\n")
+if temp.businessmodel.coststructure != "":
+    fo.write(" + its Cost Structure is: "+temp.businessmodel.coststructure+"\n")
+if temp.businessmodel.keyactivities != "":
+    fo.write(" + its Key Activities are: "+temp.businessmodel.keyactivities+"\n")
+if temp.businessmodel.keyresources != "":
+    fo.write(" + its Key Resources are: "+temp.businessmodel.keyresources+"\n")
+if temp.businessmodel.keypartners != "":
+    fo.write(" + its Key Partners are: "+temp.businessmodel.keypartners+"\n")
+fo.write("\n")
 
 # Write img tag for network analysis
 fo.write("# The network of interactions in the project\n")
 fo.write("\n")
 fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"network_interactions.png"+'">'+"\n")
+fo.write("\n")
 
 # Write license for metadesign project
 
