@@ -47,25 +47,25 @@ fo.write("Its metadesign component (version "+temp.version+"), that here explain
 fo.write("\n")
 fo.write("The project has been developed together and for a community that:\n")
 if temp.community.locality != "":
-    fo.write(" + lives in "+temp.community.locality+"\n")
+    fo.write(" + **lives** in "+temp.community.locality+"\n")
 if temp.community.activity != "":
-    fo.write(" + works in the activity of "+temp.community.activity+"\n")
+    fo.write(" + works in the **activity** of "+temp.community.activity+"\n")
 if temp.community.subject != "":
-    fo.write(" + is described as "+temp.community.subject+"\n")
+    fo.write(" + is **described** as "+temp.community.subject+"\n")
 if temp.community.object != "":
-    fo.write(" + works in the activity upon "+temp.community.object+"\n")
+    fo.write(" + works in the activity **upon** "+temp.community.object+"\n")
 if temp.community.outcome != "":
-    fo.write(" + works in the activity in order to get "+temp.community.outcome+"\n")
+    fo.write(" + works in the activity **in order to get** "+temp.community.outcome+"\n")
 if temp.community.needs != "":
-    fo.write(" + works in the activity because its needs are "+temp.community.needs+"\n")
+    fo.write(" + works in the activity because **its needs** are "+temp.community.needs+"\n")
 if temp.community.tools != "":
-    fo.write(" + uses these tools in the activity: "+temp.community.tools+"\n")
+    fo.write(" + uses these **tools** in the activity: "+temp.community.tools+"\n")
 if temp.community.rules != "":
-    fo.write(" + uses these rules in the activity: "+temp.community.rules+"\n")
+    fo.write(" + uses these **rules** in the activity: "+temp.community.rules+"\n")
 if temp.community.roles != "":
-    fo.write(" + adopt these roles in the activity: "+temp.community.roles+"\n")
+    fo.write(" + adopt these **roles** in the activity: "+temp.community.roles+"\n")
 if temp.community.context != "":
-    fo.write(" + works in the bigger context of: "+temp.community.context+"\n")
+    fo.write(" + works in the **bigger context** of: "+temp.community.context+"\n")
 fo.write("\n")
 
 
@@ -85,23 +85,23 @@ fo.write("\n")
 fo.write("# Business Model\n")
 fo.write("\n")
 if temp.businessmodel.valueproposition != "":
-    fo.write(" + its Value Proposition is: "+temp.businessmodel.valueproposition+"\n")
+    fo.write(" + its **Value Proposition** is: "+temp.businessmodel.valueproposition+"\n")
 if temp.businessmodel.customersegments != "":
-    fo.write(" + its Customer Segments are: "+temp.businessmodel.customersegments+"\n")
+    fo.write(" + its **Customer Segments** are: "+temp.businessmodel.customersegments+"\n")
 if temp.businessmodel.customerrelationships != "":
-    fo.write(" + its Customer Relationships are: "+temp.businessmodel.customerrelationships+"\n")
+    fo.write(" + its **Customer Relationships** are: "+temp.businessmodel.customerrelationships+"\n")
 if temp.businessmodel.channels != "":
-    fo.write(" + its Channels are: "+temp.businessmodel.channels+"\n")
+    fo.write(" + its **Channels** are: "+temp.businessmodel.channels+"\n")
 if temp.businessmodel.revenuestreams != "":
-    fo.write(" + its Revenue Streams are: "+temp.businessmodel.revenuestreams+"\n")
+    fo.write(" + its **Revenue Streams** are: "+temp.businessmodel.revenuestreams+"\n")
 if temp.businessmodel.coststructure != "":
-    fo.write(" + its Cost Structure is: "+temp.businessmodel.coststructure+"\n")
+    fo.write(" + its **Cost Structure** is: "+temp.businessmodel.coststructure+"\n")
 if temp.businessmodel.keyactivities != "":
-    fo.write(" + its Key Activities are: "+temp.businessmodel.keyactivities+"\n")
+    fo.write(" + its **Key Activities** are: "+temp.businessmodel.keyactivities+"\n")
 if temp.businessmodel.keyresources != "":
-    fo.write(" + its Key Resources are: "+temp.businessmodel.keyresources+"\n")
+    fo.write(" + its **Key Resources** are: "+temp.businessmodel.keyresources+"\n")
 if temp.businessmodel.keypartners != "":
-    fo.write(" + its Key Partners are: "+temp.businessmodel.keypartners+"\n")
+    fo.write(" + its **Key Partners** are: "+temp.businessmodel.keypartners+"\n")
 fo.write("\n")
 
 # Write img tag for network analysis
