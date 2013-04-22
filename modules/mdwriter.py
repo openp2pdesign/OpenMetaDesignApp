@@ -46,6 +46,8 @@ fo.write(founders+"\n");
 fo.write("Its metadesign component, that here explains how the project works and how it has been developed is now at version "+temp.version+"\n")
 fo.write("\n")
 
+
+
 # Write img tag for process participation
 fo.write("# Participation Process\n");
 fo.write("\n");
@@ -61,10 +63,11 @@ fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"actors_flows_system.
 # Write img tag for business models, or text?
 
 # Write img tag for network analysis
-fo.write("# Actors and Flows in the process\n");
+fo.write("# The network of interactions in the project\n");
 fo.write("\n");
 fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"network_interactions.png"+'">'+"\n");
 
+# Write license for metadesign project
 
 
 # Close opend file
