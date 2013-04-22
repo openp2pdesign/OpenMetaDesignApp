@@ -23,9 +23,9 @@ temp.load("test2.meta")
 fo = open("README.md", "w")
 
 # Write a title
-fo.write(temp.title+"\n")
+fo.write(temp.title+": Metadesign\n")
 titleFormat = ""
-for i in temp.title:
+for i in temp.title+": Metadesign":
     titleFormat += "="
 titleFormat += "\n"
 fo.write(titleFormat)
