@@ -12,6 +12,7 @@
 
 #from modules.classes import *
 
+import os
 from classes import *
 
 currentFolder = "/home/mediafactoryadmin/Documents/github/testapp/metadesign/"
@@ -76,16 +77,18 @@ def mdwrite(temp,currentFolder):
     
     
     # Write img tag for process participation
-    fo.write("## Participation Process\n")
-    fo.write("\n")
-    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"participation_process.png"+'">'+"\n")
-    fo.write("\n")
+    if os.path.exists(currentFolder+"participation_process.png"):
+        fo.write("## Participation Process\n")
+        fo.write("\n")
+        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"participation_process.png"+'">'+"\n")
+        fo.write("\n")
     
     # Write img tag for actors and flows
-    fo.write("## Actors and Flows in the process\n")
-    fo.write("\n")
-    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
-    fo.write("\n")
+    if os.path.exists(currentFolder+"actors_flows_system.png"):
+        fo.write("## Actors and Flows in the process\n")
+        fo.write("\n")
+        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
+        fo.write("\n")
     
     # Write business model
     fo.write("## Business Model\n")
@@ -111,10 +114,11 @@ def mdwrite(temp,currentFolder):
     fo.write("\n")
     
     # Write img tag for network analysis
-    fo.write("## The network of interactions in the project\n")
-    fo.write("\n")
-    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"network_interactions.png"+'">'+"\n")
-    fo.write("\n")
+    if os.path.exists(currentFolder+"network_interactions.png"):
+        fo.write("## The network of interactions in the project\n")
+        fo.write("\n")
+        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"network_interactions.png"+'">'+"\n")
+        fo.write("\n")
     
     # Write license for metadesign project
     
