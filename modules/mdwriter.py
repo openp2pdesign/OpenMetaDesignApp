@@ -15,8 +15,6 @@
 import os
 from classes import *
 
-currentFolder = "/home/mediafactoryadmin/Documents/github/testapp/metadesign/"
-
 
 def insert(original, new, pos):
     return original[:pos] + new + original[pos:] 
@@ -121,7 +119,25 @@ def mdwrite(temp,currentFolder):
         fo.write("\n")
     
     # Write license for metadesign project
+    fo.write("## License of this metadesign project\n")
+    fo.write("\n")
     
+    if temp.license == "Creative Commons - Attribution (CC BY)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - Attribution Share Alike (CC BY-SA)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - Attribution No Derivatives (CC BY-ND)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by-nd/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nd/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/3.0/deed.en_US">Creative Commons Attribution-NoDerivs 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - Attribution Non-Commercial (CC BY-NC)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US">Creative Commons Attribution-NonCommercial 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - Attribution Non-Commercial Share Alike (CC BY-NC-SA)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - Attribution Non-Commercial No Derivatives (CC BY-NC-ND)":
+        fo.write('<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.')
+    elif temp.license == "Creative Commons - No Rights Reserved (CC0)":
+        fo.write('<p xmlns:dct="http://purl.org/dc/terms/"><a rel="license"href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" /></a><br />To the extent possible under law,<span rel="dct:publisher" resource="[_:publisher]">the person who associated CC0</span>with this work has waived all copyright and related or neighboring rights to this work.</p>')
+        
+    fo.write("\n")
     
     # Close opend file
     fo.close()
