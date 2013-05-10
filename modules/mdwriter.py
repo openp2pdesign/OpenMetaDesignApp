@@ -14,10 +14,19 @@
 
 from classes import *
 
+currentFolder = "/home/mediafactoryadmin/Documents/github/testapp/metadesign/"
+
+
+def insert(original, new, pos):
+    return original[:pos] + new + original[pos:] 
 
 def mdwrite(temp,currentFolder):
+    
+    # The correct link for the raw images
+    repo_raw = insert(temp.repo,"raw.",8)
+    
     # Open a file
-    fo = open("README.md", "w")
+    fo = open(currentFolder+"README.md", "w")
     
     # Write a title
     fo.write(temp.title+": Metadesign\n")
@@ -29,7 +38,7 @@ def mdwrite(temp,currentFolder):
     fo.write("\n")
     
     
-    fo.write("# General Information\n")
+    fo.write("## General Information\n")
     fo.write("\n")
     
     # Write founders
@@ -67,19 +76,19 @@ def mdwrite(temp,currentFolder):
     
     
     # Write img tag for process participation
-    fo.write("# Participation Process\n")
+    fo.write("## Participation Process\n")
     fo.write("\n")
-    fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"participation_process.png"+'">'+"\n")
+    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"participation_process.png"+'">'+"\n")
     fo.write("\n")
     
     # Write img tag for actors and flows
-    fo.write("# Actors and Flows in the process\n")
+    fo.write("## Actors and Flows in the process\n")
     fo.write("\n")
-    fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
+    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
     fo.write("\n")
     
     # Write business model
-    fo.write("# Business Model\n")
+    fo.write("## Business Model\n")
     fo.write("\n")
     if temp.businessmodel.valueproposition != "":
         fo.write(" + its **Value Proposition** is: "+temp.businessmodel.valueproposition+"\n")
@@ -102,9 +111,9 @@ def mdwrite(temp,currentFolder):
     fo.write("\n")
     
     # Write img tag for network analysis
-    fo.write("# The network of interactions in the project\n")
+    fo.write("## The network of interactions in the project\n")
     fo.write("\n")
-    fo.write('<img src="'+temp.repo+"/blob/master/metadesign/"+"network_interactions.png"+'">'+"\n")
+    fo.write('<img src="'+repo_raw+"/master/metadesign/"+"network_interactions.png"+'">'+"\n")
     fo.write("\n")
     
     # Write license for metadesign project
@@ -116,5 +125,5 @@ def mdwrite(temp,currentFolder):
 
 if __name__ == "__main__":
     temp = project()
-    temp.load("test2.meta")
-    mdwrite(temp,"")
+    temp.load("/home/mediafactoryadmin/Documents/github/testapp/metadesign/metadesign.meta")
+    mdwrite(temp,"/home/mediafactoryadmin/Documents/github/testapp/metadesign/")
