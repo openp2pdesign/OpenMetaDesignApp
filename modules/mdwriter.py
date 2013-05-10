@@ -78,14 +78,14 @@ def mdwrite(temp,currentFolder):
     if os.path.exists(currentFolder+"participation_process.png"):
         fo.write("## Participation Process\n")
         fo.write("\n")
-        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"participation_process.png"+'">'+"\n")
+        fo.write('<img width="890" src="'+repo_raw+"/master/metadesign/"+"participation_process.png"+'">'+"\n")
         fo.write("\n")
     
     # Write img tag for actors and flows
     if os.path.exists(currentFolder+"actors_flows_system.png"):
         fo.write("## Actors and Flows in the process\n")
         fo.write("\n")
-        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
+        fo.write('<img width="890" src="'+repo_raw+"/master/metadesign/"+"actors_flows_system.png"+'">'+"\n")
         fo.write("\n")
     
     # Write business model
@@ -115,7 +115,7 @@ def mdwrite(temp,currentFolder):
     if os.path.exists(currentFolder+"network_interactions.png"):
         fo.write("## The network of interactions in the project\n")
         fo.write("\n")
-        fo.write('<img src="'+repo_raw+"/master/metadesign/"+"network_interactions.png"+'">'+"\n")
+        fo.write('<img width="890" src="'+repo_raw+"/master/metadesign/"+"network_interactions.png"+'">'+"\n")
         fo.write("\n")
     
     # Write license for metadesign project
@@ -144,6 +144,4 @@ def mdwrite(temp,currentFolder):
 
 
 if __name__ == "__main__":
-    temp = project()
-    temp.load("/home/mediafactoryadmin/Documents/github/testapp/metadesign/metadesign.meta")
-    mdwrite(temp,"/home/mediafactoryadmin/Documents/github/testapp/metadesign/")
+    pass
