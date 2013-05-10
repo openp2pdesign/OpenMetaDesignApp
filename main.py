@@ -22,6 +22,7 @@ from modules.render import *
 from modules.githubanalysis import *
 from modules.networkrender import *
 from modules.imageviewer import *
+from modules.mdwriter import *
 
 temp = project()
 currentFile = ""
@@ -576,9 +577,7 @@ class Main(wx.Frame):
             
         self.statusBar.SetStatusText("Project initiated successfully in "+mypath)  
         
-        dlg.Destroy()
-        
-        # Load temporary project
+        # Save current initialized project
         self.SaveFile()
         
         # Save file
@@ -589,6 +588,8 @@ class Main(wx.Frame):
         currentFolder = mypath
 
         temp.save(currentFile)
+        
+        dlg.Destroy()
 
         
     def onOpenFile(self, event):
@@ -762,6 +763,7 @@ class Main(wx.Frame):
         global currentFolder
         global currentFile
         temp.save(currentFile)
+        mdwrite(temp,currentFolder)
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
             
     def onSaveFileAs(self, event):
@@ -778,6 +780,7 @@ class Main(wx.Frame):
         temp.save(path)
         currentFile = path
         currentFolder = os.path.dirname(path)
+        mdwrite(temp,currentFolder)
         self.statusBar.SetStatusText("Saved successfully file "+currentFile)
         
         dlg.Destroy()   
