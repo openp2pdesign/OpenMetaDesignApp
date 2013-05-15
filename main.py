@@ -106,7 +106,6 @@ class FlowTab(wx.Panel):
         label4 = wx.StaticText(self, label="Second actor of the flow:")
         box.Add(label4, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc4 = wx.Choice(self, -1, choices = self.actors)
-        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc4)
         box.Add(self.tc4, flag=wx.ALL, border=10)
         label41 = wx.StaticText(self, label="Please update and leave the field above about actors to refresh the list")
         box.Add(label41, flag=wx.ALL|wx.EXPAND, border=10)
@@ -118,18 +117,9 @@ class FlowTab(wx.Panel):
         label5 = wx.StaticText(self, label="Direction of the flow:")
         box.Add(label5, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc5 = wx.Choice(self, -1, choices = self.flowdirection)
-        self.Bind(wx.EVT_CHOICE, self.onChoice2, self.tc5)
         box.Add(self.tc5, flag=wx.ALL, border=10)
         
         self.SetSizer(box)
-        
-    def onChoice(self, event):
-        choice = event.GetString()
-        print choice
-        
-    def onChoice2(self, event):
-        choice = event.GetString()
-        print choice
 
         
 class StepPage(scrolled.ScrolledPanel):
@@ -636,7 +626,7 @@ class Main(wx.Frame):
         # Remove existing step pages before loading the new ones
         for j in range(4,self.pageCounter+1):
             self.nb.DeletePage(j)
-            del self.pages[self.pageCounter]        
+            del self.pages[j]        
         self.pageCounter = 4
         
         # Load and recreate step pages
@@ -652,7 +642,7 @@ class Main(wx.Frame):
             self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
             
             # Delete the first default flow before loading the flows
-            self.pages[j].nestednb.DeletePage(0)
+            #self.pages[j].nestednb.DeletePage(0)
             #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
       
             # Load the flows
