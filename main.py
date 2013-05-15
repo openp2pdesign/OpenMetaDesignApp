@@ -89,7 +89,6 @@ class FlowTab(wx.Panel):
         label1 = wx.StaticText(self, label="Flow type:")
         box.Add(label1, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc1 = wx.Choice(self, -1, choices = self.flowtype)
-        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc1)
         box.Add(self.tc1, flag=wx.ALL, border=10)
         label2 = wx.StaticText(self, label="What does flow? (Less than 15 characters)")
         box.Add(label2, flag=wx.ALL|wx.EXPAND, border=10)
@@ -99,7 +98,6 @@ class FlowTab(wx.Panel):
         label3 = wx.StaticText(self, label="First actor of the flow:")
         box.Add(label3, flag=wx.ALL|wx.EXPAND, border=10)
         self.tc3 = wx.Choice(self, -1, choices = self.actors)
-        self.Bind(wx.EVT_CHOICE, self.onChoice, self.tc3)
         box.Add(self.tc3, flag=wx.ALL, border=10)
         label31 = wx.StaticText(self, label="Please update and leave the field above about actors to refresh the list")
         box.Add(label31, flag=wx.ALL|wx.EXPAND, border=10)
@@ -158,8 +156,8 @@ class StepPage(scrolled.ScrolledPanel):
         self.tc5.Bind(wx.EVT_KILL_FOCUS, self.onUpdateCtrl)
         
         buttons = wx.BoxSizer(wx.HORIZONTAL)
-        self.flowsnumber = 0
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
+        self.flowsnumber = 1
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6 = wx.StaticText(self, label=self.flowmessage)
         buttons.Add(self.label6, flag=wx.ALL|wx.EXPAND, border=10)
         addflow = wx.Button(self, 20, "Add a flow")
@@ -183,13 +181,13 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetupScrolling()
         
     def onUpdateCtrl(self,event):
-        for k in range(self.flowsnumber+1):
+        for k in range(self.flowsnumber):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
         
     def onUpdateCtrlLoadFile(self):
-        for k in range(self.flowsnumber+1):
+        for k in range(self.flowsnumber):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
@@ -203,22 +201,22 @@ class StepPage(scrolled.ScrolledPanel):
             self.flowsnumber -= 1
             self.nestednb.DeletePage(self.nestednb.GetSelection())
             del self.tabs[self.nestednb.GetSelection()]
-            self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
+            self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
             self.label6.SetLabel(self.flowmessage)
-            for j in range(self.flowsnumber+1):
-                self.nestednb.SetPageText(j, "Flow: "+str(j+1))
+            for j in range(self.flowsnumber):
+                self.nestednb.SetPageText(j, "Flow: "+str(j))
         else:
             pass
         
     def onAddFlow(self, event):
         self.flowsnumber += 1
-        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber+1)
+        self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
         self.label6.SetLabel(self.flowmessage)
         self.tabs[self.flowsnumber] = FlowTab(self.nestednb)
         self.tabs[self.flowsnumber].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
         self.tabs[self.flowsnumber].tc3.SetItems(self.tabs[self.flowsnumber].actors)
         self.tabs[self.flowsnumber].tc4.SetItems(self.tabs[self.flowsnumber].actors)
-        self.nestednb.AddPage(self.tabs[self.flowsnumber], "Flow n. " + str(self.flowsnumber+1)) 
+        self.nestednb.AddPage(self.tabs[self.flowsnumber], "Flow n. " + str(self.flowsnumber)) 
         
         
 class WelcomePage(scrolled.ScrolledPanel):
