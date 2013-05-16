@@ -722,35 +722,26 @@ class Main(wx.Frame):
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
         #self.pageCounter -= 3
-        print "pagecounter:",self.pageCounter
         
         # Load the current values for the Steps
-        for j in range(4,self.pageCounter+1):
-            print "J:",j
-            print "pages:",self.pages
-            temp.steps[j] = step()
-            temp.steps[j].stepnumber = j 
-            temp.steps[j].title = self.pages[j].tc1.GetValue()
-            temp.steps[j].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
-            temp.steps[j].tools = self.pages[j].tc3.GetValue()
-            temp.steps[j].rules = self.pages[j].tc4.GetValue()
-            temp.steps[j].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
-            
-            print "title:",temp.steps[j].title
-            
-            print "flows:",self.pages[j].flowsnumber
+        for f,j in enumerate(range(4,self.pageCounter+1)):
+            temp.steps[f] = step()
+            temp.steps[f].stepnumber = j 
+            temp.steps[f].title = self.pages[j].tc1.GetValue()
+            temp.steps[f].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
+            temp.steps[f].tools = self.pages[j].tc3.GetValue()
+            temp.steps[f].rules = self.pages[j].tc4.GetValue()
+            temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
-            for k in range(1,self.pages[j].flowsnumber+1):
-                print "K:",k
-                temp.steps[j].flows[k] = flow()
-                temp.steps[j].flows[k].number = str(k)
-                temp.steps[j].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
-                print "type:",temp.steps[j].flows[k].type
-                temp.steps[j].flows[k].what = self.pages[j].tabs[k].tc2.GetValue()
-                temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
-                temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
-                temp.steps[j].flows[k].direction = self.pages[j].tabs[k].flowdirection[self.pages[j].tabs[k].tc5.GetSelection()]
+            for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
+                temp.steps[f].flows[m] = flow()
+                temp.steps[f].flows[m].number = str(m)
+                temp.steps[f].flows[m].type = self.pages[j].tabs[m].flowtype[self.pages[j].tabs[m].tc1.GetSelection()]
+                temp.steps[f].flows[m].what = self.pages[j].tabs[m].tc2.GetValue()
+                temp.steps[f].flows[m].actor1 = self.pages[j].tabs[m].actors[self.pages[j].tabs[m].tc3.GetSelection()]
+                temp.steps[f].flows[m].actor2 = self.pages[j].tabs[m].actors[self.pages[j].tabs[m].tc4.GetSelection()]
+                temp.steps[f].flows[m].direction = self.pages[j].tabs[m].flowdirection[self.pages[j].tabs[m].tc5.GetSelection()]
     
     def onSaveFile(self,event):
         # Load temporary project
