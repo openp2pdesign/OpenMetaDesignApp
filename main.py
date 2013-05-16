@@ -172,8 +172,8 @@ class StepPage(scrolled.ScrolledPanel):
         
         self.tabs = {}
         self.nestednb = wx.Notebook(self)
-        self.tabs[0] = FlowTab(self.nestednb)
-        self.nestednb.AddPage(self.tabs[0], "Flow n. 1") 
+        self.tabs[1] = FlowTab(self.nestednb)
+        self.nestednb.AddPage(self.tabs[1], "Flow n. 1") 
         self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
         self.SetSizer(self.box)
@@ -200,11 +200,11 @@ class StepPage(scrolled.ScrolledPanel):
         if self.flowsnumber >= 0:
             self.flowsnumber -= 1
             self.nestednb.DeletePage(self.nestednb.GetSelection())
-            del self.tabs[self.nestednb.GetSelection()]
+            del self.tabs[self.nestednb.GetSelection()+1]
             self.flowmessage = "Number of flows in the step: " + str(self.flowsnumber)
             self.label6.SetLabel(self.flowmessage)
-            for j in range(self.flowsnumber):
-                self.nestednb.SetPageText(j, "Flow: "+str(j))
+            for j in range(self.flowsnumber+1):
+                self.nestednb.SetPageText(j, "Flow: "+str(j+1))
         else:
             pass
         
