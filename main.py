@@ -640,12 +640,12 @@ class Main(wx.Frame):
             self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
             
             # Delete the first default flow before loading the flows
-            #self.pages[j].nestednb.DeletePage(0)
+            self.pages[j].nestednb.DeletePage(0)
             #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
       
             # Load the flows
             for k in range(len(temp.steps[j].flows)):
-                self.pages[j].flowmessage = "Number of flows in the step: " + str(self.pages[j].flowsnumber+1)
+                self.pages[j].flowmessage = "Number of flows in the step: " + str(self.pages[j].flowsnumber)
                 self.pages[j].label6.SetLabel(self.pages[j].flowmessage)
                 self.pages[j].tabs[k] = FlowTab(self.pages[j].nestednb)
                 
@@ -653,8 +653,8 @@ class Main(wx.Frame):
                 self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
                 self.pages[j].tabs[k].tc3.SetItems(self.pages[j].tabs[k].actors)
                 self.pages[j].tabs[k].tc4.SetItems(self.pages[j].tabs[k].actors)
-                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(self.pages[j].flowsnumber+1)) 
-                self.pages[j].flowsnumber += 1
+                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(self.pages[j].flowsnumber)) 
+                #self.pages[j].flowsnumber += 1
 
                 self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
                 self.pages[j].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
