@@ -673,7 +673,7 @@ class Main(wx.Frame):
             self.pages[j].flowsnumber +=1
         
         self.pages[j].flowsnumber = len(temp.steps[j].flows)
-        print self.pages[j].flowsnumber
+        
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
 
         dlg.Destroy()
