@@ -721,10 +721,13 @@ class Main(wx.Frame):
         temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
-        self.pageCounter -= 4
+        #self.pageCounter -= 3
+        print "pagecounter:",self.pageCounter
         
         # Load the current values for the Steps
-        for j in range(self.pageCounter):
+        for j in range(4,self.pageCounter+1):
+            print "J:",j
+            print "pages:",self.pages
             temp.steps[j] = step()
             temp.steps[j].stepnumber = j 
             temp.steps[j].title = self.pages[j].tc1.GetValue()
@@ -733,11 +736,17 @@ class Main(wx.Frame):
             temp.steps[j].rules = self.pages[j].tc4.GetValue()
             temp.steps[j].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
+            print "title:",temp.steps[j].title
+            
+            print "flows:",self.pages[j].flowsnumber
+            
             # Load the current values for the Flows
-            for k in range(self.pages[j].flowsnumber):
+            for k in range(1,self.pages[j].flowsnumber+1):
+                print "K:",k
                 temp.steps[j].flows[k] = flow()
                 temp.steps[j].flows[k].number = str(k)
                 temp.steps[j].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
+                print "type:",temp.steps[j].flows[k].type
                 temp.steps[j].flows[k].what = self.pages[j].tabs[k].tc2.GetValue()
                 temp.steps[j].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
                 temp.steps[j].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
