@@ -642,10 +642,12 @@ class Main(wx.Frame):
             # Delete the first default flow before loading the flows
             self.pages[j].nestednb.DeletePage(0)
             #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
-      
+            
+            
             # Load the flows
             for k in range(len(temp.steps[j].flows)):
-                self.pages[j].flowmessage = "Number of flows in the step: " + str(self.pages[j].flowsnumber)
+                
+                self.pages[j].flowmessage = "Number of flows in the step: " + str(len(temp.steps[j].flows))
                 self.pages[j].label6.SetLabel(self.pages[j].flowmessage)
                 self.pages[j].tabs[k] = FlowTab(self.pages[j].nestednb)
                 
@@ -668,8 +670,10 @@ class Main(wx.Frame):
                     self.pages[j].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
                    
-            self.pages[j].flowsnumber -=1
-            
+            self.pages[j].flowsnumber +=1
+        
+        self.pages[j].flowsnumber = len(temp.steps[j].flows)
+        print self.pages[j].flowsnumber
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
 
         dlg.Destroy()
