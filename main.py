@@ -653,7 +653,7 @@ class Main(wx.Frame):
                 self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
                 self.pages[j].tabs[k].tc3.SetItems(self.pages[j].tabs[k].actors)
                 self.pages[j].tabs[k].tc4.SetItems(self.pages[j].tabs[k].actors)
-                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(self.pages[j].flowsnumber)) 
+                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(k+1)) 
                 #self.pages[j].flowsnumber += 1
 
                 self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
@@ -733,6 +733,7 @@ class Main(wx.Frame):
             temp.steps[f].rules = self.pages[j].tc4.GetValue()
             temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
+            print "flows:",self.pages[j].flowsnumber
             # Load the current values for the Flows
             for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
                 temp.steps[f].flows[m] = flow()
