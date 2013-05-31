@@ -731,27 +731,23 @@ class Main(wx.Frame):
         # Load the current values for the Steps
         for f,j in enumerate(range(self.pageCounter-3)):
             j = j+4
-            print self.pages
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
             temp.steps[f].title = self.pages[j].tc1.GetValue()
-            print "step:",f, " title.",temp.steps[f].title
             temp.steps[f].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
             temp.steps[f].tools = self.pages[j].tc3.GetValue()
             temp.steps[f].rules = self.pages[j].tc4.GetValue()
             temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
-            print "flows:",self.pages[j].flowsnumber
-            print "temp flows:",temp.steps[f].flows
             # Load the current values for the Flows
             for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
-                temp.steps[f].flows[m] = flow()
-                temp.steps[f].flows[m].number = str(m)
-                temp.steps[f].flows[m].type = self.pages[j].tabs[m].flowtype[self.pages[j].tabs[m].tc1.GetSelection()]
-                temp.steps[f].flows[m].what = self.pages[j].tabs[m].tc2.GetValue()
-                temp.steps[f].flows[m].actor1 = self.pages[j].tabs[m].actors[self.pages[j].tabs[m].tc3.GetSelection()]
-                temp.steps[f].flows[m].actor2 = self.pages[j].tabs[m].actors[self.pages[j].tabs[m].tc4.GetSelection()]
-                temp.steps[f].flows[m].direction = self.pages[j].tabs[m].flowdirection[self.pages[j].tabs[m].tc5.GetSelection()]
+                temp.steps[f].flows[k] = flow()
+                temp.steps[f].flows[k].number = str(m)
+                temp.steps[f].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
+                temp.steps[f].flows[k].what = self.pages[j].tabs[k].tc2.GetValue()
+                temp.steps[f].flows[k].actor1 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc3.GetSelection()]
+                temp.steps[f].flows[k].actor2 = self.pages[j].tabs[k].actors[self.pages[j].tabs[k].tc4.GetSelection()]
+                temp.steps[f].flows[k].direction = self.pages[j].tabs[k].flowdirection[self.pages[j].tabs[k].tc5.GetSelection()]
     
     def onSaveFile(self,event):
         # Load temporary project

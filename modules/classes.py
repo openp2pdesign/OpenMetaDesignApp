@@ -168,17 +168,17 @@ class project():
             for m,k in enumerate(self.steps[n].flows):
                 flow = etree.SubElement(flows, "flow")
                 flownumber = etree.SubElement(flow, "number")
-                flownumber.text = self.steps[n].flows[m].number
+                flownumber.text = self.steps[n].flows[k].number
                 flowtype = etree.SubElement(flow, "type")
-                flowtype.text = self.steps[n].flows[m].type
+                flowtype.text = self.steps[n].flows[k].type
                 what = etree.SubElement(flow, "what")
-                what.text = self.steps[n].flows[m].what
+                what.text = self.steps[n].flows[k].what
                 direction = etree.SubElement(flow, "direction")
-                direction.text = self.steps[n].flows[m].direction
+                direction.text = self.steps[n].flows[k].direction
                 actor1 = etree.SubElement(flow, "firstactor")
-                actor1.text = self.steps[n].flows[m].actor1
+                actor1.text = self.steps[n].flows[k].actor1
                 actor2 = etree.SubElement(flow, "secondactor")
-                actor2.text = self.steps[n].flows[m].actor2
+                actor2.text = self.steps[n].flows[k].actor2
             
         # save the file
         outFile = open(filename, 'w')
