@@ -181,13 +181,13 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetupScrolling()
         
     def onUpdateCtrl(self,event):
-        for k in range(self.flowsnumber):
+        for k in range(1,self.flowsnumber+1):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
         
     def onUpdateCtrlLoadFile(self):
-        for k in range(self.flowsnumber):
+        for k in range(1,self.flowsnumber+1):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
@@ -726,18 +726,23 @@ class Main(wx.Frame):
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
         #self.pageCounter -= 4
+        print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
-        for f,j in enumerate(range(self.pageCounter-4)):
+        for f,j in enumerate(range(self.pageCounter-3)):
+            j = j+4
+            print self.pages
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
             temp.steps[f].title = self.pages[j].tc1.GetValue()
+            print "step:",f, " title.",temp.steps[f].title
             temp.steps[f].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
             temp.steps[f].tools = self.pages[j].tc3.GetValue()
             temp.steps[f].rules = self.pages[j].tc4.GetValue()
             temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
             print "flows:",self.pages[j].flowsnumber
+            print "temp flows:",temp.steps[f].flows
             # Load the current values for the Flows
             for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
                 temp.steps[f].flows[m] = flow()
