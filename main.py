@@ -172,8 +172,8 @@ class StepPage(scrolled.ScrolledPanel):
         
         self.tabs = {}
         self.nestednb = wx.Notebook(self)
-        self.tabs[1] = FlowTab(self.nestednb)
-        self.nestednb.AddPage(self.tabs[1], "Flow n. 1") 
+        self.tabs[0] = FlowTab(self.nestednb)
+        self.nestednb.AddPage(self.tabs[0], "Flow n. 1") 
         self.box.Add(self.nestednb,2,wx.EXPAND, border=10)
         
         self.SetSizer(self.box)
@@ -729,10 +729,14 @@ class Main(wx.Frame):
         print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
-        for f,j in enumerate(range(self.pageCounter-3)):
-            j = j+4
+        for f,j in enumerate(range(self.pageCounter-4)):
+            #j = j+4
+            print f
+            print j
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
+            print "pages:",self.pages
+            print "0;",self.pages[0].tabs
             temp.steps[f].title = self.pages[j].tc1.GetValue()
             temp.steps[f].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
             temp.steps[f].tools = self.pages[j].tc3.GetValue()
@@ -740,7 +744,7 @@ class Main(wx.Frame):
             temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
             # Load the current values for the Flows
-            for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
+            for m,k in enumerate(range(self.pages[j].flowsnumber)):
                 temp.steps[f].flows[k] = flow()
                 temp.steps[f].flows[k].number = str(m)
                 temp.steps[f].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
