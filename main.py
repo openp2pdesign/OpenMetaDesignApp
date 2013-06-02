@@ -393,7 +393,7 @@ class Main(wx.Frame):
         
         # Initializing the notebook
         self.pages = {}
-        self.pageCounter = 3
+        self.pageCounter = 4
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
         self.page0 = WelcomePage(self.nb)
@@ -788,7 +788,7 @@ class Main(wx.Frame):
 
     def addNotebookPage(self):
         self.pageCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageCounter-3))
+        pageTitle = "Step: {0}".format(str(self.pageCounter-4))
         self.pages[self.pageCounter] = StepPage(self.nb, pageTitle)
         self.nb.AddPage(self.pages[self.pageCounter], pageTitle)
         self.pageTitleCounter += 1
