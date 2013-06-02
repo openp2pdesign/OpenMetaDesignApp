@@ -739,17 +739,13 @@ class Main(wx.Frame):
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
         #self.pageCounter -= 4
-        print "self.pageCounter:",self.pageCounter
+        #print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
         for f,j in enumerate(range(self.pageCounter-4)):
             #j = j+4
-            print f
-            print j
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
-            print "pages:",self.pages
-            print "0;",self.pages[0].tabs
             temp.steps[f].title = self.pages[j].tc1.GetValue()
             temp.steps[f].participation = self.pages[j].participationlevels[self.pages[j].tc2.GetSelection()]
             temp.steps[f].tools = self.pages[j].tc3.GetValue()
