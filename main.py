@@ -393,7 +393,7 @@ class Main(wx.Frame):
         
         # Initializing the notebook
         self.pages = {}
-        self.pageCounter = 4
+        self.pageCounter = 3
         self.pageTitleCounter = 1          
         self.nb = wx.Notebook(pannel, -1)
         self.page0 = WelcomePage(self.nb)
@@ -405,6 +405,7 @@ class Main(wx.Frame):
         self.nb.AddPage(self.page2, "Community Analysis")
         self.nb.AddPage(self.page3, "Business Model")
         self.addNotebookPage()
+        
         
         vbox.Add(self.nb, 2, flag=wx.EXPAND)
 
@@ -592,6 +593,19 @@ class Main(wx.Frame):
         currentFolder = os.path.dirname(paths[0])
         currentFile = paths[0]
         
+        # Erase existing pages
+        for j in range(self.pageCounter+1):
+            self.nb.DeletePage(0)
+        
+        self.page0 = WelcomePage(self.nb)
+        self.page1 = GeneralPage(self.nb)
+        self.page2 = CommunityPage(self.nb)
+        self.page3 = BusinessModelPage(self.nb)
+        self.nb.AddPage(self.page0, "Welcome!") 
+        self.nb.AddPage(self.page1, "General Information")
+        self.nb.AddPage(self.page2, "Community Analysis")
+        self.nb.AddPage(self.page3, "Business Model")
+                
         # Update the values in the GUI
         self.page1.tc1.SetValue(temp.title)
         self.page1.tc2.SetValue(temp.version)
@@ -619,13 +633,11 @@ class Main(wx.Frame):
         self.page3.tc7.SetValue(temp.businessmodel.keyresources)
         self.page3.tc8.SetValue(temp.businessmodel.revenuestreams)
         self.page3.tc9.SetValue(temp.businessmodel.coststructure)
-    
         
-        # Remove existing step pages before loading the new ones
-        for j in range(4,self.pageCounter+1):
-            self.nb.DeletePage(j)
-            del self.pages[j]        
+        # Remove existing step pages before loading the new ones       
         self.pageCounter = 4
+        del self.pages
+        self.pages = {}
         
         # Load and recreate step pages
         for j in range(len(temp.steps)): 
@@ -655,7 +667,8 @@ class Main(wx.Frame):
                 self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
                 self.pages[j].tabs[k].tc3.SetItems(self.pages[j].tabs[k].actors)
                 self.pages[j].tabs[k].tc4.SetItems(self.pages[j].tabs[k].actors)
-                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(k+1)) 
+                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(k+1))
+                self.pageTitleCounter = k+2
                 #self.pages[j].flowsnumber += 1
 
                 self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
@@ -788,10 +801,11 @@ class Main(wx.Frame):
 
     def addNotebookPage(self):
         self.pageCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageCounter-4))
+        self.pageTitleCounter += 1
+        pageTitle = "Step: {0}".format(str(self.pageTitleCounter-1))
         self.pages[self.pageCounter] = StepPage(self.nb, pageTitle)
         self.nb.AddPage(self.pages[self.pageCounter], pageTitle)
-        self.pageTitleCounter += 1
+        
 
     def onStepRemove(self, event):  
         if self.nb.GetSelection() > 4:
