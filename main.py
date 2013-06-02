@@ -826,6 +826,5 @@ class MyApp(wx.App, wx.lib.mixins.inspection.InspectionMixin):
         return True
 
 if __name__ == "__main__":
-    
     app = MyApp(redirect=False)
     app.MainLoop()
