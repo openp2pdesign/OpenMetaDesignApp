@@ -19,8 +19,8 @@ import thread
 #from github import Github
 from modules.classes import *
 from modules.render import *
-from modules.githubanalysis import *
-from modules.networkrender import *
+#from modules.githubanalysis import *
+#from modules.networkrender import *
 from modules.imageviewer import *
 from modules.mdwriter import *
 
