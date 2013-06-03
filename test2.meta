@@ -1,75 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
-  <title>project title</title>
+  <title>test</title>
   <version>0.1</version>
   <founders>
     <founder>founder</founder>
   </founders>
   <license>Creative Commons - Attribution (CC BY)</license>
   <licenseurl>http://creativecommons.org/licenses/by/3.0/</licenseurl>
+  <repo>https://github.com/openp2pdesign/testapp</repo>
   <community>
-    <locality>Locality</locality>
-    <activity>Activity</activity>
-    <subject>Subject</subject>
-    <object>Object</object>
-    <outcome>Outcome</outcome>
-    <needs>Needs</needs>
-    <communitytools>Tools</communitytools>
-    <communityrules>Rules</communityrules>
-    <communityroles>Roles</communityroles>
-    <context>Larger context</context>
+    <locality>noo</locality>
+    <activity>non</activity>
+    <subject>n</subject>
+    <object>on</object>
+    <outcome>on</outcome>
+    <needs>o</needs>
+    <communitytools>no</communitytools>
+    <communityrules>no</communityrules>
+    <communityroles>n</communityroles>
+    <context>on</context>
   </community>
   <businessmodel>
-    <valueproposition>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</valueproposition>
-    <customerrelationships>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</customerrelationships>
-    <channels>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</channels>
-    <customersegments>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</customersegments>
-    <revenuestreams>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</revenuestreams>
-    <coststructure>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</coststructure>
-    <keyactivities>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</keyactivities>
-    <keyresources>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</keyresources>
-    <keypartners>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec tortor ut nunc aliquet auctor porttitor vel orci. Donec nec consectetur orci. Morbi vel enim quis massa pharetra sagittis sit amet ut dui. Cras malesuada tellus a justo auctor at pellentesque enim suscipit. Aliquam ornare dolor ut mi tincidunt non placerat risus interdum. Integer porttitor, lectus id scelerisque tempus, nisl magna fermentum dolor, eget pretium nunc ligula et mi. Nunc a ipsum lobortis velit vulputate gravida et vel eros. Pellentesque scelerisque, nunc pellentesque semper adipiscing, sem quam bibendum arcu, dictum lobortis odio mauris nec augue. Nulla at sem vitae libero egestas bibendum consequat et risus. Cras eget mauris et odio sagittis cursus. Integer venenatis tortor vitae sem mollis sit amet adipiscing diam placerat. Sed sed egestas eros. Mauris in sapien quam, in cursus lectus. Etiam quam risus, tincidunt nec dignissim id, mollis sed orci.</keypartners>
+    <valueproposition>no</valueproposition>
+    <customerrelationships>on</customerrelationships>
+    <channels>o</channels>
+    <customersegments>n</customersegments>
+    <revenuestreams>on</revenuestreams>
+    <coststructure>o</coststructure>
+    <keyactivities>no</keyactivities>
+    <keyresources>n</keyresources>
+    <keypartners>no</keypartners>
   </businessmodel>
   <step>
     <stepnumber>0</stepnumber>
     <steptitle>first step</steptitle>
     <participation>None</participation>
-    <tools>tools</tools>
-    <rules>rules</rules>
+    <tools>to</tools>
+    <rules>ru</rules>
     <actors>
-      <actor>first actor</actor>
-      <actor>second actor</actor>
-      <actor>flood</actor>
+      <actor>a1</actor>
+      <actor>a2</actor>
     </actors>
-    <picture>picture</picture>
-    <flows/>
-  </step>
-  <step>
-    <stepnumber>1</stepnumber>
-    <steptitle>second step</steptitle>
-    <participation>Indirect</participation>
-    <tools>tools</tools>
-    <rules>rules</rules>
-    <actors>
-      <actor>first actor</actor>
-      <actor>second actor</actor>
-      <actor>third actor</actor>
-    </actors>
-    <picture>picture</picture>
-    <flows/>
-  </step>
-  <step>
-    <stepnumber>2</stepnumber>
-    <steptitle>third step</steptitle>
-    <participation>Shared control</participation>
-    <tools>tools</tools>
-    <rules>rules</rules>
-    <actors>
-      <actor>first actor</actor>
-      <actor>second actor</actor>
-      <actor>Trent Reznor</actor>
-    </actors>
-    <picture>picture</picture>
-    <flows/>
+    <flows>
+      <flow>
+        <number>0</number>
+        <type>Financial flow</type>
+        <what>money</what>
+        <direction>From the first actor to the second one</direction>
+        <firstactor>a2</firstactor>
+        <secondactor>a1</secondactor>
+      </flow>
+    </flows>
   </step>
 </project>
