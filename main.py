@@ -16,7 +16,7 @@ import wx
 import wx.lib.mixins.inspection
 import wx.lib.scrolledpanel as scrolled
 import thread
-from github import Github
+#from github import Github
 from modules.classes import *
 from modules.render import *
 from modules.githubanalysis import *
