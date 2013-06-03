@@ -479,14 +479,14 @@ class Main(wx.Frame):
         
         self.Show()
         
+
+    # Multithreading and wxPython, from http://wiki.wxpython.org/LongRunningTasks
+    def onStart(self, evt):
         # Prompt for GitHub username and login at the beginning 
         logdlg = GitHubLogin(self, -1, size=(350, 200))
         logdlg.ShowModal()
         logdlg.Destroy()
         
-
-    # Multithreading and wxPython, from http://wiki.wxpython.org/LongRunningTasks
-    def onStart(self, evt):
         self.statusBar.SetStatusText('Analysing your GitHub repository...')
         thread.start_new_thread(self.longRunning, ())
     
@@ -543,18 +543,22 @@ class Main(wx.Frame):
         app.MainLoop()
         
     def onViewNetwork(self,event):
-        self.statusBar.SetStatusText('Generating your network of interactions...')
-        self.SaveFile()
         thisFile = currentFolder + "/network_interactions.png"
         thisGraph = currentFolder + "/github_social_interactions_analysis.graphml"
         
         # Here check if thisGraph exists! else dialog that warns to first analyse the graph
-        
-        network_render(thisGraph,thisFile)
-        self.statusBar.SetStatusText('Network of interactions generated.')
-        
-        app = ImageViewerApp(thisFile, "The interactions that take place in the Open Design process")
-        app.MainLoop()
+        if not os.path.isfile(thisGraph):
+            dlg = wx.MessageDialog( self, "You haven't analysed your repository yet.\nPlease analyse it by choosing Analyse > Analyse the GitHub repository of the project", "Error", wx.OK)
+            dlg.ShowModal()
+            dlg.Destroy()
+        else:
+            self.statusBar.SetStatusText('Generating your network of interactions...')
+            self.SaveFile()
+            network_render(thisGraph,thisFile)
+            self.statusBar.SetStatusText('Network of interactions generated.')
+            
+            app = ImageViewerApp(thisFile, "The interactions that take place in the Open Design process")
+            app.MainLoop()
         
     def onInitialize(self,event):        
         dlg = wx.DirDialog(self, "Choose a repository directory:",style=wx.DD_DEFAULT_STYLE)
