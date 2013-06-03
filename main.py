@@ -435,10 +435,10 @@ class Main(wx.Frame):
         self.m_menu2.AppendItem( self.m_menuItem7 )
         self.m_menubar1.Append( self.m_menu2, u"Edit" ) 
         
-        self.m_menu4 = wx.Menu()
-        self.m_menuItem12 = wx.MenuItem( self.m_menu4, 20, u"Analyse the GitHub repository of the project", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu4.AppendItem( self.m_menuItem12 )
-        self.m_menubar1.Append( self.m_menu4, u"Analyse" ) 
+        #self.m_menu4 = wx.Menu()
+        #self.m_menuItem12 = wx.MenuItem( self.m_menu4, 20, u"Analyse the GitHub repository of the project", wx.EmptyString, wx.ITEM_NORMAL )
+        #self.m_menu4.AppendItem( self.m_menuItem12 )
+        #self.m_menubar1.Append( self.m_menu4, u"Analyse" ) 
         
         self.m_menu3 = wx.Menu()
         self.m_menuItem8 = wx.MenuItem( self.m_menu3, 15, u"View the participation in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
@@ -447,8 +447,8 @@ class Main(wx.Frame):
         self.m_menu3.AppendItem( self.m_menuItem9 )
         self.m_menuItem10 = wx.MenuItem( self.m_menu3, 17, u"View the actors and the flows of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu3.AppendItem( self.m_menuItem10 )
-        self.m_menuItem11 = wx.MenuItem( self.m_menu3, 18, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu3.AppendItem( self.m_menuItem11 )
+        #self.m_menuItem11 = wx.MenuItem( self.m_menu3, 18, u"View the interactions in the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
+        #self.m_menu3.AppendItem( self.m_menuItem11 )
       
         #self.m_menuItem12 = wx.MenuItem( self.m_menu3, wx.ID_ANY, u"View the whole canvas of the Open Design process", wx.EmptyString, wx.ITEM_NORMAL )
         #self.m_menu3.AppendItem( self.m_menuItem12 )
@@ -470,11 +470,11 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onStepInsert, self.m_menuItem6)
         self.Bind(wx.EVT_MENU, self.onStepRemove, self.m_menuItem7)
         self.Bind(wx.EVT_MENU, self.onAbout, self.m_menuItem13)
-        self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem12)
+        #self.Bind(wx.EVT_MENU, self.onStart, self.m_menuItem12)
         self.Bind(wx.EVT_MENU, self.onViewParticipation, self.m_menuItem8)
         self.Bind(wx.EVT_MENU, self.onViewBusiness, self.m_menuItem9)
         self.Bind(wx.EVT_MENU, self.onViewActorsFlows, self.m_menuItem10)
-        self.Bind(wx.EVT_MENU, self.onViewNetwork, self.m_menuItem11)
+        #self.Bind(wx.EVT_MENU, self.onViewNetwork, self.m_menuItem11)
         
         
         self.Show()
