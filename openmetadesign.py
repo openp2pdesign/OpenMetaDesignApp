@@ -406,8 +406,13 @@ class Main(wx.Frame):
         self.nb.AddPage(self.page1, "General Information")
         self.nb.AddPage(self.page2, "Community Analysis")
         self.nb.AddPage(self.page3, "Business Model")
-        self.addNotebookPage()
+        #self.addNotebookPage()
         
+        self.pageCounter += 1
+        self.pageTitleCounter += 1
+        pageTitle = "Step: {0}".format(str(1))
+        self.pages[1] = StepPage(self.nb, pageTitle)
+        self.nb.AddPage(self.pages[1], pageTitle)
         
         vbox.Add(self.nb, 2, flag=wx.EXPAND)
 
@@ -477,7 +482,6 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onViewBusiness, self.m_menuItem9)
         self.Bind(wx.EVT_MENU, self.onViewActorsFlows, self.m_menuItem10)
         #self.Bind(wx.EVT_MENU, self.onViewNetwork, self.m_menuItem11)
-        
         
         self.Show()
         
@@ -647,6 +651,8 @@ class Main(wx.Frame):
         
         # Load and recreate step pages
         for j in range(len(temp.steps)): 
+            print j
+            print "pages:",self.pages
             pageTitle = "Step: {0}".format(str(self.pageCounter-3))
             self.pages[j] = StepPage(self.nb, pageTitle)
             self.nb.AddPage(self.pages[j], pageTitle)
@@ -744,13 +750,14 @@ class Main(wx.Frame):
         temp.businessmodel.revenuestreams = self.page3.tc8.GetValue()
         temp.businessmodel.coststructure = self.page3.tc9.GetValue()
         
-        #self.pageCounter -= 4
+        self.pageCounter -= 4
         #print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
-        for f,j in enumerate(range(4,self.pageCounter+1)):
-	    #print "J:",j
-            #print "pages:",self.pages
+        for f,j in enumerate(range(self.pageCounter)):
+	    print "J:",j
+            print "se",self.pageCounter
+            print "pages:",self.pages
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
             temp.steps[f].title = self.pages[j].tc1.GetValue()
