@@ -181,13 +181,15 @@ class StepPage(scrolled.ScrolledPanel):
         self.SetupScrolling()
         
     def onUpdateCtrl(self,event):
-        for k in range(1,self.flowsnumber+1):
+	# was: (1,self.flowsnumber+1)
+        for k in range(self.flowsnumber):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
         
     def onUpdateCtrlLoadFile(self):
-        for k in range(1,self.flowsnumber+1):
+	# was: (1,self.flowsnumber+1)
+        for k in range(self.flowsnumber):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
