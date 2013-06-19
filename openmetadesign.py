@@ -748,8 +748,9 @@ class Main(wx.Frame):
         #print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
-        for f,j in enumerate(range(self.pageCounter-4)):
-            #j = j+4
+        for f,j in enumerate(range(4,self.pageCounter+1)):
+	    #print "J:",j
+            #print "pages:",self.pages
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
             temp.steps[f].title = self.pages[j].tc1.GetValue()
@@ -758,8 +759,12 @@ class Main(wx.Frame):
             temp.steps[f].rules = self.pages[j].tc4.GetValue()
             temp.steps[f].actors = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
             
+	
             # Load the current values for the Flows
+	    # print "flows", self.pages[j].flowsnumber
             for m,k in enumerate(range(self.pages[j].flowsnumber)):
+		# print "M:",m
+		# print "K:",k
                 temp.steps[f].flows[k] = flow()
                 temp.steps[f].flows[k].number = str(m)
                 temp.steps[f].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
