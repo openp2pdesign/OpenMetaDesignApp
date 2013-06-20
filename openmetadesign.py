@@ -766,12 +766,11 @@ class Main(wx.Frame):
 	
             # Load the current values for the Flows
 	    # print "flows", self.pages[j].flowsnumber
-            print j,"flows:",self.pages[j].flowsnumber
             for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
-		print "M:",m
-		print "K:",k
-                print "tab"
-                print "tab",self.pages[j].tabs
+		#print "M:",m
+		#print "K:",k
+                #print "tab"
+                #print "tab",self.pages[j].tabs
                 temp.steps[f].flows[k] = flow()
                 temp.steps[f].flows[k].number = str(m)
                 temp.steps[f].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]

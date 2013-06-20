@@ -106,28 +106,30 @@ def actors_flows_system_render(temp, filename):
     
     for j in range(len(temp.steps)):       
         for l,k in enumerate(temp.steps[j].flows):
+            print "L:",l
+            print "K:",k
             # Connect the actors with a line, here we start
             ctx.set_source_rgb(0, 0, 0)
             ctx.set_line_width(2)
             
             # Set the type of flow as a line style
-            if temp.steps[j].flows[l].type == "Information flow":
+            if temp.steps[j].flows[k].type == "Information flow":
                 ctx.set_dash([2.0])
-            elif temp.steps[j].flows[l].type == "Financial flow":
+            elif temp.steps[j].flows[k].type == "Financial flow":
                 ctx.set_dash([6.0])
-            elif temp.steps[j].flows[l].type == "Physical resources flow":
+            elif temp.steps[j].flows[k].type == "Physical resources flow":
                 ctx.set_dash([1.0,0.2,0.4])
             
             # Draw the flow lines, add the barSize according to the order of the actors
-            if totalActors[temp.steps[j].flows[l].actor1]["order"] > totalActors[temp.steps[j].flows[l].actor2]["order"]:
+            if totalActors[temp.steps[j].flows[k].actor1]["order"] > totalActors[temp.steps[j].flows[k].actor2]["order"]:
                 # First actor has a greater ordering number
                 coordX = whiteBorder+20+j*400+l*50
-                coordY1 = originAreaY+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
-                coordY2 = originAreaY+barSize+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+                coordY1 = originAreaY+(totalActors[temp.steps[j].flows[k].actor1]["order"])*150
+                coordY2 = originAreaY+barSize+(totalActors[temp.steps[j].flows[k].actor2]["order"])*150
                 ctx.move_to(coordX, coordY1)
                 ctx.line_to(coordX, coordY2)
                 ctx.stroke()
-                if temp.steps[j].flows[l].direction == "From the first actor to the second one":
+                if temp.steps[j].flows[k].direction == "From the first actor to the second one":
                     # Arrow must be drawn on the second actor
                     ctx.translate(coordX, coordY1)
                     ctx.arc(0, 0, 4, 0, 3*pi)
@@ -138,17 +140,17 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY1-33, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY1-20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
                     
-                elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
+                elif temp.steps[j].flows[k].direction == "From the second actor to the first one":
                     # Arrow must be drawn on the first actor
                     ctx.translate(coordX, coordY2)
                     ctx.arc(0, 0, 4, 0, 3*pi)
@@ -159,17 +161,17 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY2+8, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY2+8, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY2+20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY2+20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
                     
-                elif temp.steps[j].flows[l].direction == "Both directions":
+                elif temp.steps[j].flows[k].direction == "Both directions":
                     ctx.translate(coordX, coordY2)
                     ctx.arc(0, 0, 4, 0, 3*pi)
                     ctx.set_source_rgb(0, 0, 0)
@@ -185,25 +187,25 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1-33, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY1-33, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1-20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY1-20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
             
             else:
                 # First actor has a smaller ordering number
                 coordX = whiteBorder+20+j*400+l*50
-                coordY1 = originAreaY+barSize+(totalActors[temp.steps[j].flows[l].actor1]["order"])*150
-                coordY2 = originAreaY+(totalActors[temp.steps[j].flows[l].actor2]["order"])*150
+                coordY1 = originAreaY+barSize+(totalActors[temp.steps[j].flows[k].actor1]["order"])*150
+                coordY2 = originAreaY+(totalActors[temp.steps[j].flows[k].actor2]["order"])*150
                 ctx.move_to(coordX, coordY1)
                 ctx.line_to(coordX, coordY2)
                 ctx.stroke()
-                if temp.steps[j].flows[l].direction == "From the first actor to the second one":
+                if temp.steps[j].flows[k].direction == "From the first actor to the second one":
                     # Arrow must be drawn on the second actor
                     ctx.translate(coordX, coordY1)
                     ctx.arc(0, 0, 4, 0, 3*pi)
@@ -214,17 +216,17 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1+8, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY1+8, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1+20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY1+20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
                     
-                elif temp.steps[j].flows[l].direction == "From the second actor to the first one":
+                elif temp.steps[j].flows[k].direction == "From the second actor to the first one":
                     # Arrow must be drawn on the first actor
                     ctx.translate(coordX, coordY2)
                     ctx.arc(0, 0, 4, 0, 3*pi)
@@ -235,17 +237,17 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY2-33, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY2-33, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY2-20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY2-20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
                     
-                elif temp.steps[j].flows[l].direction == "Both directions":
+                elif temp.steps[j].flows[k].direction == "Both directions":
                     ctx.translate(coordX, coordY2)
                     ctx.arc(0, 0, 4, 0, 3*pi)
                     ctx.set_source_rgb(0, 0, 0)
@@ -261,15 +263,15 @@ def actors_flows_system_render(temp, filename):
                     
                     # Draw label box
                     ctx.set_source_rgba(0.95, 0.95, 0.95,0.9)
-                    ctx.rectangle(coordX-len(temp.steps[j].flows[l].what)*4, coordY1+8, 
-                                  len(temp.steps[j].flows[l].what)*8, 18)
+                    ctx.rectangle(coordX-len(temp.steps[j].flows[k].what)*4, coordY1+8, 
+                                  len(temp.steps[j].flows[k].what)*8, 18)
                     ctx.fill()
                     # Draw label
                     ctx.set_source_rgb(0, 0, 0)
                     ctx.select_font_face("TitilliumText25L", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
                     ctx.set_font_size(12)
-                    ctx.move_to(coordX-len(temp.steps[j].flows[l].what)*2.5, coordY1+20)
-                    ctx.show_text(temp.steps[j].flows[l].what)
+                    ctx.move_to(coordX-len(temp.steps[j].flows[k].what)*2.5, coordY1+20)
+                    ctx.show_text(temp.steps[j].flows[k].what)
             
     # Write the canvas as a .png file
     surface.write_to_png(filename)
