@@ -664,6 +664,7 @@ class Main(wx.Frame):
             
             # Delete the first default flow before loading the flows
             self.pages[self.pageTitleCounter].nestednb.DeletePage(0)
+            del self.pages[self.pageTitleCounter].tabs[0]
             #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
             
             
@@ -672,31 +673,31 @@ class Main(wx.Frame):
                 
                 self.pages[self.pageTitleCounter].flowmessage = "Number of flows in the step: " + str(len(temp.steps[j].flows))
                 self.pages[self.pageTitleCounter].label6.SetLabel(self.pages[self.pageTitleCounter].flowmessage)
-                self.pages[self.pageTitleCounter].tabs[k] = FlowTab(self.pages[self.pageTitleCounter].nestednb)
+                self.pages[self.pageTitleCounter].tabs[k+1] = FlowTab(self.pages[self.pageTitleCounter].nestednb)
                 
-                self.pages[self.pageTitleCounter].tabs[k].actors = temp.steps[j].actors
+                self.pages[self.pageTitleCounter].tabs[k+1].actors = temp.steps[j].actors
                 self.pages[self.pageTitleCounter].tc5.SetValue(", ".join(temp.steps[j].actors))
-                self.pages[self.pageTitleCounter].tabs[k].tc3.SetItems(self.pages[self.pageTitleCounter].tabs[k].actors)
-                self.pages[self.pageTitleCounter].tabs[k].tc4.SetItems(self.pages[self.pageTitleCounter].tabs[k].actors)
-                self.pages[self.pageTitleCounter].nestednb.AddPage(self.pages[self.pageTitleCounter].tabs[k], "Flow n. " + str(k+1))
+                self.pages[self.pageTitleCounter].tabs[k+1].tc3.SetItems(self.pages[self.pageTitleCounter].tabs[k+1].actors)
+                self.pages[self.pageTitleCounter].tabs[k+1].tc4.SetItems(self.pages[self.pageTitleCounter].tabs[k+1].actors)
+                self.pages[self.pageTitleCounter].nestednb.AddPage(self.pages[self.pageTitleCounter].tabs[k+1], "Flow n. " + str(k+1))
                 #self.pageTitleCounter = k+2
                 #self.pages[j].flowsnumber += 1
 
-                self.pages[self.pageTitleCounter].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
-                self.pages[self.pageTitleCounter].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
+                self.pages[self.pageTitleCounter].tabs[k+1].tc1.SetStringSelection(temp.steps[j].flows[k].type)
+                self.pages[self.pageTitleCounter].tabs[k+1].tc2.SetValue(temp.steps[j].flows[k].what)
                 
                 for f in range(self.pages[self.pageTitleCounter].flowsnumber):
                     load = [x.strip() for x in self.pages[self.pageTitleCounter].tc5.GetValue().split(',')]
-                    self.pages[self.pageTitleCounter].tabs[f].tc3.SetItems(load)
-                    self.pages[self.pageTitleCounter].tabs[f].tc4.SetItems(load)
-                    self.pages[self.pageTitleCounter].tabs[f].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
-                    self.pages[self.pageTitleCounter].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
-                    self.pages[self.pageTitleCounter].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
+		    self.pages[self.pageTitleCounter].tabs[f+1].tc3.SetItems(load)
+                    self.pages[self.pageTitleCounter].tabs[f+1].tc4.SetItems(load)
+                    self.pages[self.pageTitleCounter].tabs[f+1].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
+                    self.pages[self.pageTitleCounter].tabs[f+1].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
+                    self.pages[self.pageTitleCounter].tabs[f+1].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
                    
             self.pages[self.pageTitleCounter].flowsnumber +=1
-        
-        self.pages[self.pageTitleCounter].flowsnumber = len(temp.steps[j].flows)
+            self.pages[self.pageTitleCounter].flowsnumber = len(temp.steps[j].flows)
+            
         
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
         
@@ -766,9 +767,9 @@ class Main(wx.Frame):
             # Load the current values for the Flows
 	    # print "flows", self.pages[j].flowsnumber
             print j,"flows:",self.pages[j].flowsnumber
-            for m,k in enumerate(range(self.pages[j].flowsnumber)):
-		#print "M:",m
-		#print "K:",k
+            for m,k in enumerate(range(1,self.pages[j].flowsnumber+1)):
+		print "M:",m
+		print "K:",k
                 print "tab"
                 print "tab",self.pages[j].tabs
                 temp.steps[f].flows[k] = flow()
