@@ -182,14 +182,14 @@ class StepPage(scrolled.ScrolledPanel):
         
     def onUpdateCtrl(self,event):
 	# was: (1,self.flowsnumber+1)
-        for k in range(self.flowsnumber):
+        for k in range(1,self.flowsnumber+1):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
         
     def onUpdateCtrlLoadFile(self):
 	# was: (1,self.flowsnumber+1)
-        for k in range(self.flowsnumber):
+        for k in range(1,self.flowsnumber+1):
             self.tabs[k].actors = [x.strip() for x in self.tc5.GetValue().split(',')]
             self.tabs[k].tc3.SetItems(self.tabs[k].actors)
             self.tabs[k].tc4.SetItems(self.tabs[k].actors)
@@ -219,6 +219,7 @@ class StepPage(scrolled.ScrolledPanel):
         self.tabs[self.flowsnumber].tc3.SetItems(self.tabs[self.flowsnumber].actors)
         self.tabs[self.flowsnumber].tc4.SetItems(self.tabs[self.flowsnumber].actors)
         self.nestednb.AddPage(self.tabs[self.flowsnumber], "Flow n. " + str(self.flowsnumber)) 
+        print "OK",self.tabs
         
         
 class WelcomePage(scrolled.ScrolledPanel):
@@ -409,11 +410,9 @@ class Main(wx.Frame):
         #self.addNotebookPage()
         
         self.pageCounter += 1
-        self.pageTitleCounter += 1
-        pageTitle = "Step: {0}".format(str(1))
-        self.pages[1] = StepPage(self.nb, pageTitle)
-        self.nb.AddPage(self.pages[1], pageTitle)
-        
+        pageTitle = "Step: {0}".format(str(self.pageTitleCounter))
+        self.pages[self.pageTitleCounter] = StepPage(self.nb, pageTitle)
+        self.nb.AddPage(self.pages[self.pageTitleCounter], pageTitle)
         vbox.Add(self.nb, 2, flag=wx.EXPAND)
 
         pannel.SetSizer(vbox)
@@ -646,61 +645,61 @@ class Main(wx.Frame):
         
         # Remove existing step pages before loading the new ones       
         self.pageCounter = 4
+        self.pageTitleCounter = 0
         del self.pages
         self.pages = {}
         
         # Load and recreate step pages
-        for j in range(len(temp.steps)): 
-            print j
-            print "pages:",self.pages
-            pageTitle = "Step: {0}".format(str(self.pageCounter-3))
-            self.pages[j] = StepPage(self.nb, pageTitle)
-            self.nb.AddPage(self.pages[j], pageTitle)
+        for j in range(len(temp.steps)):
+            self.pageTitleCounter += 1 
+            pageTitle = "Step: {0}".format(str(self.pageTitleCounter))
+            self.pages[self.pageTitleCounter] = StepPage(self.nb, pageTitle)
+            self.nb.AddPage(self.pages[self.pageTitleCounter], pageTitle)
             self.pageCounter += 1
-            self.pages[j].tc1.SetValue(temp.steps[j].title)
-            self.pages[j].tc2.SetStringSelection(temp.steps[j].participation)
-            self.pages[j].tc3.SetValue(temp.steps[j].tools)
-            self.pages[j].tc4.SetValue(temp.steps[j].rules)
-            self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
+            self.pages[self.pageTitleCounter].tc1.SetValue(temp.steps[j].title)
+            self.pages[self.pageTitleCounter].tc2.SetStringSelection(temp.steps[j].participation)
+            self.pages[self.pageTitleCounter].tc3.SetValue(temp.steps[j].tools)
+            self.pages[self.pageTitleCounter].tc4.SetValue(temp.steps[j].rules)
+            self.pages[self.pageTitleCounter].tc5.SetValue(", ".join(temp.steps[j].actors))
             
             # Delete the first default flow before loading the flows
-            self.pages[j].nestednb.DeletePage(0)
+            self.pages[self.pageTitleCounter].nestednb.DeletePage(0)
             #del self.pages[j].tabs[self.pages[j].nestednb.GetSelection()]
             
             
             # Load the flows
             for k in range(len(temp.steps[j].flows)):
                 
-                self.pages[j].flowmessage = "Number of flows in the step: " + str(len(temp.steps[j].flows))
-                self.pages[j].label6.SetLabel(self.pages[j].flowmessage)
-                self.pages[j].tabs[k] = FlowTab(self.pages[j].nestednb)
+                self.pages[self.pageTitleCounter].flowmessage = "Number of flows in the step: " + str(len(temp.steps[j].flows))
+                self.pages[self.pageTitleCounter].label6.SetLabel(self.pages[self.pageTitleCounter].flowmessage)
+                self.pages[self.pageTitleCounter].tabs[k] = FlowTab(self.pages[self.pageTitleCounter].nestednb)
                 
-                self.pages[j].tabs[k].actors = temp.steps[j].actors
-                self.pages[j].tc5.SetValue(", ".join(temp.steps[j].actors))
-                self.pages[j].tabs[k].tc3.SetItems(self.pages[j].tabs[k].actors)
-                self.pages[j].tabs[k].tc4.SetItems(self.pages[j].tabs[k].actors)
-                self.pages[j].nestednb.AddPage(self.pages[j].tabs[k], "Flow n. " + str(k+1))
-                self.pageTitleCounter = k+2
+                self.pages[self.pageTitleCounter].tabs[k].actors = temp.steps[j].actors
+                self.pages[self.pageTitleCounter].tc5.SetValue(", ".join(temp.steps[j].actors))
+                self.pages[self.pageTitleCounter].tabs[k].tc3.SetItems(self.pages[self.pageTitleCounter].tabs[k].actors)
+                self.pages[self.pageTitleCounter].tabs[k].tc4.SetItems(self.pages[self.pageTitleCounter].tabs[k].actors)
+                self.pages[self.pageTitleCounter].nestednb.AddPage(self.pages[self.pageTitleCounter].tabs[k], "Flow n. " + str(k+1))
+                #self.pageTitleCounter = k+2
                 #self.pages[j].flowsnumber += 1
 
-                self.pages[j].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
-                self.pages[j].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
+                self.pages[self.pageTitleCounter].tabs[k].tc1.SetStringSelection(temp.steps[j].flows[k].type)
+                self.pages[self.pageTitleCounter].tabs[k].tc2.SetValue(temp.steps[j].flows[k].what)
                 
-                for f in range(self.pages[j].flowsnumber):
-                    load = [x.strip() for x in self.pages[j].tc5.GetValue().split(',')]
-                    self.pages[j].tabs[f].tc3.SetItems(load)
-                    self.pages[j].tabs[f].tc4.SetItems(load)
-                    self.pages[j].tabs[f].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
-                    self.pages[j].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
-                    self.pages[j].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
+                for f in range(self.pages[self.pageTitleCounter].flowsnumber):
+                    load = [x.strip() for x in self.pages[self.pageTitleCounter].tc5.GetValue().split(',')]
+                    self.pages[self.pageTitleCounter].tabs[f].tc3.SetItems(load)
+                    self.pages[self.pageTitleCounter].tabs[f].tc4.SetItems(load)
+                    self.pages[self.pageTitleCounter].tabs[f].tc3.SetStringSelection(temp.steps[j].flows[k].actor1)
+                    self.pages[self.pageTitleCounter].tabs[f].tc4.SetStringSelection(temp.steps[j].flows[k].actor2)
+                    self.pages[self.pageTitleCounter].tabs[f].tc5.SetStringSelection(temp.steps[j].flows[k].direction)
             
                    
-            self.pages[j].flowsnumber +=1
+            self.pages[self.pageTitleCounter].flowsnumber +=1
         
-        self.pages[j].flowsnumber = len(temp.steps[j].flows)
+        self.pages[self.pageTitleCounter].flowsnumber = len(temp.steps[j].flows)
         
         self.statusBar.SetStatusText("Loaded successfully file "+currentFile)
-
+        
         dlg.Destroy()
         
     def SaveFile(self):
@@ -754,10 +753,7 @@ class Main(wx.Frame):
         #print "self.pageCounter:",self.pageCounter
 
         # Load the current values for the Steps
-        for f,j in enumerate(range(self.pageCounter)):
-	    print "J:",j
-            print "se",self.pageCounter
-            print "pages:",self.pages
+        for f,j in enumerate(range(1,self.pageCounter+1)):
             temp.steps[f] = step()
             temp.steps[f].stepnumber = j
             temp.steps[f].title = self.pages[j].tc1.GetValue()
@@ -769,9 +765,12 @@ class Main(wx.Frame):
 	
             # Load the current values for the Flows
 	    # print "flows", self.pages[j].flowsnumber
+            print j,"flows:",self.pages[j].flowsnumber
             for m,k in enumerate(range(self.pages[j].flowsnumber)):
-		# print "M:",m
-		# print "K:",k
+		#print "M:",m
+		#print "K:",k
+                print "tab"
+                print "tab",self.pages[j].tabs
                 temp.steps[f].flows[k] = flow()
                 temp.steps[f].flows[k].number = str(m)
                 temp.steps[f].flows[k].type = self.pages[j].tabs[k].flowtype[self.pages[j].tabs[k].tc1.GetSelection()]
@@ -816,9 +815,9 @@ class Main(wx.Frame):
     def addNotebookPage(self):
         self.pageCounter += 1
         self.pageTitleCounter += 1
-        pageTitle = "Step: {0}".format(str(self.pageTitleCounter-1))
-        self.pages[self.pageCounter] = StepPage(self.nb, pageTitle)
-        self.nb.AddPage(self.pages[self.pageCounter], pageTitle)
+        pageTitle = "Step: {0}".format(str(self.pageTitleCounter))
+        self.pages[self.pageTitleCounter] = StepPage(self.nb, pageTitle)
+        self.nb.AddPage(self.pages[self.pageTitleCounter], pageTitle)
         
 
     def onStepRemove(self, event):  
